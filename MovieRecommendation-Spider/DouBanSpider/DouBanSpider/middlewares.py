@@ -8,6 +8,8 @@ from scrapy import signals
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
+import random
+
 
 class DoubanspiderSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
@@ -101,3 +103,10 @@ class DoubanspiderDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+
+class RandomUserAgentMiddleware(object):
+    def process_request(self, request, spider):
+        user_agent = random.choice(spider.settings['USER_AGENT_LIST'])
+        request.headers['User-Agent'] = user_agent

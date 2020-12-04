@@ -6,7 +6,7 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
-from DouBanSpider.items import MovieBriefIntroduction
+from DouBanSpider.items import MovieBriefIntroduction, MovieDetail
 import pymysql
 
 
@@ -29,6 +29,10 @@ class DoubanspiderPipeline:
             exist = self.get_movie_brief_introduction(item)
             if not exist:
                 self.save_movie_brief_introduction(item)
+        if isinstance(item, MovieDetail):
+            exist = self.get_movie_detail(item)
+            if not exist:
+                self.save_movie_detail(item)
         return item
 
     # 获取电影简要信息
@@ -48,5 +52,21 @@ class DoubanspiderPipeline:
         fields = ','.join(keys)
         temp = ','.join(['%s'] * len(keys))
         sql = 'INSERT INTO movie_brief_introduction (%s) VALUES (%s)' % (fields, temp)
+        self.cursor.execute(sql, tuple(i for i in values))
+        return self.connection.commit()
+
+    # 获取电影详细信息
+    def get_movie_detail(self, item):
+        sql = 'SELECT douban_id FROM movie_detail WHERE douban_id = %s;' % item['douban_id']
+        self.cursor.execute(sql)
+        return self.cursor.fetchone()
+
+    # 保存电影详细信息进入数据库
+    def save_movie_detail(self, item):
+        keys = item.keys()
+        values = tuple(item.values())
+        fields = ','.join(keys)
+        temp = ','.join(['%s'] * len(keys))
+        sql = 'INSERT INTO movie_detail (%s) VALUES (%s)' % (fields, temp)
         self.cursor.execute(sql, tuple(i for i in values))
         return self.connection.commit()

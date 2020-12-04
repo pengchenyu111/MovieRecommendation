@@ -50,4 +50,4 @@ class MovieDetail(scrapy.Item):
     better_than = scrapy.Field()  # 好于其他类型影片占比，列表
     douban_url = scrapy.Field()  # 豆瓣电影链接
     cover_url = scrapy.Field()  # 电影海报链接
-    IMDb_url = scrapy.Field()  # IMDb链接
+    imdb_url = scrapy.Field()  # IMDb链接

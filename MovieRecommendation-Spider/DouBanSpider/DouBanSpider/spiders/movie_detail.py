@@ -12,7 +12,6 @@ class MovieDetailSpider(scrapy.Spider):
     cursor.execute(sql)
     douban_id_tuple_list = cursor.fetchall()
     start_urls = ['https://movie.douban.com/subject/{}/'.format(i[0]) for i in douban_id_tuple_list]
-    print(start_urls)
 
     def start_requests(self):
         for url in self.start_urls:
@@ -201,5 +200,5 @@ class MovieDetailSpider(scrapy.Spider):
     # 获取IMDb链接
     def get_IMDb_url(self, item, response):
         regx = '//div[@id="info"]/span[contains(text(),"IMDb链接:")]/following-sibling::a/@href'
-        item['IMDb_url'] = response.xpath(regx).get()
+        item['imdb_url'] = response.xpath(regx).get()
         return item

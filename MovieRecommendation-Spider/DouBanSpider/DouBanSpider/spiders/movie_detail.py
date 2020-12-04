@@ -165,11 +165,11 @@ class MovieDetailSpider(scrapy.Spider):
         regx = '//div[@class="ratings-on-weight"]/div/span[@class="rating_per"]/text()'
         rating_weights = response.xpath(regx).getall()
         if len(rating_weights) > 0:
-            item['rating_5_star_weight'] = rating_weights[4]
-            item['rating_4_star_weight'] = rating_weights[3]
+            item['rating_5_star_weight'] = rating_weights[0]
+            item['rating_4_star_weight'] = rating_weights[1]
             item['rating_3_star_weight'] = rating_weights[2]
-            item['rating_2_star_weight'] = rating_weights[1]
-            item['rating_1_star_weight'] = rating_weights[0]
+            item['rating_2_star_weight'] = rating_weights[3]
+            item['rating_1_star_weight'] = rating_weights[4]
         else:
             if len(rating_weights) > 0:
                 item['rating_5_star_weight'] = 0

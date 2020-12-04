@@ -51,3 +51,20 @@ class MovieDetail(scrapy.Item):
     douban_url = scrapy.Field()  # 豆瓣电影链接
     cover_url = scrapy.Field()  # 电影海报链接
     imdb_url = scrapy.Field()  # IMDb链接
+
+
+# IMDb网站评分信息
+class IMDbRatings(scrapy.Item):
+    imdb_id = scrapy.Field()  # IMDb id
+    douban_id = scrapy.Field()  # 豆瓣id
+    imdb_rating = scrapy.Field()  # IMDb评分
+    rating_scores = scrapy.Field()  # 各级评分，1-10，|分割
+    rating_scores_weights = scrapy.Field()  # 各级评分权重，|分割
+    rating_scores_votes = scrapy.Field()  # 各级评分投票数，|分割
+    age_all = scrapy.Field()  # 全年龄段评分情况，评分|投票数
+    age_less_than_18 = scrapy.Field()  # 年龄小于18的评分情况，评分|投票数
+    age_18_29 = scrapy.Field()  # 年龄18-29的评分情况，评分|投票数
+    age_30_44 = scrapy.Field()  # 年龄30-44的评分情况，评分|投票数
+    age_more_than_45 = scrapy.Field()  # 年龄大于45的评分情况，评分|投票数
+    male_ratings = scrapy.Field()  # 男性评分情况
+    female_ratings = scrapy.Field()  # 女性评分情况

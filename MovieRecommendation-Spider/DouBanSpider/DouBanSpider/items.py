@@ -68,3 +68,20 @@ class IMDbRatings(scrapy.Item):
     age_more_than_45 = scrapy.Field()  # 年龄大于45的评分情况，评分|投票数
     male_ratings = scrapy.Field()  # 男性评分情况
     female_ratings = scrapy.Field()  # 女性评分情况
+
+
+# 豆瓣短评信息
+class MovieReviews(scrapy.Item):
+    review_id = scrapy.Field()  # 评论id
+    douban_id = scrapy.Field()  # 电影豆瓣id
+    user_unique_name = scrapy.Field()  # 用户唯一名字标志，短评上没有id，以此做唯一标识
+    user_head_portrait_url = scrapy.Field()  # 用户头像url
+    user_url = scrapy.Field()  # 用户主页链接
+    user_name = scrapy.Field()  # 用户名
+    user_movie_rating = scrapy.Field()  # 用户对电影的评分星级，5星级
+    user_movie_rating_time = scrapy.Field()  # 用户对电影的评分时间
+    user_movie_rating_agree = scrapy.Field()  # 其他用户对此评论的赞同数
+    user_movie_rating_content = scrapy.Field()  # 评论内容
+    movie_positive_rate = scrapy.Field()  # 电影评论好评率
+    movie_general_rate = scrapy.Field()  # 电影评论一般评率
+    movie_negative_rate = scrapy.Field()  # 电影评论差评率

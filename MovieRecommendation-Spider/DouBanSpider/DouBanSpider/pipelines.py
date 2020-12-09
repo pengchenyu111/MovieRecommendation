@@ -6,7 +6,7 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
-from DouBanSpider.items import MovieBriefIntroduction, MovieDetail, IMDbRatings
+from DouBanSpider.items import MovieBriefIntroduction, MovieDetail, IMDbRatings, MovieReviews
 import pymysql
 
 
@@ -37,6 +37,11 @@ class DoubanspiderPipeline:
             exist = self.get_imdb_ratings(item)
             if not exist:
                 self.save_imdb_ratings(item)
+        if isinstance(item, MovieReviews):
+            if item['review_id'] != '':
+                exist = self.get_movie_reviews(item)
+                if not exist:
+                    self.save_movie_reviews(item)
         return item
 
     # 获取电影简要信息
@@ -88,5 +93,21 @@ class DoubanspiderPipeline:
         fields = ','.join(keys)
         temp = ','.join(['%s'] * len(keys))
         sql = 'INSERT INTO imdb_ratings (%s) VALUES (%s)' % (fields, temp)
+        self.cursor.execute(sql, tuple(i for i in values))
+        return self.connection.commit()
+
+    # 获取评论信息
+    def get_movie_reviews(self, item):
+        sql = "SELECT review_id FROM movie_reviews WHERE review_id = '%s';" % item['review_id']
+        self.cursor.execute(sql)
+        return self.cursor.fetchone()
+
+    # 保存IMDb电影评分信息进入数据库
+    def save_movie_reviews(self, item):
+        keys = item.keys()
+        values = tuple(item.values())
+        fields = ','.join(keys)
+        temp = ','.join(['%s'] * len(keys))
+        sql = 'INSERT INTO movie_reviews (%s) VALUES (%s)' % (fields, temp)
         self.cursor.execute(sql, tuple(i for i in values))
         return self.connection.commit()

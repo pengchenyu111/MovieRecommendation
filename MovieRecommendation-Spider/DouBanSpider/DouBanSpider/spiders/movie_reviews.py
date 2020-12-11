@@ -56,7 +56,7 @@ class MovieReviewsSpider(scrapy.Spider):
                 yield item
         # 翻页
         url = response.xpath('//a[@data-page="next"]/@href').get()
-        if len(url) > 0:
+        if url is not None:
             next_url = 'https://movie.douban.com/subject/%s/comments%s' % (item['douban_id'], url)
             print('**********下一页*************' + next_url)
             yield scrapy.Request(

@@ -22,7 +22,7 @@ RETRY_ENABLED = False
 RETRY_TIMES = 2
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 5
+CONCURRENT_REQUESTS = 40
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -54,6 +54,8 @@ DEFAULT_REQUEST_HEADERS = {
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
+    # 设置隧道代理
+    'DouBanSpider.middlewares.ProxyDownloaderMiddleware': 100,
     # 随机User-Agent中间件
     'DouBanSpider.middlewares.RandomUserAgentMiddleware': 543,
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,

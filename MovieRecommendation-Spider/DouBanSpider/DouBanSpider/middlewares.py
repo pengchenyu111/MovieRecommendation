@@ -9,6 +9,8 @@ from scrapy import signals
 from itemadapter import is_item, ItemAdapter
 
 import random
+from scrapy import signals
+from w3lib.http import basic_auth_header
 
 
 class DoubanspiderSpiderMiddleware:
@@ -105,8 +107,17 @@ class DoubanspiderDownloaderMiddleware:
         spider.logger.info('Spider opened: %s' % spider.name)
 
 
-
 class RandomUserAgentMiddleware(object):
     def process_request(self, request, spider):
         user_agent = random.choice(spider.settings['USER_AGENT_LIST'])
         request.headers['User-Agent'] = user_agent
+
+
+class ProxyDownloaderMiddleware:
+
+    def process_request(self, request, spider):
+        proxy = "tps192.kdlapi.com:15818"
+        request.meta['proxy'] = "http://%(proxy)s" % {'proxy': proxy}
+        # 用户名密码认证
+        request.headers['Proxy-Authorization'] = basic_auth_header('${t10768767812982}', '${jkhildq9}')  # 白名单认证可注释此行
+        return None

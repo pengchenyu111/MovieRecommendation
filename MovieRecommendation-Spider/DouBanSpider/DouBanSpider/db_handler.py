@@ -29,6 +29,17 @@ def update_movie_subject():
         connection.rollback()
         print(e)
 
+# 删除movie_detail表中title字段为空的记录
+def delete_movie_detail_title_null():
+    sql = 'DELETE FROM movie_detail WHERE movie_detail.title IS NULL;'
+    try:
+        row = cursor.execute(sql)
+        print(str(row) + '行记录已删除')
+        connection.commit()
+    except Exception as e:
+        connection.rollback()
+        print(e)
 
 if __name__ == '__main__':
-    update_movie_subject()
+    # update_movie_subject()
+    delete_movie_detail_title_null()

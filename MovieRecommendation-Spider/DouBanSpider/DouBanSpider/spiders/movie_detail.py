@@ -146,7 +146,7 @@ class MovieDetailSpider(scrapy.Spider):
     def get_rating_star(self, item, response):
         regx = '//*[@id="interest_sectl"]/div[1]/div[2]/div/div[1]/@class'
         str = response.xpath(regx).get()
-        if len(str) > 0:
+        if str is not None:
             data = re.findall('ll bigstar bigstar(\d+)', str)
             item['rating_star'] = data[0]
         else:

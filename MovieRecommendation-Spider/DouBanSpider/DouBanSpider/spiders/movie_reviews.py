@@ -97,8 +97,10 @@ class MovieReviewsSpider(scrapy.Spider):
 
     # 获取评论id
     def get_review_id(self, item, review):
-        data = review['data-cid']
-        item['review_id'] = data if len(data) > 0 else ''
+        if review is not None:
+            item['review_id'] = review['data-cid']
+        else:
+            item['review_id'] = ''
         return item
 
     # 获取用户唯一名字标志，短评上没有id，以此做唯一标识

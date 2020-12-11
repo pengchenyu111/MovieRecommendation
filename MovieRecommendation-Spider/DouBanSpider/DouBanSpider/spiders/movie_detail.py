@@ -18,7 +18,7 @@ class MovieDetailSpider(scrapy.Spider):
             # 这里后面可能会加Cookie
             yield scrapy.Request(
                 url,
-                meta={'main_url': url},
+                meta={'main_url': url, 'dont_redirect': True, 'handle_httpstatus_list': [302]},
                 dont_filter=True
             )
 

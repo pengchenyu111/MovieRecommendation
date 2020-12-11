@@ -10,10 +10,12 @@ class MovieBriefIntroductionSpider(scrapy.Spider):
 
     def parse(self, response):
         for i in range(0, 10000, 20):
-            url = 'https://movie.douban.com/j/new_search_subjects?sort=T&range=0,10&tags=&start={}'.format(i)
+            url = 'https://movie.douban.com/j/new_search_subjects?sort=U&range=0,10&tags=%E7%94%B5%E5%BD%B1&start={}'.format(i)
             yield scrapy.Request(
                 url,
-                callback=self.parse_movie_brief_introduction
+                callback=self.parse_movie_brief_introduction,
+                meta={'dont_redirect': True, 'handle_httpstatus_list': [302]},
+                dont_filter=True
             )
 
     def parse_movie_brief_introduction(self, response):

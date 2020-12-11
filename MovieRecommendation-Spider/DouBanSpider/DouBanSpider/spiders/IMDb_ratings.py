@@ -24,7 +24,7 @@ class ImdbRatingsSpider(scrapy.Spider):
             # 这里后面可能会加Cookie
             yield scrapy.Request(
                 url,
-                meta={'item': item},
+                meta={'item': item, 'dont_redirect': True, 'handle_httpstatus_list': [302]},
                 dont_filter=True
             )
 

@@ -93,7 +93,10 @@ class MovieDetailSpider(scrapy.Spider):
     # 注意返回的是列表，可能没有
     def get_casts(self, item, response):
         regx = '//a[@rel="v:starring"]/text()'
-        item['casts'] = ' / '.join(response.xpath(regx).getall())
+        data = response.xpath(regx).getall()
+        if len(data) > 10:
+            data = data[0:10]
+        item['casts'] = ' / '.join(data)
         return item
 
     # 获取类型列表

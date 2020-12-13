@@ -22,7 +22,7 @@ RETRY_ENABLED = False
 RETRY_TIMES = 2
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 150
+CONCURRENT_REQUESTS = 250
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay

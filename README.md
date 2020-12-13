@@ -47,3 +47,11 @@ Scrapy官方文档：https://docs.scrapy.org/en/latest/
 本项目为电影推荐系统的前端项目。
 
 如需了解详情，请参阅该文件夹下的README文件。
+
+
+
+## MovieRecommendation-DataHandler
+
+本项目为数据的处理、清洗、分析项目。
+
+如需了解详情，请参阅该文件夹下的README文件。

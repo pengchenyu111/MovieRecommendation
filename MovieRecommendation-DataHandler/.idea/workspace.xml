@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24eb3076-3953-4d0d-ae43-1ac7930e4d95" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/WordCloudHandler/contents.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WordCloudHandler/fonts/msyh.ttc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WordCloudHandler/fonts/msyhbd.ttc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WordCloudHandler/fonts/msyhl.ttc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WordCloudHandler/graph/movie_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WordCloudHandler/graph/movie_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/WordCloudHandler/movie_reviews_word_cloud.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WordCloudHandler/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/WordCloudHandler/README.md" afterDir="false" />
     </list>
@@ -38,14 +31,24 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/WordCloudHandler/movie_reviews_word_cloud.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="50" column="48" selection-start-line="50" selection-start-column="48" selection-end-line="50" selection-end-column="48" />
+            <state relative-caret-position="360">
+              <caret line="12" column="65" selection-start-line="12" selection-start-column="65" selection-end-line="12" selection-end-column="65" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/WordCloudHandler/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="-1593" />
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -112,18 +115,6 @@
               <item name="MovieRecommendation-DataHandler" type="b2602c69:ProjectViewProjectNode" />
               <item name="MovieRecommendation-DataHandler" type="462c0819:PsiDirectoryNode" />
               <item name="WordCloudHandler" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MovieRecommendation-DataHandler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MovieRecommendation-DataHandler" type="462c0819:PsiDirectoryNode" />
-              <item name="WordCloudHandler" type="462c0819:PsiDirectoryNode" />
-              <item name="fonts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MovieRecommendation-DataHandler" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MovieRecommendation-DataHandler" type="462c0819:PsiDirectoryNode" />
-              <item name="WordCloudHandler" type="462c0819:PsiDirectoryNode" />
-              <item name="graph" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -243,19 +234,26 @@
       <option name="project" value="LOCAL" />
       <updated>1607951954450</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="添加生成评论词云图模块.">
+      <created>1607958582762</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1607958582762</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2062" height="1136" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16716567" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16716567" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32968128" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2001992" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.31075698" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -315,18 +313,11 @@
     <MESSAGE value="更新README文件." />
     <MESSAGE value="连接数据库." />
     <MESSAGE value="从用户评论数据中插入简要的用户评分数据到数据库中." />
-    <option name="LAST_COMMIT_MESSAGE" value="从用户评论数据中插入简要的用户评分数据到数据库中." />
+    <MESSAGE value="添加生成评论词云图模块." />
+    <option name="LAST_COMMIT_MESSAGE" value="添加生成评论词云图模块." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WordCloudHandler/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor />
@@ -368,9 +359,6 @@
     <entry file="file://$PROJECT_DIR$/WordCloudHandler/1291543.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/WordCloudHandler/contents.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://D:/Python/Lib/site-packages/wordcloud/wordcloud.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1048">
@@ -378,22 +366,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WordCloudHandler/contents.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WordCloudHandler/word_cloud_imgs/1291543.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/WordCloudHandler/word_cloud_imgs/1291544.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/WordCloudHandler/word_cloud_imgs/1291545.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/WordCloudHandler/word_cloud_imgs/1291543.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/WordCloudHandler/movie_reviews_word_cloud.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="50" column="48" selection-start-line="50" selection-start-column="48" selection-end-line="50" selection-end-column="48" />
+        <state relative-caret-position="360">
+          <caret line="12" column="65" selection-start-line="12" selection-start-column="65" selection-end-line="12" selection-end-column="65" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WordCloudHandler/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="-1593" />
+          <second_editor />
         </state>
       </provider>
     </entry>

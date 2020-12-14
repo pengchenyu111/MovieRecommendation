@@ -82,7 +82,7 @@ class ImdbRatingsSpider(scrapy.Spider):
             regx_votes = '//*[@id="main"]/section/div/div[3]/div/table[2]//tr[2]/td[{}]/div[2]/a/text()'.format(i)
             score = response.xpath(regx_score).get()
             votes = response.xpath(regx_votes).get()
-            if score is None:
+            if score is None or score == '-':
                 score = '0'
                 votes = '0'
             else:
@@ -105,7 +105,7 @@ class ImdbRatingsSpider(scrapy.Spider):
         regx_votes = '//*[@id="main"]/section/div/div[3]/div/table[2]//tr[3]/td[2]/div[2]/a/text()'
         score = response.xpath(regx_score).get()
         votes = response.xpath(regx_votes).get()
-        if score is None:
+        if score is None or score == '-':
             score = '0'
             votes = '0'
         else:
@@ -119,7 +119,7 @@ class ImdbRatingsSpider(scrapy.Spider):
         regx_votes = '//*[@id="main"]/section/div/div[3]/div/table[2]//tr[4]/td[2]/div[2]/a/text()'
         score = response.xpath(regx_score).get()
         votes = response.xpath(regx_votes).get()
-        if score is None:
+        if score is None or score == '-':
             score = '0'
             votes = '0'
         else:

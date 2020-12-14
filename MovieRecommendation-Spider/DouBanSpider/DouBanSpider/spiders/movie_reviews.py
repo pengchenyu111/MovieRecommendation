@@ -16,9 +16,9 @@ class MovieReviewsSpider(scrapy.Spider):
     name = 'movie_reviews'
     allowed_domains = ['movie.douban.com']
 
-    # sql = "SELECT douban_id FROM subjects WHERE type = 'movie' AND douban_id NOT IN (SELECT douban_id FROM movie_reviews);"
+    sql = "SELECT douban_id FROM subjects WHERE type = 'movie' AND douban_id NOT IN (SELECT douban_id FROM movie_reviews);"
     # 处理因为网络中断导致的某些评论过少的情况
-    sql = "SELECT douban_id,COUNT(*) AS count FROM movie_reviews GROUP BY douban_id HAVING COUNT(*) < 60 ORDER BY count ASC;"
+    # sql = "SELECT douban_id,COUNT(*) AS count FROM movie_reviews GROUP BY douban_id HAVING COUNT(*) < 60 ORDER BY count ASC;"
     cursor.execute(sql)
     douban_id_tuple_list = cursor.fetchall()
 

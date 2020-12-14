@@ -46,6 +46,10 @@ class DoubanspiderPipeline:
                 exist = self.get_movie_reviews(item)
                 if not exist:
                     self.save_movie_reviews(item)
+        if spider.name == 'movie_imgs':
+            if len(item['img_list']) > 0:
+                print(item)
+                self.save_movie_img_list(item)
         return item
 
     # 获取电影简要信息
@@ -114,4 +118,10 @@ class DoubanspiderPipeline:
         temp = ','.join(['%s'] * len(keys))
         sql = 'INSERT INTO movie_reviews (%s) VALUES (%s)' % (fields, temp)
         self.cursor.execute(sql, tuple(i for i in values))
+        return self.connection.commit()
+
+    # 保存电影图片列表
+    def save_movie_img_list(self, item):
+        sql = "UPDATE movie_detail SET img_list = '(%s)' WHERE douban_id = (%s)" % (item['img_list'], item['douban_id'])
+        self.cursor.execute(sql)
         return self.connection.commit()

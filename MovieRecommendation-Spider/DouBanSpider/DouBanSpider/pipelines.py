@@ -23,6 +23,10 @@ class DoubanspiderPipeline:
         )
         self.cursor = self.connection.cursor()
 
+    # 爬虫关闭后及时关闭数据库连接
+    def close_spider(self, spider):
+        self.connection.close()
+
     # item处理入口
     def process_item(self, item, spider):
         if isinstance(item, MovieBriefIntroduction):

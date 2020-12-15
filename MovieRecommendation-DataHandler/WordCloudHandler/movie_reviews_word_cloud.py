@@ -42,7 +42,7 @@ def draw_cloud(text, graph, save_name):
     # 背景轮廓图
     backgroud = np.array(Image.open(graph))
     # 停用词集
-    stop_words = ['我', '你', '他', '她', '它', '的', '了', '在', '都'] + list(STOPWORDS)
+    stop_words = ['我', '你', '他', '她', '它', '的', '了', '在', '都', '是', '也', '和', '有'] + list(STOPWORDS)
     mywordcloud = WordCloud(background_color="white",  # 背景颜色
                             width=400,
                             height=200,

@@ -74,6 +74,7 @@ def handler():
                    save_name='word_cloud_imgs/{}.jpg'.format(douban_id))
         print('{}已绘制完成'.format(douban_id))
         clean_txt()
+    connection.close()
 
 
 if __name__ == '__main__':

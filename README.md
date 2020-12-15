@@ -16,23 +16,33 @@
 
 ------
 
+
+
 ## MovieRecommendation-Spider
 
-本项目为对豆瓣电影、IMDb电影等网站的爬虫项目。
+本项目为对豆瓣电影、IMDb电影等网站的爬虫项目。使用的框架为Scrapy，并使用MySQL保存数据。
 
-使用的框架为Scrapy，并使用MySQL保存数据。
+爬取的内容包括：电影基本详细信息、电影评论信息，用户评分信息等。经清洗后，电影数为8319条，评论信息105w+条。
 
-爬取的内容包括：电影基本详细信息、电影评论信息，用户评分信息等。经清洗后，电影数为8319条，评论信息160w+条。
-
-如需了解详情，请参阅该文件夹下的README文件。
+如需了解代码实现详情，请参阅该文件夹下DouBanSpider下的README文件。
 
 Scrapy官方文档：https://docs.scrapy.org/en/latest/
 
 购买的快代理：https://www.kuaidaili.com/pricing/#tps
 
+------
 
+
+
+## MovieRecommendation-DataHandler
+
+本项目为数据的处理、清洗、分析项目。
+
+如需了解详情，请参阅该文件夹下的README文件。
 
 ------
+
+
 
 ## MovieRecommendation-Server
 
@@ -42,16 +52,15 @@ Scrapy官方文档：https://docs.scrapy.org/en/latest/
 
 ------
 
+
+
 ## MovieRecommendation-Web
 
 本项目为电影推荐系统的前端项目。
 
 如需了解详情，请参阅该文件夹下的README文件。
 
+------
 
 
-## MovieRecommendation-DataHandler
 
-本项目为数据的处理、清洗、分析项目。
-
-如需了解详情，请参阅该文件夹下的README文件。

@@ -1,0 +1,59 @@
+# 项目信息配置
+project:
+  name: movie-recommendation
+  version: 1.0.0
+  env: development
+
+# WEB服务器配置
+server:
+  port: 8090
+
+spring:
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://49.232.218.99:3306/movie_recommendation?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: Pcy90321.
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  # Redis配置
+  redis:
+    database: 0
+    host: 49.232.218.99
+    port: 6379
+    password: Pcy903215488
+    timeout: 5000
+    block-when-exhausted: true
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 10
+        min-idle: 2
+        max-wait: 10000
+
+# MyBatis配置
+mybatis:
+  type-aliases-package: com.pcy.movierecommendation.entity
+  mapper-locations: classpath:/mappers/*.xml
+  configuration:
+    # 开启驼峰转化
+    map-underscore-to-camel-case: true
+
+
+# Swagger配置
+swagger:
+  host: localhost
+  title: ${project.name}接口文档
+  description: ${project.name}接口文档
+  enabled: true
+  # 禁用swagger时的重定向地址
+  redirect-uri: /
+
+# 日志配置
+logback:
+  level: INFO
+  appender: ${project.env}
+# dao层的日志设置为debug，方便查看sql
+logging:
+  level:
+    com.pcy.movierecommendation.dao: debug

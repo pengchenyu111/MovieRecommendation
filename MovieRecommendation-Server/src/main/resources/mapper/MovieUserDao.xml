@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcy.movierecommendation.dao.movieUser.MovieUserDao">
+
+    <resultMap type="com.pcy.movierecommendation.entity.movieUser.MovieUser" id="MovieUserMap">
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userUniqueName" column="user_unique_name" jdbcType="VARCHAR"/>
+        <result property="userHeadPortraitUrl" column="user_head_portrait_url" jdbcType="VARCHAR"/>
+        <result property="userUrl" column="user_url" jdbcType="VARCHAR"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="birth" column="birth" jdbcType="OTHER"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieUserMap">
+        select
+          user_id, user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age
+        from movie_recommendation.movie_user
+        where user_id = #{userId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieUserMap">
+        select
+          user_id, user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age
+        from movie_recommendation.movie_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MovieUserMap">
+        select
+        user_id, user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex,
+        birth, age
+        from movie_recommendation.movie_user
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="userUniqueName != null and userUniqueName != ''">
+                and user_unique_name = #{userUniqueName}
+            </if>
+            <if test="userHeadPortraitUrl != null and userHeadPortraitUrl != ''">
+                and user_head_portrait_url = #{userHeadPortraitUrl}
+            </if>
+            <if test="userUrl != null and userUrl != ''">
+                and user_url = #{userUrl}
+            </if>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="birth != null">
+                and birth = #{birth}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+        </where>
+    </select>
+
+    <!-- 总数 -->
+    <select id="count" resultType="int">
+        select count(*) from movie_user
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_user(user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age)
+        values (#{userName}, #{userUniqueName}, #{userHeadPortraitUrl}, #{userUrl}, #{account}, #{password}, #{email}, #{phone}, #{sex}, #{birth}, #{age})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_user(user_name, user_unique_name, user_head_portrait_url, user_url,
+        account, password, email, phone, sex, birth, age)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userName}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl}, #{entity.userUrl},
+            #{entity.account}, #{entity.password}, #{entity.email}, #{entity.phone}, #{entity.sex}, #{entity.birth},
+            #{entity.age})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_user(user_name, user_unique_name, user_head_portrait_url, user_url,
+        account, password, email, phone, sex, birth, age)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userName}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl}, #{entity.userUrl},
+            #{entity.account}, #{entity.password}, #{entity.email}, #{entity.phone}, #{entity.sex}, #{entity.birth},
+            #{entity.age})
+        </foreach>
+        on duplicate key update
+        user_name = values(user_name) , user_unique_name = values(user_unique_name) , user_head_portrait_url =
+        values(user_head_portrait_url) , user_url = values(user_url) , account = values(account) , password =
+        values(password) , email = values(email) , phone = values(phone) , sex = values(sex) , birth = values(birth) ,
+        age = values(age)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_recommendation.movie_user
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="userUniqueName != null and userUniqueName != ''">
+                user_unique_name = #{userUniqueName},
+            </if>
+            <if test="userHeadPortraitUrl != null and userHeadPortraitUrl != ''">
+                user_head_portrait_url = #{userHeadPortraitUrl},
+            </if>
+            <if test="userUrl != null and userUrl != ''">
+                user_url = #{userUrl},
+            </if>
+            <if test="account != null and account != ''">
+                account = #{account},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="birth != null">
+                birth = #{birth},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_recommendation.movie_user where user_id = #{userId}
+    </delete>
+
+</mapper>

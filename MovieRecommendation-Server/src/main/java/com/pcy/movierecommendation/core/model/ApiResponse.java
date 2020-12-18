@@ -1,6 +1,8 @@
 package com.pcy.movierecommendation.core.model;
 
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,12 +14,16 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@ApiModel(value = "统一出参包装对象")
 public class ApiResponse<T> {
 
+    @ApiModelProperty(value = "请求是否成功", example = "true")
     private Boolean success;
 
+    @ApiModelProperty(value = "请求返回描述")
     private String message;
 
+    @ApiModelProperty(value = "具体的返回数据")
     private T data;
 
     /**

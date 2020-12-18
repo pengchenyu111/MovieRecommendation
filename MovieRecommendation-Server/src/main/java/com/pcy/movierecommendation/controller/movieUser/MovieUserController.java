@@ -1,6 +1,8 @@
 package com.pcy.movierecommendation.controller.movieUser;
 
 import com.pcy.movierecommendation.controller.BaseController;
+import com.pcy.movierecommendation.core.constants.ErrorMessages;
+import com.pcy.movierecommendation.core.model.ApiResponse;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
 import com.pcy.movierecommendation.service.movieUser.MovieUserService;
 import io.swagger.annotations.Api;
@@ -41,8 +43,12 @@ public class MovieUserController extends BaseController {
             @ApiImplicitParam(paramType="query", name = "userId", value = "用户id", required = true, dataType = "Integer")
     })
     @GetMapping("/{userId}")
-    public MovieUser selectOne(@PathVariable("userId") Integer userId) {
-        return this.movieUserService.queryById(userId);
+    public ApiResponse selectOne(@PathVariable("userId") Integer userId) {
+        MovieUser movieUser = this.movieUserService.queryById(userId);
+        if (movieUser == null){
+            return ApiResponse.failed(ErrorMessages.QUERY_NULL);
+        }
+        return ApiResponse.success(ErrorMessages.REQUEST_SUCCESS, movieUser);
     }
 
 }

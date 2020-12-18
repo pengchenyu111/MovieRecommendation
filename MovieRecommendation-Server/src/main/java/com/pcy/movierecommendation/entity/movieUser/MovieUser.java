@@ -1,6 +1,13 @@
 package com.pcy.movierecommendation.entity.movieUser;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * (MovieUser)实体类
@@ -8,152 +15,49 @@ import java.io.Serializable;
  * @author PengChenyu
  * @since 2020-12-18 17:42:00
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel(value = "用户对象")
 public class MovieUser implements Serializable {
+
     private static final long serialVersionUID = 636136077410750499L;
-    /**
-     * 用户id
-     */
+
+    @ApiModelProperty(value = "用户id", required = true)
     private Integer userId;
-    /**
-     * 用户名
-     */
+
+    @ApiModelProperty(value = "用户名")
     private String userName;
-    /**
-     * 用户唯一名字标志，短评上没有id，以此做唯一标识
-     */
+
+    @ApiModelProperty(value = "用户唯一名字标志，短评上没有id，以此做唯一标识")
     private String userUniqueName;
-    /**
-     * 用户头像url
-     */
+
+    @ApiModelProperty(value = "用户头像url")
     private String userHeadPortraitUrl;
-    /**
-     * 用户豆瓣主页链接
-     */
+
+    @ApiModelProperty(value = "用户豆瓣主页链接")
     private String userUrl;
-    /**
-     * 用户账户
-     */
+
+    @ApiModelProperty(value = "用户账户")
     private String account;
-    /**
-     * 账号密码，加密
-     */
+
+    @ApiModelProperty(value = "账号密码，加密")
     private String password;
-    /**
-     * 用户邮箱
-     */
+
+    @ApiModelProperty(value = "用户邮箱")
     private String email;
-    /**
-     * 用户联系电话
-     */
+
+    @ApiModelProperty(value = "用户联系电话")
     private String phone;
-    /**
-     * 用户性别
-     */
+
+    @ApiModelProperty(value = "用户性别", example = "男")
     private String sex;
-    /**
-     * 用户生日
-     */
-    private Object birth;
-    /**
-     * 用户年龄
-     */
+
+    @ApiModelProperty(value = "用户生日")
+    private Date birth;
+
+    @ApiModelProperty(value = "用户年龄")
     private Integer age;
 
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserUniqueName() {
-        return userUniqueName;
-    }
-
-    public void setUserUniqueName(String userUniqueName) {
-        this.userUniqueName = userUniqueName;
-    }
-
-    public String getUserHeadPortraitUrl() {
-        return userHeadPortraitUrl;
-    }
-
-    public void setUserHeadPortraitUrl(String userHeadPortraitUrl) {
-        this.userHeadPortraitUrl = userHeadPortraitUrl;
-    }
-
-    public String getUserUrl() {
-        return userUrl;
-    }
-
-    public void setUserUrl(String userUrl) {
-        this.userUrl = userUrl;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public Object getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Object birth) {
-        this.birth = birth;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
 
 }

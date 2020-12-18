@@ -1,8 +1,14 @@
 package com.pcy.movierecommendation.controller.movieUser;
 
+import com.pcy.movierecommendation.controller.BaseController;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
 import com.pcy.movierecommendation.service.movieUser.MovieUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +21,9 @@ import javax.annotation.Resource;
  * @since 2020-12-18 17:42:00
  */
 @RestController
-@RequestMapping("movieUser")
-public class MovieUserController {
+@RequestMapping("api/recommendation/movieUser")
+@Api(value = "/movieUser", tags = "movieUser")
+public class MovieUserController extends BaseController {
     /**
      * 服务对象
      */
@@ -26,12 +33,16 @@ public class MovieUserController {
     /**
      * 通过主键查询单条数据
      *
-     * @param id 主键
+     * @param userId 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
-    public MovieUser selectOne(Integer id) {
-        return this.movieUserService.queryById(id);
+    @ApiOperation(value = "主键查询", notes = "通过主键查询单条数据")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType="query", name = "userId", value = "用户id", required = true, dataType = "Integer")
+    })
+    @GetMapping("/{userId}")
+    public MovieUser selectOne(@PathVariable("userId") Integer userId) {
+        return this.movieUserService.queryById(userId);
     }
 
 }

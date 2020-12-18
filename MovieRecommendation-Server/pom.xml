@@ -27,6 +27,7 @@
         <spark.version>3.0.0</spark.version>
         <janino.version>3.0.8</janino.version>
         <swagger.version>2.9.2</swagger.version>
+        <swagger.bootstrap-ui.version>1.9.6</swagger.bootstrap-ui.version>
         <scala-maven-plugin.version>3.3.1</scala-maven-plugin.version>
     </properties>
 
@@ -127,9 +128,9 @@
             <version>${swagger.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${swagger.version}</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>${swagger.bootstrap-ui.version}</version>
         </dependency>
         <!-- lombok -->
         <dependency>

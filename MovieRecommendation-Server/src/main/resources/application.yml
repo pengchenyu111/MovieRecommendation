@@ -34,7 +34,7 @@ spring:
 # MyBatis配置
 mybatis:
   type-aliases-package: com.pcy.movierecommendation.entity
-  mapper-locations: classpath:/mappers/*.xml
+  mapper-locations: classpath:/mapper/*.xml
   configuration:
     # 开启驼峰转化
     map-underscore-to-camel-case: true

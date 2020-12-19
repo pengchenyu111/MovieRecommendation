@@ -15,12 +15,13 @@
         <result property="sex" column="sex" jdbcType="VARCHAR"/>
         <result property="birth" column="birth" jdbcType="OTHER"/>
         <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="profession" column="profession" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="MovieUserMap">
         select
-          user_id, user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age
+          user_id, user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age, profession
         from movie_recommendation.movie_user
         where user_id = #{userId}
     </select>
@@ -28,7 +29,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MovieUserMap">
         select
-          user_id, user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age
+          user_id, user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age, profession
         from movie_recommendation.movie_user
         limit #{offset}, #{limit}
     </select>
@@ -37,7 +38,7 @@
     <select id="queryAll" resultMap="MovieUserMap">
         select
         user_id, user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex,
-        birth, age
+        birth, age, profession
         from movie_recommendation.movie_user
         <where>
             <if test="userId != null">
@@ -76,6 +77,9 @@
             <if test="age != null">
                 and age = #{age}
             </if>
+            <if test="profession != null and profession != ''">
+                and profession = #{profession}
+            </if>
         </where>
     </select>
 
@@ -86,35 +90,35 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
-        insert into movie_recommendation.movie_user(user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age)
-        values (#{userName}, #{userUniqueName}, #{userHeadPortraitUrl}, #{userUrl}, #{account}, #{password}, #{email}, #{phone}, #{sex}, #{birth}, #{age})
+        insert into movie_recommendation.movie_user(user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age, profession)
+        values (#{userName}, #{userUniqueName}, #{userHeadPortraitUrl}, #{userUrl}, #{account}, #{password}, #{email}, #{phone}, #{sex}, #{birth}, #{age}, #{profession})
     </insert>
 
     <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
         insert into movie_recommendation.movie_user(user_name, user_unique_name, user_head_portrait_url, user_url,
-        account, password, email, phone, sex, birth, age)
+        account, password, email, phone, sex, birth, age, profession)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.userName}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl}, #{entity.userUrl},
             #{entity.account}, #{entity.password}, #{entity.email}, #{entity.phone}, #{entity.sex}, #{entity.birth},
-            #{entity.age})
+            #{entity.age}, #{entity.profession})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
         insert into movie_recommendation.movie_user(user_name, user_unique_name, user_head_portrait_url, user_url,
-        account, password, email, phone, sex, birth, age)
+        account, password, email, phone, sex, birth, age, profession)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.userName}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl}, #{entity.userUrl},
             #{entity.account}, #{entity.password}, #{entity.email}, #{entity.phone}, #{entity.sex}, #{entity.birth},
-            #{entity.age})
+            #{entity.age}, #{entity.profession})
         </foreach>
         on duplicate key update
         user_name = values(user_name) , user_unique_name = values(user_unique_name) , user_head_portrait_url =
         values(user_head_portrait_url) , user_url = values(user_url) , account = values(account) , password =
         values(password) , email = values(email) , phone = values(phone) , sex = values(sex) , birth = values(birth) ,
-        age = values(age)
+        age = values(age) , profession = values(profession)
     </insert>
 
     <!--通过主键修改数据-->
@@ -153,6 +157,9 @@
             </if>
             <if test="age != null">
                 age = #{age},
+            </if>
+            <if test="profession != null and profession != ''">
+                profession = #{profession},
             </if>
         </set>
         where user_id = #{userId}

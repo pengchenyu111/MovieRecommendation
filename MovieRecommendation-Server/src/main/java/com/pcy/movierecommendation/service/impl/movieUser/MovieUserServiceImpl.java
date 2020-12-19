@@ -1,5 +1,6 @@
 package com.pcy.movierecommendation.service.impl.movieUser;
 
+import com.pcy.movierecommendation.core.utils.EncryptionUtil;
 import com.pcy.movierecommendation.dao.movieUser.MovieUserDao;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
 import com.pcy.movierecommendation.service.movieUser.MovieUserService;
@@ -88,4 +89,20 @@ public class MovieUserServiceImpl implements MovieUserService {
     public boolean deleteById(Integer userId) {
         return this.movieUserDao.deleteById(userId) > 0;
     }
+
+    /**
+     * 用户通过账号和密码登录
+     *
+     * @param account  账号
+     * @param password 密码
+     * @return 实例对象
+     */
+    @Override
+    public MovieUser login(String account, String password) {
+        // 进行加盐加密
+        String encryptionPassword = EncryptionUtil.sha384HashWithSalt(password);
+        return this.movieUserDao.login(account, encryptionPassword);
+    }
+
+
 }

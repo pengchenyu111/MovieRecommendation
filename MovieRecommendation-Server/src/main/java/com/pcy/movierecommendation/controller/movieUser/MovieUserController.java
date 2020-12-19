@@ -5,16 +5,11 @@ import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
 import com.pcy.movierecommendation.service.movieUser.MovieUserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.*;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * (MovieUser)表控制层
@@ -40,15 +35,34 @@ public class MovieUserController extends BaseController {
      */
     @ApiOperation(value = "主键查询", notes = "通过主键查询单条数据")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType="query", name = "userId", value = "用户id", required = true, dataType = "Integer")
+            @ApiImplicitParam(paramType = "query", name = "userId", value = "用户id", required = true, dataType = "Integer")
     })
     @GetMapping("/{userId}")
     public ApiResponse<MovieUser> selectOne(@PathVariable("userId") Integer userId) {
         MovieUser movieUser = this.movieUserService.queryById(userId);
-        if (movieUser == null){
+        if (movieUser == null) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieUser);
+    }
+
+    /**
+     * 用户登录请求
+     *
+     * @param map
+     * @return
+     */
+    @ApiOperation(value = "用户登录", notes = "用户输入账号和密码，进行验证登录")
+    @PostMapping("/login")
+    public ApiResponse<MovieUser> login(@RequestBody @ApiParam("账户和密码") Map<String, String> map) {
+        String account = map.get("account");
+        String password = map.get("password");
+        MovieUser movieUser = movieUserService.login(account, password);
+        if (movieUser == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.LOGIN_ACCOUNT_PASSWORD_WRONG, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.LOGIN_SUCCESS, movieUser);
+
     }
 
 }

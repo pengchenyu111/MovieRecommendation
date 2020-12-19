@@ -170,4 +170,9 @@
         delete from movie_recommendation.movie_user where user_id = #{userId}
     </delete>
 
+    <!-- 用户通过账号和密码登录 -->
+    <select id="login" resultMap="MovieUserMap">
+        select * from movie_recommendation.movie_user where account = #{account} and password = #{password}
+    </select>
+
 </mapper>

@@ -62,4 +62,12 @@ public interface MovieUserService {
      */
     boolean deleteById(Integer userId);
 
+    /**
+     * 用户通过账号和密码登录
+     *
+     * @param account  账号
+     * @param password 密码
+     * @return 实例对象
+     */
+    MovieUser login(String account, String password);
 }

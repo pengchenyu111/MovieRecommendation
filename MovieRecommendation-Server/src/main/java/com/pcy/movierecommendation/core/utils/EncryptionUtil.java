@@ -26,5 +26,9 @@ public class EncryptionUtil {
         return new Sha384Hash(source, EncryptionUtil.SALT).toString();
     }
 
+    public static void main(String[] args) {
+        System.out.println(EncryptionUtil.sha384HashWithSalt("123456"));
+    }
+
 
 }

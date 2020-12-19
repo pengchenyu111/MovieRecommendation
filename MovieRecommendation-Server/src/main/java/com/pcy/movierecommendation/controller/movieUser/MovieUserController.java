@@ -43,12 +43,12 @@ public class MovieUserController extends BaseController {
             @ApiImplicitParam(paramType="query", name = "userId", value = "用户id", required = true, dataType = "Integer")
     })
     @GetMapping("/{userId}")
-    public ApiResponse selectOne(@PathVariable("userId") Integer userId) {
+    public ApiResponse<MovieUser> selectOne(@PathVariable("userId") Integer userId) {
         MovieUser movieUser = this.movieUserService.queryById(userId);
         if (movieUser == null){
-            return ApiResponse.failed(ErrorMessages.QUERY_NULL);
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
-        return ApiResponse.success(ErrorMessages.REQUEST_SUCCESS, movieUser);
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieUser);
     }
 
 }

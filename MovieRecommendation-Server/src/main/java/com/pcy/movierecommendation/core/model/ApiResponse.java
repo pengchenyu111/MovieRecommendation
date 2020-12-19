@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-@ApiModel(value = "统一出参包装对象")
+@ApiModel(value = "ApiResponse", description = "统一出参包装对象")
 public class ApiResponse<T> {
 
     @ApiModelProperty(value = "请求是否成功", example = "true")

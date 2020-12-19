@@ -18,7 +18,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value = "用户对象")
+@ApiModel(value = "MovieUser", description = "用户对象")
 public class MovieUser implements Serializable {
 
     private static final long serialVersionUID = 636136077410750499L;

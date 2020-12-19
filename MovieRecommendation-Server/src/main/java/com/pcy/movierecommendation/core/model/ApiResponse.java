@@ -40,6 +40,16 @@ public class ApiResponse<T> {
      * 请求成功
      *
      * @param message 自定义message
+     * @return 请求成功的message
+     */
+    public static ApiResponse success(String message) {
+        return new ApiResponse<>(Boolean.TRUE, message, null);
+    }
+
+    /**
+     * 请求成功
+     *
+     * @param message 自定义message
      * @param data    数据
      * @return 成功bool值 + 请求成功的message + 数据data
      */

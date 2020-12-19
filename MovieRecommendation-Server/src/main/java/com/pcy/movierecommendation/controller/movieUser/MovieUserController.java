@@ -49,12 +49,15 @@ public class MovieUserController extends BaseController {
     /**
      * 用户登录请求
      *
-     * @param map
-     * @return
+     * @param map 账号和密码
+     * @return 单条用户数据
      */
     @ApiOperation(value = "用户登录", notes = "用户输入账号和密码，进行验证登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "body", name = "map", value = "用户账号和密码", required = true, dataType = "Map")
+    })
     @PostMapping("/login")
-    public ApiResponse<MovieUser> login(@RequestBody @ApiParam("账户和密码") Map<String, String> map) {
+    public ApiResponse<MovieUser> login(@RequestBody Map<String, String> map) {
         String account = map.get("account");
         String password = map.get("password");
         MovieUser movieUser = movieUserService.login(account, password);

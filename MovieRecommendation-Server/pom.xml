@@ -17,6 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <mybatis.version>2.1.4</mybatis.version>
+        <pagehelper.version>1.2.13</pagehelper.version>
         <mysql-connector.version>8.0.22</mysql-connector.version>
         <druid.version>1.2.4</druid.version>
         <jedis.version>3.3.0</jedis.version>
@@ -42,6 +43,12 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${mybatis.version}</version>
+        </dependency>
+        <!-- 分页插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.version}</version>
         </dependency>
         <!-- 连接池 -->
         <dependency>

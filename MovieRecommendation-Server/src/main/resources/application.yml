@@ -16,6 +16,12 @@ spring:
     password: Pcy90321.
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+    # JSON返回配置
+  jackson:
+    # 默认时区
+    time-zone: GMT+8
+    # 默认日期格式化
+    date-format: yyyy-MM-dd HH:mm:ss
   # Redis配置
   redis:
     database: 0

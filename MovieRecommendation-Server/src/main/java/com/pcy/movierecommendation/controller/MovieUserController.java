@@ -91,4 +91,25 @@ public class MovieUserController extends BaseController {
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.CHANGE_SUCCESS, movieUser);
     }
 
+
+    /**
+     * 用户修改个人信息
+     *
+     * @param movieUser 已修改的个人信息
+     * @param userId    用户id
+     * @return 单条用户数据
+     */
+    @ApiOperation(value = "用户修改个人信息", notes = "用户修改个人基础信息，此处某些信息无法修改，比如密码、用户唯一标识等")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "body", name = "movieUser", value = "已修改的个人信息", required = true, dataType = "MovieUser")
+    })
+    @PutMapping("/{userId}")
+    public ApiResponse<MovieUser> changePassword(@RequestBody MovieUser movieUser, @PathVariable("userId") int userId) {
+        MovieUser updatedUser = movieUserService.update(movieUser);
+        if (updatedUser == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.CHANGE_FAIL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.CHANGE_SUCCESS, updatedUser);
+    }
+
 }

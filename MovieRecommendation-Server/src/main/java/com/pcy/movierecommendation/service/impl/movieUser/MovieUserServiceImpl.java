@@ -1,9 +1,16 @@
 package com.pcy.movierecommendation.service.impl.movieUser;
 
+import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.utils.EncryptionUtil;
-import com.pcy.movierecommendation.dao.movieUser.MovieUserDao;
+import com.pcy.movierecommendation.core.utils.RedisUtil;
+import com.pcy.movierecommendation.dao.MovieUserDao;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
-import com.pcy.movierecommendation.service.movieUser.MovieUserService;
+import com.pcy.movierecommendation.service.MovieUserService;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,6 +24,11 @@ import java.util.List;
  */
 @Service("movieUserService")
 public class MovieUserServiceImpl implements MovieUserService {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    RedisUtil redisUtil;
     @Resource
     private MovieUserDao movieUserDao;
 
@@ -102,6 +114,49 @@ public class MovieUserServiceImpl implements MovieUserService {
         // 进行加盐加密
         String encryptionPassword = EncryptionUtil.sha384HashWithSalt(password);
         return this.movieUserDao.login(account, encryptionPassword);
+    }
+
+    /**
+     * 用户修改密码
+     *
+     * @param account         账户
+     * @param verifyCode      验证码
+     * @param newPassword     新密码
+     * @param confirmPassword 确认密码
+     * @return 实例对象
+     */
+    @Override
+    public MovieUser changePassword(String account, String verifyCode, String newPassword, String confirmPassword) {
+        if (StringUtils.isEmpty(verifyCode)) {
+            logger.info("用户" + account + ":" + ErrorMessages.VERIFICATION_NULL);
+            return null;
+        }
+        String key = "verificationCode:" + account;
+        String verifyCodeInRedis = redisUtil.get(key);
+        if (StringUtils.isEmpty(verifyCodeInRedis)) {
+            logger.info("用户" + account + ":Redis中无此验证码" );
+            return null;
+        }
+        if (!verifyCode.equals(verifyCodeInRedis)) {
+            logger.info("用户" + account + ":" + ErrorMessages.VERIFICATION_WRONG);
+            return null;
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            logger.info("用户" + account + ":两次密码输入不一致" );
+            return null;
+        }
+        String encryptionPassword = EncryptionUtil.sha384HashWithSalt(newPassword);
+        int row = movieUserDao.changePassword(account, encryptionPassword);
+        if (row == 0) {
+            return null;
+        }
+        MovieUser movieUser = new MovieUser();
+        movieUser.setAccount(account);
+        List<MovieUser> movieUsers = movieUserDao.queryAll(movieUser);
+        if (CollectionUtils.isEmpty(movieUsers)) {
+            return null;
+        }
+        return movieUsers.get(0);
     }
 
 

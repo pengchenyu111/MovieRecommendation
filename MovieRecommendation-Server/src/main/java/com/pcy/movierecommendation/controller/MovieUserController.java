@@ -1,10 +1,9 @@
-package com.pcy.movierecommendation.controller.movieUser;
+package com.pcy.movierecommendation.controller;
 
-import com.pcy.movierecommendation.controller.BaseController;
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
-import com.pcy.movierecommendation.service.movieUser.MovieUserService;
+import com.pcy.movierecommendation.service.MovieUserService;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,6 +65,30 @@ public class MovieUserController extends BaseController {
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.LOGIN_SUCCESS, movieUser);
 
+    }
+
+
+    /**
+     * 用户修改密码请求
+     *
+     * @param map 账号 + 验证码 + 新密码 + 确认密码
+     * @return 单条用户数据
+     */
+    @ApiOperation(value = "用户修改密码", notes = "用户输入账号、验证码和新密码，进行密码修改")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "body", name = "map", value = "账号、验证码、新密码、确认密码", required = true, dataType = "Map")
+    })
+    @PostMapping("/changePassword")
+    public ApiResponse<MovieUser> changePassword(@RequestBody Map<String, String> map) {
+        String account = map.get("account");
+        String verifyCode = map.get("verifyCode");
+        String newPassword = map.get("newPassword");
+        String confirmPassword = map.get("confirmPassword");
+        MovieUser movieUser = movieUserService.changePassword(account, verifyCode, newPassword, confirmPassword);
+        if (movieUser == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.CHANGE_FAIL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.CHANGE_SUCCESS, movieUser);
     }
 
 }

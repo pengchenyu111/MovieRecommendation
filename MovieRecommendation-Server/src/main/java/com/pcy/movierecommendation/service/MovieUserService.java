@@ -1,4 +1,4 @@
-package com.pcy.movierecommendation.service.movieUser;
+package com.pcy.movierecommendation.service;
 
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
 
@@ -70,4 +70,15 @@ public interface MovieUserService {
      * @return 实例对象
      */
     MovieUser login(String account, String password);
+
+    /**
+     * 用户修改密码
+     *
+     * @param account         账户
+     * @param verifyCode      验证码
+     * @param newPassword     新密码
+     * @param confirmPassword 确认密码
+     * @return 实例对象
+     */
+    MovieUser changePassword(String account, String verifyCode, String newPassword, String confirmPassword);
 }

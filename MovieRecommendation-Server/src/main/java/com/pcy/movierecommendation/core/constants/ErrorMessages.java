@@ -30,6 +30,8 @@ public class ErrorMessages {
      */
     public static final String VERIFICATION_SUCCESS = "获取验证码成功";
     public static final String VERIFICATION_FAIL = "获取验证码失败，请稍后再试";
+    public static final String VERIFICATION_WRONG = "验证码错误";
+    public static final String VERIFICATION_NULL = "验证码为空";
 
     /**
      * 修改信息

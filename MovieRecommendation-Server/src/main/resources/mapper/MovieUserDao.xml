@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pcy.movierecommendation.dao.movieUser.MovieUserDao">
+<mapper namespace="com.pcy.movierecommendation.dao.MovieUserDao">
 
     <resultMap type="com.pcy.movierecommendation.entity.movieUser.MovieUser" id="MovieUserMap">
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
@@ -175,4 +175,10 @@
         select * from movie_recommendation.movie_user where account = #{account} and password = #{password}
     </select>
 
+    <!-- 用户修改密码 -->
+    <update id="changePassword">
+        update movie_recommendation.movie_user
+        set password = #{newPassword}
+        where account = #{account}
+    </update>
 </mapper>

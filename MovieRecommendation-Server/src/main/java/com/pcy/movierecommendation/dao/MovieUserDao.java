@@ -1,4 +1,4 @@
-package com.pcy.movierecommendation.dao.movieUser;
+package com.pcy.movierecommendation.dao;
 
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
 import org.apache.ibatis.annotations.Mapper;
@@ -95,9 +95,18 @@ public interface MovieUserDao {
     /**
      * 用户通过账号和密码登录
      *
-     * @param account 账号
+     * @param account  账号
      * @param password 密码
      * @return 实例对象
      */
     MovieUser login(@Param("account") String account, @Param("password") String password);
+
+    /**
+     * 用户修改密码
+     *
+     * @param account     账号
+     * @param newPassword 密码
+     * @return 影响行数
+     */
+    int changePassword(@Param("account") String account, @Param("newPassword") String newPassword);
 }

@@ -1,5 +1,6 @@
 package com.pcy.movierecommendation.service;
 
+import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
 
 import java.util.List;
@@ -28,6 +29,15 @@ public interface MovieUserService {
      * @return 对象列表
      */
     List<MovieUser> queryAllByLimit(int offset, int limit);
+
+    /**
+     * 分页查询
+     *
+     * @param pageNum  当前页
+     * @param pageSize 每页的数量
+     * @return 分页信息
+     */
+    PageInfo<MovieUser> queryPage(int pageNum, int pageSize);
 
 
     /**

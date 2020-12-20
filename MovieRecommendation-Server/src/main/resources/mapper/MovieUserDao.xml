@@ -34,6 +34,11 @@
         limit #{offset}, #{limit}
     </select>
 
+    <!-- 直接查询全部 -->
+    <select id="queryAllUsers" resultType="com.pcy.movierecommendation.entity.movieUser.MovieUser">
+        select * from movie_user
+    </select>
+
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="MovieUserMap">
         select

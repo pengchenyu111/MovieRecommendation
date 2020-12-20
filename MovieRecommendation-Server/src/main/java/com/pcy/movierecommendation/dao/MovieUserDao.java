@@ -36,6 +36,13 @@ public interface MovieUserDao {
 
 
     /**
+     * 直接查询全部数据
+     * @return 对象列表
+     */
+    List<MovieUser> queryAllUsers();
+
+
+    /**
      * 通过实体作为筛选条件查询
      *
      * @param movieUser 实例对象

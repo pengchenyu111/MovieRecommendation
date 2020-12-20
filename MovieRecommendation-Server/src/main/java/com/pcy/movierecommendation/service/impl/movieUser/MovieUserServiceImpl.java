@@ -1,5 +1,7 @@
 package com.pcy.movierecommendation.service.impl.movieUser;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.utils.EncryptionUtil;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
@@ -53,6 +55,20 @@ public class MovieUserServiceImpl implements MovieUserService {
     @Override
     public List<MovieUser> queryAllByLimit(int offset, int limit) {
         return this.movieUserDao.queryAllByLimit(offset, limit);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param pageNum  当前页
+     * @param pageSize 每页的数量
+     * @return 分页信息
+     */
+    @Override
+    public PageInfo<MovieUser> queryPage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<MovieUser> movieUserList = movieUserDao.queryAllUsers();
+        return new PageInfo<>(movieUserList);
     }
 
 
@@ -134,7 +150,7 @@ public class MovieUserServiceImpl implements MovieUserService {
         String key = "verificationCode:" + account;
         String verifyCodeInRedis = redisUtil.get(key);
         if (StringUtils.isEmpty(verifyCodeInRedis)) {
-            logger.info("用户" + account + ":Redis中无此验证码" );
+            logger.info("用户" + account + ":Redis中无此验证码");
             return null;
         }
         if (!verifyCode.equals(verifyCodeInRedis)) {
@@ -142,7 +158,7 @@ public class MovieUserServiceImpl implements MovieUserService {
             return null;
         }
         if (!newPassword.equals(confirmPassword)) {
-            logger.info("用户" + account + ":两次密码输入不一致" );
+            logger.info("用户" + account + ":两次密码输入不一致");
             return null;
         }
         String encryptionPassword = EncryptionUtil.sha384HashWithSalt(newPassword);

@@ -1,5 +1,6 @@
 package com.pcy.movierecommendation.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
@@ -42,6 +43,25 @@ public class MovieUserController extends BaseController {
         if (movieUser == null) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieUser);
+    }
+
+
+    /**
+     * 分页查询
+     *
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @return 单条数据
+     */
+    @ApiOperation(value = "分页查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页", required = true, dataType = "int"),
+            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页的数量", required = true, dataType = "int")
+    })
+    @GetMapping("/page/{pageNum}/{pageSize}")
+    public ApiResponse<PageInfo<MovieUser>> queryPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
+        PageInfo<MovieUser> movieUser = this.movieUserService.queryPage(pageNum, pageSize);
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieUser);
     }
 

@@ -16,6 +16,20 @@ spring:
     password: Pcy90321.
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+    #druid 数据源配置
+    initialSize: 10
+    minIdle: 5
+    maxActive: 30
+    maxWait: 6000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
     # JSON返回配置
   jackson:
     # 默认时区

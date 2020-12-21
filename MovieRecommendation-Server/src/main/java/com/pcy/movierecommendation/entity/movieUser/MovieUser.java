@@ -50,7 +50,7 @@ public class MovieUser implements Serializable {
     @ApiModelProperty(value = "用户联系电话")
     private String phone;
 
-    @ApiModelProperty(value = "用户性别", example = "男")
+    @ApiModelProperty(value = "用户性别")
     private String sex;
 
     @ApiModelProperty(value = "用户生日")

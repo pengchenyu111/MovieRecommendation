@@ -17,7 +17,7 @@ import lombok.Data;
 @ApiModel(value = "ApiResponse", description = "统一出参包装对象")
 public class ApiResponse<T> {
 
-    @ApiModelProperty(value = "请求是否成功", example = "true")
+    @ApiModelProperty(value = "请求是否成功")
     private Boolean success;
 
     @ApiModelProperty(value = "请求返回描述")

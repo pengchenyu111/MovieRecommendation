@@ -132,4 +132,23 @@ public class MovieUserController extends BaseController {
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.CHANGE_SUCCESS, updatedUser);
     }
 
+    /**
+     * 用户注册
+     *
+     * @param movieUser 要注册的的用户个人信息
+     * @return 单条用户数据
+     */
+    @ApiOperation(value = "用户注册", notes = "注册一名新用户，验证码验证在 VerificationCodeController 中验证")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "body", name = "movieUser", value = "用户个人信息", required = true, dataType = "MovieUser")
+    })
+    @PostMapping("/register")
+    public ApiResponse<MovieUser> register(@RequestBody MovieUser movieUser) {
+        MovieUser registeredMovieUser = movieUserService.register(movieUser);
+        if (movieUser == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.REGISTER_FAIL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REGISTER_SUCCESS, registeredMovieUser);
+    }
+
 }

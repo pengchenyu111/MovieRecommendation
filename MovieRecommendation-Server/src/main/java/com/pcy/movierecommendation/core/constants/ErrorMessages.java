@@ -26,6 +26,13 @@ public class ErrorMessages {
     public static final String LOGIN_SUCCESS = "登录成功";
 
     /**
+     * 注册
+     */
+    public static final String REGISTER_SUCCESS = "注册成功";
+    public static final String REGISTER_FAIL = "注册失败";
+    public static final String REGISTER_ALREADY = "账户已注册";
+
+    /**
      * 验证码
      */
     public static final String VERIFICATION_SUCCESS = "获取验证码成功";

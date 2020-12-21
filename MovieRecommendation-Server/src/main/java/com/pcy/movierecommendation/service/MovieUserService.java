@@ -91,4 +91,12 @@ public interface MovieUserService {
      * @return 实例对象
      */
     MovieUser changePassword(String account, String verifyCode, String newPassword, String confirmPassword);
+
+    /**
+     * 用户注册
+     *
+     * @param movieUser 要注册的用户信息
+     * @return 注册标识
+     */
+    MovieUser register(MovieUser movieUser);
 }

@@ -175,5 +175,23 @@ public class MovieUserServiceImpl implements MovieUserService {
         return movieUsers.get(0);
     }
 
+    /**
+     * 用户注册
+     *
+     * @param movieUser 要注册的用户信息
+     * @return 注册好的用户信息
+     */
+    @Override
+    public MovieUser register(MovieUser movieUser) {
+        movieUser.setAccount(movieUser.getPhone());
+        movieUser.setPassword(EncryptionUtil.sha384HashWithSalt(movieUser.getPassword()));
+        int row = movieUserDao.insert(movieUser);
+        if (row == 0) {
+            return null;
+        }
+        logger.info("注册用户：" + movieUser.toString());
+        return movieUser;
+    }
+
 
 }

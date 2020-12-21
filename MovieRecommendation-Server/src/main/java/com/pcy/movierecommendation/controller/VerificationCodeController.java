@@ -9,10 +9,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 获取验证码的接口
@@ -39,5 +36,20 @@ public class VerificationCodeController {
             return ApiResponse.failed(ErrorMessages.VERIFICATION_FAIL);
         }
         return ApiResponse.success(ErrorMessages.VERIFICATION_SUCCESS);
+    }
+
+
+    @ApiOperation(value = "验证码", notes = "检查验证码是否正确")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "phoneNumber", value = "用户手机号", required = true, dataType = "String"),
+            @ApiImplicitParam(paramType = "query", name = "code", value = "用户填写的验证码", required = true, dataType = "String")
+    })
+    @GetMapping("/check/{phoneNumber}/{code}")
+    public ApiResponse checkCode(@PathVariable("phoneNumber") String phoneNumber, @PathVariable("code") String code) {
+        boolean isCorrect = verificationCodeService.checkCode(phoneNumber, code);
+        if (!isCorrect) {
+            return ApiResponse.failed(ErrorMessages.VERIFICATION_WRONG);
+        }
+        return ApiResponse.success(ErrorMessages.VERIFICATION_CORRECT);
     }
 }

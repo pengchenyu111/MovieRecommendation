@@ -15,4 +15,13 @@ public interface VerificationCodeService {
      * @return 是否成功
      */
     boolean getCode(String phoneNumber);
+
+    /**
+     * 检查验证码是否正确
+     *
+     * @param phoneNumber 手机号
+     * @param code        用户填写的验证码
+     * @return 是否成功
+     */
+    boolean checkCode(String phoneNumber, String code);
 }

@@ -57,4 +57,26 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         logger.info("写入Redis，verificationCode:" + sixNum);
         return redisUtil.exists(key);
     }
+
+
+    /**
+     * 检查验证码是否正确
+     *
+     * @param phoneNumber 手机号
+     * @param code        用户填写的验证码
+     * @return 是否成功
+     */
+    @Override
+    public boolean checkCode(String phoneNumber, String code) {
+        if (StringUtils.isEmpty(code)) {
+            return false;
+        }
+        // 检查Redis中的验证码
+        String key = "verificationCode:" + phoneNumber;
+        String codeInRedis = redisUtil.get(key);
+        if (StringUtils.isEmpty(codeInRedis)) {
+            return false;
+        }
+        return code.equals(codeInRedis);
+    }
 }

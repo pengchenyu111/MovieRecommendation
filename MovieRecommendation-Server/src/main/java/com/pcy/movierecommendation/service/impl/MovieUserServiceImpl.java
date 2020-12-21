@@ -1,4 +1,4 @@
-package com.pcy.movierecommendation.service.impl.movieUser;
+package com.pcy.movierecommendation.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

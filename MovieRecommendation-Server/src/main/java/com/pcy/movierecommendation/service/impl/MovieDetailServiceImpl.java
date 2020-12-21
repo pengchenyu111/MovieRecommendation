@@ -1,0 +1,91 @@
+package com.pcy.movierecommendation.service.impl;
+
+import com.pcy.movierecommendation.dao.MovieDetailDao;
+import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.service.MovieDetailService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * (MovieDetail)表服务实现类
+ *
+ * @author PengChenyu
+ * @since 2020-12-21 21:41:53
+ */
+@Service("movieDetailService")
+public class MovieDetailServiceImpl implements MovieDetailService {
+    @Resource
+    private MovieDetailDao movieDetailDao;
+
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param doubanId 主键
+     * @return 实例对象
+     */
+    @Override
+    public MovieDetail queryById(Integer doubanId) {
+        return this.movieDetailDao.queryById(doubanId);
+    }
+
+    /**
+     * 查询多条数据
+     *
+     * @param offset 查询起始位置
+     * @param limit  查询条数
+     * @return 对象列表
+     */
+    @Override
+    public List<MovieDetail> queryAllByLimit(int offset, int limit) {
+        return this.movieDetailDao.queryAllByLimit(offset, limit);
+    }
+
+
+    /**
+     * 查询总数据数
+     *
+     * @return 数据总数
+     */
+    @Override
+    public int count() {
+        return this.movieDetailDao.count();
+    }
+
+
+    /**
+     * 新增数据
+     *
+     * @param movieDetail 实例对象
+     * @return 实例对象
+     */
+    @Override
+    public MovieDetail insert(MovieDetail movieDetail) {
+        this.movieDetailDao.insert(movieDetail);
+        return movieDetail;
+    }
+
+    /**
+     * 修改数据
+     *
+     * @param movieDetail 实例对象
+     * @return 实例对象
+     */
+    @Override
+    public MovieDetail update(MovieDetail movieDetail) {
+        this.movieDetailDao.update(movieDetail);
+        return this.queryById(movieDetail.getDoubanId());
+    }
+
+    /**
+     * 通过主键删除数据
+     *
+     * @param doubanId 主键
+     * @return 是否成功
+     */
+    @Override
+    public boolean deleteById(Integer doubanId) {
+        return this.movieDetailDao.deleteById(doubanId) > 0;
+    }
+}

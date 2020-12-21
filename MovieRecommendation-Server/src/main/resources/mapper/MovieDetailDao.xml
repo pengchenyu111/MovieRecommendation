@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcy.movierecommendation.dao.MovieDetailDao">
+
+    <resultMap type="com.pcy.movierecommendation.entity.movieDetail.MovieDetail" id="MovieDetailMap">
+        <result property="doubanId" column="douban_id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="briefInstruction" column="brief_instruction" jdbcType="VARCHAR"/>
+        <result property="directors" column="directors" jdbcType="VARCHAR"/>
+        <result property="screenwriters" column="screenwriters" jdbcType="VARCHAR"/>
+        <result property="casts" column="casts" jdbcType="VARCHAR"/>
+        <result property="types" column="types" jdbcType="VARCHAR"/>
+        <result property="productionCountryArea" column="production_country_area" jdbcType="VARCHAR"/>
+        <result property="language" column="language" jdbcType="VARCHAR"/>
+        <result property="publishDate" column="publish_date" jdbcType="VARCHAR"/>
+        <result property="runtime" column="runtime" jdbcType="VARCHAR"/>
+        <result property="ratingScore" column="rating_score" jdbcType="NUMERIC"/>
+        <result property="ratingStar" column="rating_star" jdbcType="INTEGER"/>
+        <result property="ratingNum" column="rating_num" jdbcType="INTEGER"/>
+        <result property="rating5StarWeight" column="rating_5_star_weight" jdbcType="VARCHAR"/>
+        <result property="rating4StarWeight" column="rating_4_star_weight" jdbcType="VARCHAR"/>
+        <result property="rating3StarWeight" column="rating_3_star_weight" jdbcType="VARCHAR"/>
+        <result property="rating2StarWeight" column="rating_2_star_weight" jdbcType="VARCHAR"/>
+        <result property="rating1StarWeight" column="rating_1_star_weight" jdbcType="VARCHAR"/>
+        <result property="betterThan" column="better_than" jdbcType="VARCHAR"/>
+        <result property="doubanUrl" column="douban_url" jdbcType="VARCHAR"/>
+        <result property="coverUrl" column="cover_url" jdbcType="VARCHAR"/>
+        <result property="imdbUrl" column="imdb_url" jdbcType="VARCHAR"/>
+        <result property="imgList" column="img_list" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieDetailMap">
+        select
+          douban_id, title, brief_instruction, directors, screenwriters, casts, types, production_country_area, language, publish_date, runtime, rating_score, rating_star, rating_num, rating_5_star_weight, rating_4_star_weight, rating_3_star_weight, rating_2_star_weight, rating_1_star_weight, better_than, douban_url, cover_url, imdb_url, img_list
+        from movie_recommendation.movie_detail
+        where douban_id = #{doubanId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieDetailMap">
+        select
+          douban_id, title, brief_instruction, directors, screenwriters, casts, types, production_country_area, language, publish_date, runtime, rating_score, rating_star, rating_num, rating_5_star_weight, rating_4_star_weight, rating_3_star_weight, rating_2_star_weight, rating_1_star_weight, better_than, douban_url, cover_url, imdb_url, img_list
+        from movie_recommendation.movie_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MovieDetailMap">
+        select
+        douban_id, title, brief_instruction, directors, screenwriters, casts, types, production_country_area, language,
+        publish_date, runtime, rating_score, rating_star, rating_num, rating_5_star_weight, rating_4_star_weight,
+        rating_3_star_weight, rating_2_star_weight, rating_1_star_weight, better_than, douban_url, cover_url, imdb_url,
+        img_list
+        from movie_recommendation.movie_detail
+        <where>
+            <if test="doubanId != null">
+                and douban_id = #{doubanId}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="briefInstruction != null and briefInstruction != ''">
+                and brief_instruction = #{briefInstruction}
+            </if>
+            <if test="directors != null and directors != ''">
+                and directors = #{directors}
+            </if>
+            <if test="screenwriters != null and screenwriters != ''">
+                and screenwriters = #{screenwriters}
+            </if>
+            <if test="casts != null and casts != ''">
+                and casts = #{casts}
+            </if>
+            <if test="types != null and types != ''">
+                and types = #{types}
+            </if>
+            <if test="productionCountryArea != null and productionCountryArea != ''">
+                and production_country_area = #{productionCountryArea}
+            </if>
+            <if test="language != null and language != ''">
+                and language = #{language}
+            </if>
+            <if test="publishDate != null and publishDate != ''">
+                and publish_date = #{publishDate}
+            </if>
+            <if test="runtime != null and runtime != ''">
+                and runtime = #{runtime}
+            </if>
+            <if test="ratingScore != null">
+                and rating_score = #{ratingScore}
+            </if>
+            <if test="ratingStar != null">
+                and rating_star = #{ratingStar}
+            </if>
+            <if test="ratingNum != null">
+                and rating_num = #{ratingNum}
+            </if>
+            <if test="rating5StarWeight != null and rating5StarWeight != ''">
+                and rating_5_star_weight = #{rating5StarWeight}
+            </if>
+            <if test="rating4StarWeight != null and rating4StarWeight != ''">
+                and rating_4_star_weight = #{rating4StarWeight}
+            </if>
+            <if test="rating3StarWeight != null and rating3StarWeight != ''">
+                and rating_3_star_weight = #{rating3StarWeight}
+            </if>
+            <if test="rating2StarWeight != null and rating2StarWeight != ''">
+                and rating_2_star_weight = #{rating2StarWeight}
+            </if>
+            <if test="rating1StarWeight != null and rating1StarWeight != ''">
+                and rating_1_star_weight = #{rating1StarWeight}
+            </if>
+            <if test="betterThan != null and betterThan != ''">
+                and better_than = #{betterThan}
+            </if>
+            <if test="doubanUrl != null and doubanUrl != ''">
+                and douban_url = #{doubanUrl}
+            </if>
+            <if test="coverUrl != null and coverUrl != ''">
+                and cover_url = #{coverUrl}
+            </if>
+            <if test="imdbUrl != null and imdbUrl != ''">
+                and imdb_url = #{imdbUrl}
+            </if>
+            <if test="imgList != null and imgList != ''">
+                and img_list = #{imgList}
+            </if>
+        </where>
+    </select>
+
+    <!-- 总数 -->
+    <select id="count" resultType="int">
+        select count(*) from movie_detail
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="doubanId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_detail(title, brief_instruction, directors, screenwriters, casts, types, production_country_area, language, publish_date, runtime, rating_score, rating_star, rating_num, rating_5_star_weight, rating_4_star_weight, rating_3_star_weight, rating_2_star_weight, rating_1_star_weight, better_than, douban_url, cover_url, imdb_url, img_list)
+        values (#{title}, #{briefInstruction}, #{directors}, #{screenwriters}, #{casts}, #{types}, #{productionCountryArea}, #{language}, #{publishDate}, #{runtime}, #{ratingScore}, #{ratingStar}, #{ratingNum}, #{rating5StarWeight}, #{rating4StarWeight}, #{rating3StarWeight}, #{rating2StarWeight}, #{rating1StarWeight}, #{betterThan}, #{doubanUrl}, #{coverUrl}, #{imdbUrl}, #{imgList})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="doubanId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_detail(title, brief_instruction, directors, screenwriters, casts, types,
+        production_country_area, language, publish_date, runtime, rating_score, rating_star, rating_num,
+        rating_5_star_weight, rating_4_star_weight, rating_3_star_weight, rating_2_star_weight, rating_1_star_weight,
+        better_than, douban_url, cover_url, imdb_url, img_list)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.title}, #{entity.briefInstruction}, #{entity.directors}, #{entity.screenwriters}, #{entity.casts},
+            #{entity.types}, #{entity.productionCountryArea}, #{entity.language}, #{entity.publishDate},
+            #{entity.runtime}, #{entity.ratingScore}, #{entity.ratingStar}, #{entity.ratingNum},
+            #{entity.rating5StarWeight}, #{entity.rating4StarWeight}, #{entity.rating3StarWeight},
+            #{entity.rating2StarWeight}, #{entity.rating1StarWeight}, #{entity.betterThan}, #{entity.doubanUrl},
+            #{entity.coverUrl}, #{entity.imdbUrl}, #{entity.imgList})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="doubanId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_detail(title, brief_instruction, directors, screenwriters, casts, types,
+        production_country_area, language, publish_date, runtime, rating_score, rating_star, rating_num,
+        rating_5_star_weight, rating_4_star_weight, rating_3_star_weight, rating_2_star_weight, rating_1_star_weight,
+        better_than, douban_url, cover_url, imdb_url, img_list)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.title}, #{entity.briefInstruction}, #{entity.directors}, #{entity.screenwriters}, #{entity.casts},
+            #{entity.types}, #{entity.productionCountryArea}, #{entity.language}, #{entity.publishDate},
+            #{entity.runtime}, #{entity.ratingScore}, #{entity.ratingStar}, #{entity.ratingNum},
+            #{entity.rating5StarWeight}, #{entity.rating4StarWeight}, #{entity.rating3StarWeight},
+            #{entity.rating2StarWeight}, #{entity.rating1StarWeight}, #{entity.betterThan}, #{entity.doubanUrl},
+            #{entity.coverUrl}, #{entity.imdbUrl}, #{entity.imgList})
+        </foreach>
+        on duplicate key update
+        title = values(title) , brief_instruction = values(brief_instruction) , directors = values(directors) ,
+        screenwriters = values(screenwriters) , casts = values(casts) , types = values(types) , production_country_area
+        = values(production_country_area) , language = values(language) , publish_date = values(publish_date) , runtime
+        = values(runtime) , rating_score = values(rating_score) , rating_star = values(rating_star) , rating_num =
+        values(rating_num) , rating_5_star_weight = values(rating_5_star_weight) , rating_4_star_weight =
+        values(rating_4_star_weight) , rating_3_star_weight = values(rating_3_star_weight) , rating_2_star_weight =
+        values(rating_2_star_weight) , rating_1_star_weight = values(rating_1_star_weight) , better_than =
+        values(better_than) , douban_url = values(douban_url) , cover_url = values(cover_url) , imdb_url =
+        values(imdb_url) , img_list = values(img_list)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_recommendation.movie_detail
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="briefInstruction != null and briefInstruction != ''">
+                brief_instruction = #{briefInstruction},
+            </if>
+            <if test="directors != null and directors != ''">
+                directors = #{directors},
+            </if>
+            <if test="screenwriters != null and screenwriters != ''">
+                screenwriters = #{screenwriters},
+            </if>
+            <if test="casts != null and casts != ''">
+                casts = #{casts},
+            </if>
+            <if test="types != null and types != ''">
+                types = #{types},
+            </if>
+            <if test="productionCountryArea != null and productionCountryArea != ''">
+                production_country_area = #{productionCountryArea},
+            </if>
+            <if test="language != null and language != ''">
+                language = #{language},
+            </if>
+            <if test="publishDate != null and publishDate != ''">
+                publish_date = #{publishDate},
+            </if>
+            <if test="runtime != null and runtime != ''">
+                runtime = #{runtime},
+            </if>
+            <if test="ratingScore != null">
+                rating_score = #{ratingScore},
+            </if>
+            <if test="ratingStar != null">
+                rating_star = #{ratingStar},
+            </if>
+            <if test="ratingNum != null">
+                rating_num = #{ratingNum},
+            </if>
+            <if test="rating5StarWeight != null and rating5StarWeight != ''">
+                rating_5_star_weight = #{rating5StarWeight},
+            </if>
+            <if test="rating4StarWeight != null and rating4StarWeight != ''">
+                rating_4_star_weight = #{rating4StarWeight},
+            </if>
+            <if test="rating3StarWeight != null and rating3StarWeight != ''">
+                rating_3_star_weight = #{rating3StarWeight},
+            </if>
+            <if test="rating2StarWeight != null and rating2StarWeight != ''">
+                rating_2_star_weight = #{rating2StarWeight},
+            </if>
+            <if test="rating1StarWeight != null and rating1StarWeight != ''">
+                rating_1_star_weight = #{rating1StarWeight},
+            </if>
+            <if test="betterThan != null and betterThan != ''">
+                better_than = #{betterThan},
+            </if>
+            <if test="doubanUrl != null and doubanUrl != ''">
+                douban_url = #{doubanUrl},
+            </if>
+            <if test="coverUrl != null and coverUrl != ''">
+                cover_url = #{coverUrl},
+            </if>
+            <if test="imdbUrl != null and imdbUrl != ''">
+                imdb_url = #{imdbUrl},
+            </if>
+            <if test="imgList != null and imgList != ''">
+                img_list = #{imgList},
+            </if>
+        </set>
+        where douban_id = #{doubanId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_recommendation.movie_detail where douban_id = #{doubanId}
+    </delete>
+
+</mapper>

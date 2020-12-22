@@ -1,8 +1,13 @@
 package com.pcy.movierecommendation.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieDetailDao;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
 import com.pcy.movierecommendation.service.MovieDetailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,8 +21,13 @@ import java.util.List;
  */
 @Service("movieDetailService")
 public class MovieDetailServiceImpl implements MovieDetailService {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Resource
     private MovieDetailDao movieDetailDao;
+    @Autowired
+    RedisUtil redisUtil;
 
     /**
      * 通过ID查询单条数据
@@ -27,7 +37,18 @@ public class MovieDetailServiceImpl implements MovieDetailService {
      */
     @Override
     public MovieDetail queryById(Integer doubanId) {
-        return this.movieDetailDao.queryById(doubanId);
+        String key = "movieDetail:" + doubanId;
+        if (redisUtil.exists(key)) {
+            String movieDetailJson = redisUtil.get(key);
+            logger.info("从Redis中读取" + key);
+            return JSON.parseObject(movieDetailJson, MovieDetail.class);
+        }
+        MovieDetail movieDetail = this.movieDetailDao.queryById(doubanId);
+        if (movieDetail != null) {
+            String json = JSON.toJSONString(movieDetail);
+            redisUtil.set(key, json, 0);
+        }
+        return movieDetail;
     }
 
     /**

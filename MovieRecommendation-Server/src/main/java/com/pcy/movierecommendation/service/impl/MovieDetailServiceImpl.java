@@ -1,6 +1,8 @@
 package com.pcy.movierecommendation.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieDetailDao;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
@@ -108,5 +110,20 @@ public class MovieDetailServiceImpl implements MovieDetailService {
     @Override
     public boolean deleteById(Integer doubanId) {
         return this.movieDetailDao.deleteById(doubanId) > 0;
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param pageNum     当前页
+     * @param pageSize    每页多少数据
+     * @param movieDetail 查询条件
+     * @return 分页数据
+     */
+    @Override
+    public PageInfo<MovieDetail> queryPage(int pageNum, int pageSize, MovieDetail movieDetail) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<MovieDetail> movieDetailList = movieDetailDao.queryAll(movieDetail);
+        return new PageInfo<>(movieDetailList);
     }
 }

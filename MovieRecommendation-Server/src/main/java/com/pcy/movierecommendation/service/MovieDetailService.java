@@ -1,5 +1,6 @@
 package com.pcy.movierecommendation.service;
 
+import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
 
 import java.util.List;
@@ -62,4 +63,13 @@ public interface MovieDetailService {
      */
     boolean deleteById(Integer doubanId);
 
+    /**
+     * 分页查询
+     *
+     * @param pageNum     当前页
+     * @param pageSize    每页多少数据
+     * @param movieDetail 查询条件
+     * @return 分页数据
+     */
+    PageInfo<MovieDetail> queryPage(int pageNum, int pageSize, MovieDetail movieDetail);
 }

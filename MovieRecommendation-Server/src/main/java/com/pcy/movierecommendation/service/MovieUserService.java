@@ -33,11 +33,12 @@ public interface MovieUserService {
     /**
      * 分页查询
      *
-     * @param pageNum  当前页
-     * @param pageSize 每页的数量
+     * @param pageNum   当前页
+     * @param pageSize  每页的数量
+     * @param movieUser 查询条件
      * @return 分页信息
      */
-    PageInfo<MovieUser> queryPage(int pageNum, int pageSize);
+    PageInfo<MovieUser> queryPage(int pageNum, int pageSize, MovieUser movieUser);
 
 
     /**

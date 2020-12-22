@@ -50,19 +50,21 @@ public class MovieUserController extends BaseController {
     /**
      * 分页查询
      *
-     * @param pageNum  当前页
-     * @param pageSize 每页多少数据
+     * @param pageNum   当前页
+     * @param pageSize  每页多少数据
+     * @param movieUser 查询条件
      * @return 单条数据
      */
     @ApiOperation(value = "分页查询")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页", required = true, dataType = "int"),
-            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页的数量", required = true, dataType = "int")
+            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页的数量", required = true, dataType = "int"),
+            @ApiImplicitParam(paramType = "query", name = "movieUser", value = "查询条件", required = true, dataType = "MovieUser")
     })
-    @GetMapping("/page/{pageNum}/{pageSize}")
-    public ApiResponse<PageInfo<MovieUser>> queryPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
-        PageInfo<MovieUser> movieUser = this.movieUserService.queryPage(pageNum, pageSize);
-        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieUser);
+    @PostMapping("/page/{pageNum}/{pageSize}")
+    public ApiResponse<PageInfo<MovieUser>> queryPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @RequestBody MovieUser movieUser) {
+        PageInfo<MovieUser> result = this.movieUserService.queryPage(pageNum, pageSize, movieUser);
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, result);
     }
 
     /**

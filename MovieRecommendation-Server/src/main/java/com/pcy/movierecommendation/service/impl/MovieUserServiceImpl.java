@@ -60,14 +60,15 @@ public class MovieUserServiceImpl implements MovieUserService {
     /**
      * 分页查询
      *
-     * @param pageNum  当前页
-     * @param pageSize 每页的数量
+     * @param pageNum   当前页
+     * @param pageSize  每页的数量
+     * @param movieUser 查询条件
      * @return 分页信息
      */
     @Override
-    public PageInfo<MovieUser> queryPage(int pageNum, int pageSize) {
+    public PageInfo<MovieUser> queryPage(int pageNum, int pageSize, MovieUser movieUser) {
         PageHelper.startPage(pageNum, pageSize);
-        List<MovieUser> movieUserList = movieUserDao.queryAllUsers();
+        List<MovieUser> movieUserList = movieUserDao.queryAll(movieUser);
         return new PageInfo<>(movieUserList);
     }
 

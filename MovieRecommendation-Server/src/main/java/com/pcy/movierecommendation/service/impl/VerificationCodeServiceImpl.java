@@ -6,8 +6,9 @@ import com.pcy.movierecommendation.service.VerificationCodeService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author PengChenyu
@@ -24,7 +25,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     private static final int EXPIRE = 300;
     private static final int DEFAULT_DB = 0;
 
-    @Autowired
+    @Resource
     RedisUtil redisUtil;
 
     /**

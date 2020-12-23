@@ -1,10 +1,11 @@
 package com.pcy.movierecommendation.config;
 
 import com.pcy.movierecommendation.interceptor.SwaggerInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.annotation.Resource;
 
 /**
  * Swagger拦截器配置
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class SwaggerInterceptorConfig implements WebMvcConfigurer {
 
-    @Autowired
+    @Resource
     private SwaggerInterceptor swaggerInterceptor;
 
     @Override

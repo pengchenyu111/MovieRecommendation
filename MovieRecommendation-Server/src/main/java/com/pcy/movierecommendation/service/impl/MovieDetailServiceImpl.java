@@ -9,7 +9,6 @@ import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
 import com.pcy.movierecommendation.service.MovieDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,7 +27,7 @@ public class MovieDetailServiceImpl implements MovieDetailService {
 
     @Resource
     private MovieDetailDao movieDetailDao;
-    @Autowired
+    @Resource
     RedisUtil redisUtil;
 
     /**

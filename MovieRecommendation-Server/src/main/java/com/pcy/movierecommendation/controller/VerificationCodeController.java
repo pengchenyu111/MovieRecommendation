@@ -7,9 +7,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * 获取验证码的接口
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(value = "/verificationCode", tags = "VerificationCode")
 public class VerificationCodeController {
 
-    @Autowired
+    @Resource
     VerificationCodeService verificationCodeService;
 
     @ApiOperation(value = "验证码", notes = "通过阿里云短信服务获取验证码")

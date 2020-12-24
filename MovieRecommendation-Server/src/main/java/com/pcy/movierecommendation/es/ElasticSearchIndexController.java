@@ -20,8 +20,8 @@ import java.io.IOException;
  */
 @Api(value = "/es", tags = "es")
 @RestController
-@RequestMapping("api/recommendation/es")
-public class ElasticSearchController extends BaseController {
+@RequestMapping("api/recommendation/es/index")
+public class ElasticSearchIndexController extends BaseController {
 
     @Resource
     BaseElasticSearchService baseElasticSearchService;
@@ -38,7 +38,7 @@ public class ElasticSearchController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "indexName", value = "索引名", required = true, dataType = "String")
     })
-    @GetMapping("/index/{indexName}")
+    @GetMapping("/{indexName}")
     public ApiResponse isExistsIndex(@PathVariable("indexName") String indexName) throws IOException {
         boolean isExistsIndex = baseElasticSearchService.isExistsIndex(indexName);
         if (!isExistsIndex) {
@@ -58,7 +58,7 @@ public class ElasticSearchController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "indexName", value = "索引名", required = true, dataType = "String")
     })
-    @PostMapping("/index/{indexName}")
+    @PostMapping("/{indexName}")
     public ApiResponse createIndex(@PathVariable("indexName") String indexName) throws IOException {
         Boolean isSuccess = baseElasticSearchService.createIndex(indexName);
         if (!isSuccess) {
@@ -78,7 +78,7 @@ public class ElasticSearchController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "indexName", value = "索引名", required = true, dataType = "String")
     })
-    @DeleteMapping("/index/{indexName}")
+    @DeleteMapping("/{indexName}")
     public ApiResponse deleteIndex(@PathVariable("indexName") String indexName) throws IOException {
         Boolean isSuccess = baseElasticSearchService.deleteIndex(indexName);
         if (!isSuccess) {

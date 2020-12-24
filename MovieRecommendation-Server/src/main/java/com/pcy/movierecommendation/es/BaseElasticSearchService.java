@@ -1,5 +1,7 @@
 package com.pcy.movierecommendation.es;
 
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
@@ -57,6 +59,22 @@ public class BaseElasticSearchService {
                 .put("index.number_of_replicas", ElasticSearchConstant.NUMBER_OF_REPLICAS)
         );
         CreateIndexResponse response = restHighLevelClient.indices().create(request, RequestOptions.DEFAULT);
+        return response.isAcknowledged();
+    }
+
+    /**
+     * 删除索引
+     *
+     * @param indexName 索引名
+     * @return 是否删除成功
+     */
+    public Boolean deleteIndex(String indexName) throws IOException {
+        if (!this.isExistsIndex(indexName)) {
+            logger.info("索引不存在，删除失败");
+            return false;
+        }
+        DeleteIndexRequest request = new DeleteIndexRequest(indexName);
+        AcknowledgedResponse response = restHighLevelClient.indices().delete(request, RequestOptions.DEFAULT);
         return response.isAcknowledged();
     }
 

@@ -66,4 +66,24 @@ public class ElasticSearchController extends BaseController {
         }
         return ApiResponse.success(ErrorMessages.ELASTICSEARCH_INDEX_CREATE_SUCCESS);
     }
+
+    /**
+     * 删除索引
+     *
+     * @param indexName 索引名
+     * @return 是否删除成功
+     * @throws IOException BaseController统一处理
+     */
+    @ApiOperation(value = "删除索引", notes = "删除索引（单机），注意删除索引会将索引中的所有数据一并删除")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "indexName", value = "索引名", required = true, dataType = "String")
+    })
+    @DeleteMapping("/index/{indexName}")
+    public ApiResponse deleteIndex(@PathVariable("indexName") String indexName) throws IOException {
+        Boolean isSuccess = baseElasticSearchService.deleteIndex(indexName);
+        if (!isSuccess) {
+            return ApiResponse.failed(ErrorMessages.ELASTICSEARCH_INDEX_DELETE_FAIL);
+        }
+        return ApiResponse.success(ErrorMessages.ELASTICSEARCH_INDEX_DELETE_SUCCESS);
+    }
 }

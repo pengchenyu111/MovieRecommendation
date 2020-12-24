@@ -56,6 +56,9 @@ public class ErrorMessages {
     public static final String ELASTICSEARCH_INDEX_CREATE_FAIL = "索引创建失败";
     public static final String ELASTICSEARCH_INDEX_DELETE_SUCCESS = "索引删除成功";
     public static final String ELASTICSEARCH_INDEX_DELETE_FAIL = "索引删除失败";
+    public static final String ELASTICSEARCH_DATA_INSERT_SUCCESS = "数据插入成功";
+    public static final String ELASTICSEARCH_DATA_INSERT_FAIL = "数据插入失败";
+
 
 
 }

@@ -64,6 +64,16 @@ public class MovieDetailServiceImpl implements MovieDetailService {
         return this.movieDetailDao.queryAllByLimit(offset, limit);
     }
 
+    /**
+     * 查询所有数据
+     *
+     * @return 对象列表
+     */
+    @Override
+    public List<MovieDetail> queryAllMovieDetails() {
+        return this.movieDetailDao.queryAllMovieDetails();
+    }
+
 
     /**
      * 查询总数据数

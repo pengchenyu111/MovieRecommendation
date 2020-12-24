@@ -30,6 +30,13 @@ public interface MovieDetailService {
      */
     List<MovieDetail> queryAllByLimit(int offset, int limit);
 
+    /**
+     * 查询全部数据
+     *
+     * @return 对象列表
+     */
+    List<MovieDetail> queryAllMovieDetails();
+
 
     /**
      * 查询总数据数

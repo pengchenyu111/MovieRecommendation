@@ -134,6 +134,13 @@
         select count(*) from movie_detail
     </select>
 
+    <!-- 查询所有 -->
+    <select id="queryAllMovieDetails" resultMap="MovieDetailMap">
+        select
+          douban_id, title, brief_instruction, directors, screenwriters, casts, types, production_country_area, language, publish_date, runtime, rating_score, rating_star, rating_num, rating_5_star_weight, rating_4_star_weight, rating_3_star_weight, rating_2_star_weight, rating_1_star_weight, better_than, douban_url, cover_url, imdb_url, img_list
+        from movie_recommendation.movie_detail
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="doubanId" useGeneratedKeys="true">
         insert into movie_recommendation.movie_detail(title, brief_instruction, directors, screenwriters, casts, types, production_country_area, language, publish_date, runtime, rating_score, rating_star, rating_num, rating_5_star_weight, rating_4_star_weight, rating_3_star_weight, rating_2_star_weight, rating_1_star_weight, better_than, douban_url, cover_url, imdb_url, img_list)

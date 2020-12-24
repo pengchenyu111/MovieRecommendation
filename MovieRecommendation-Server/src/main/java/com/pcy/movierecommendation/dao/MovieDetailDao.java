@@ -34,6 +34,13 @@ public interface MovieDetailDao {
      */
     List<MovieDetail> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
+    /**
+     * 查询所有数据
+     *
+     * @return 对象列表
+     */
+    List<MovieDetail> queryAllMovieDetails();
+
 
     /**
      * 通过实体作为筛选条件查询

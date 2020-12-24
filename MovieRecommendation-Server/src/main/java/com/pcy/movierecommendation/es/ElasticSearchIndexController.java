@@ -18,7 +18,7 @@ import java.io.IOException;
  * @author PengChenyu
  * @since 2020-12-24 21:12:24
  */
-@Api(value = "/es", tags = "es")
+@Api(value = "/es/index", tags = "es-index")
 @RestController
 @RequestMapping("api/recommendation/es/index")
 public class ElasticSearchIndexController extends BaseController {

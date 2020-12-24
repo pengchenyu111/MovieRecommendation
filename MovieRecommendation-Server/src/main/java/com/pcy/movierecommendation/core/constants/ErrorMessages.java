@@ -47,5 +47,13 @@ public class ErrorMessages {
     public static final String CHANGE_FAIL = "修改失败";
     public static final String CHANGE_SUCCESS = "修改成功";
 
+    /**
+     * ElasticSearch
+     */
+    public static final String ELASTICSEARCH_SEARCH_SUCCESS = "查询成功";
+    public static final String ELASTICSEARCH_INDEX_NULL = "索引不存在";
+    public static final String ELASTICSEARCH_INDEX_CREATE_SUCCESS = "索引创建成功";
+    public static final String ELASTICSEARCH_INDEX_CREATE_FAIL = "索引创建失败";
+
 
 }

@@ -51,6 +51,12 @@ spring:
         min-idle: 2
         max-wait: 10000
 
+# ElasticSearch配置
+elasticsearch:
+  hostname: 101.37.173.73
+  port: 9200
+  scheme: http
+
 # MyBatis配置
 mybatis:
   type-aliases-package: com.pcy.movierecommendation.entity

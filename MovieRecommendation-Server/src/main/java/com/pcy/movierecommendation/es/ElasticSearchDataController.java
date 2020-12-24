@@ -3,6 +3,7 @@ package com.pcy.movierecommendation.es;
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.service.MovieDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -23,6 +24,8 @@ public class ElasticSearchDataController {
 
     @Resource
     BaseElasticSearchService baseElasticSearchService;
+    @Resource
+    MovieDetailService movieDetailService;
 
     /**
      * 插入MovieDetail数据（所有字段）
@@ -40,6 +43,26 @@ public class ElasticSearchDataController {
     public ApiResponse insertOrUpdateDocOne(@PathVariable("indexName") String indexName, @RequestBody MovieDetail movieDetail) throws IOException {
         Boolean isSuccess = baseElasticSearchService.insertDocOne(indexName, movieDetail);
         if (!isSuccess) {
+            return ApiResponse.failed(ErrorMessages.ELASTICSEARCH_DATA_INSERT_FAIL);
+        }
+        return ApiResponse.success(ErrorMessages.ELASTICSEARCH_DATA_INSERT_SUCCESS);
+    }
+
+
+    /**
+     * 批量插入MovieDetail数据
+     *
+     * @param indexName 索引名
+     * @throws IOException BaseController统一处理
+     */
+    @ApiOperation(value = "批量插入电影数据", notes = "批量插入MovieDetail数据（所有字段）")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "indexName", value = "索引名", required = true, dataType = "String")
+    })
+    @PostMapping("/batch/{indexName}")
+    public ApiResponse insertDocBatch(@PathVariable("indexName") String indexName) throws IOException {
+        Boolean hasFailures = baseElasticSearchService.insertDocBatch(indexName, movieDetailService.queryAllMovieDetails());
+        if (hasFailures) {
             return ApiResponse.failed(ErrorMessages.ELASTICSEARCH_DATA_INSERT_FAIL);
         }
         return ApiResponse.success(ErrorMessages.ELASTICSEARCH_DATA_INSERT_SUCCESS);

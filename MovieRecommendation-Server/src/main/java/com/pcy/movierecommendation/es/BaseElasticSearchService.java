@@ -133,7 +133,7 @@ public class BaseElasticSearchService {
      *
      * @param indexName 索引名
      * @param builder   查询参数
-     * @param c         结果类对象   调用者通过Class.forName(String clazzName)获取
+     * @param c         结果类对象   调用者通过 Xxx.class 获取
      * @return 对象列表
      */
     public <T> ElasticSearchVo<T> search(String indexName, SearchSourceBuilder builder, Class<?> c) throws IOException {

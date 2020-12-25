@@ -6,6 +6,8 @@ import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -16,12 +18,16 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -119,6 +125,32 @@ public class BaseElasticSearchService {
         BulkResponse bulkResponse = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
         logger.info("=====>批量插入数据结束");
         return bulkResponse.hasFailures();
+    }
+
+    /**
+     * 查询
+     * SearchSourceBuilder中的具体查询参数由具体业务中的逻辑决定
+     *
+     * @param indexName 索引名
+     * @param builder   查询参数
+     * @param c         结果类对象   调用者通过Class.forName(String clazzName)获取
+     * @return 对象列表
+     */
+    public <T> ElasticSearchVo<T> search(String indexName, SearchSourceBuilder builder, Class<?> c) throws IOException {
+        // 设置查询参数
+        SearchRequest request = new SearchRequest(indexName);
+        request.source(builder);
+        SearchResponse response = restHighLevelClient.search(request, RequestOptions.DEFAULT);
+        // 写入结果
+        ElasticSearchVo<T> elasticSearchVo = new ElasticSearchVo<>();
+        elasticSearchVo.setTotal(response.getHits().getTotalHits().value);
+        SearchHit[] hits = response.getHits().getHits();
+        List<T> result = new ArrayList<>(hits.length);
+        for (SearchHit hit : hits) {
+            result.add(JSON.parseObject(hit.getSourceAsString(), (Type) c));
+        }
+        elasticSearchVo.setResultList(result);
+        return elasticSearchVo;
     }
 
 }

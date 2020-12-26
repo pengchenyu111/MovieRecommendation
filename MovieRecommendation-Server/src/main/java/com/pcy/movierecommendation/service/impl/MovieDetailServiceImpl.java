@@ -6,12 +6,20 @@ import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieDetailDao;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.es.BaseElasticSearchService;
+import com.pcy.movierecommendation.es.ElasticSearchVo;
 import com.pcy.movierecommendation.service.MovieDetailService;
+import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,10 +33,25 @@ public class MovieDetailServiceImpl implements MovieDetailService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
+    /**
+     * 电影搜索的字段：电影名，演员，导演
+     */
+    private final String[] SEARCH_MOVIE_FIELDS = {"title", "casts", "directors"};
+    /**
+     * 搜索的索引
+     */
+    private final String SEARCH_INDEX = "movie_detail";
+    /**
+     * 搜索超时
+     */
+    private final Long SEARCH_TIMEOUT = 1L;
+
     @Resource
     private MovieDetailDao movieDetailDao;
     @Resource
     RedisUtil redisUtil;
+    @Resource
+    BaseElasticSearchService baseElasticSearchService;
 
     /**
      * 通过ID查询单条数据
@@ -134,5 +157,34 @@ public class MovieDetailServiceImpl implements MovieDetailService {
         PageHelper.startPage(pageNum, pageSize);
         List<MovieDetail> movieDetailList = movieDetailDao.queryAll(movieDetail);
         return new PageInfo<>(movieDetailList);
+    }
+
+    /**
+     * 电影搜索
+     *
+     * @param keyword  搜索关键词
+     * @param pageNum  第几页
+     * @param pageSize 每页大小
+     * @return ElasticSearchVo<MovieDetail>
+     */
+    @Override
+    public ElasticSearchVo<MovieDetail> searchMovie(String keyword, int pageNum, int pageSize) {
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        // 多字段查询
+        MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(keyword, this.SEARCH_MOVIE_FIELDS);
+        searchSourceBuilder.query(multiMatchQueryBuilder);
+        // 设置分页
+        searchSourceBuilder.from(pageNum);
+        searchSourceBuilder.size(pageSize);
+        // 设置超时
+        searchSourceBuilder.timeout(TimeValue.timeValueSeconds(SEARCH_TIMEOUT));
+        // 开始搜索
+        ElasticSearchVo<MovieDetail> result = new ElasticSearchVo<>();
+        try {
+            result = baseElasticSearchService.search(this.SEARCH_INDEX, searchSourceBuilder, MovieDetail.class);
+        } catch (IOException e) {
+            logger.error("搜索出错:" + e.getMessage());
+        }
+        return result;
     }
 }

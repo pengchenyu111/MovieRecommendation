@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.es.ElasticSearchVo;
 import com.pcy.movierecommendation.service.MovieDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -12,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * (MovieDetail)表控制层
@@ -67,6 +69,31 @@ public class MovieDetailController extends BaseController {
     public ApiResponse<PageInfo<MovieDetail>> queryPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @RequestBody MovieDetail movieDetail) {
         PageInfo<MovieDetail> movieDetailPageInfo = movieDetailService.queryPage(pageNum, pageSize, movieDetail);
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetailPageInfo);
+    }
+
+
+    /**
+     * 搜索，电影名/导演/演员
+     *
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @param map      keyword 用户搜索的关键字
+     * @return 分页数据
+     */
+    @ApiOperation(value = "分页查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页", required = true, dataType = "int"),
+            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页的数量", required = true, dataType = "int"),
+            @ApiImplicitParam(paramType = "query", name = "map", value = "用户搜索的关键字", required = true, dataType = "Map")
+    })
+    @PostMapping("/search/{pageNum}/{pageSize}")
+    public ApiResponse<ElasticSearchVo<MovieDetail>> searchMovie(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @RequestBody Map<String, String> map) {
+        String keyword = map.get("keyword");
+        ElasticSearchVo<MovieDetail> movieDetailElasticSearchVo = movieDetailService.searchMovie(keyword, pageNum, pageSize);
+        if (movieDetailElasticSearchVo.getTotal() == 0) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetailElasticSearchVo);
     }
 
 }

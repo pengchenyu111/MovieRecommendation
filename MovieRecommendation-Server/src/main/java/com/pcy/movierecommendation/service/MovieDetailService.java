@@ -2,6 +2,7 @@ package com.pcy.movierecommendation.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.es.ElasticSearchVo;
 
 import java.util.List;
 
@@ -79,4 +80,15 @@ public interface MovieDetailService {
      * @return 分页数据
      */
     PageInfo<MovieDetail> queryPage(int pageNum, int pageSize, MovieDetail movieDetail);
+
+
+    /**
+     * 电影搜索
+     *
+     * @param keyword  搜索关键词
+     * @param pageNum  第几页
+     * @param pageSize 每页大小
+     * @return ElasticSearchVo<MovieDetail>
+     */
+    ElasticSearchVo<MovieDetail> searchMovie(String keyword, int pageNum, int pageSize);
 }

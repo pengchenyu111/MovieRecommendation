@@ -42,6 +42,8 @@ public class BaseElasticSearchService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+    private final float FILTER_RATE = 0.95f;
+
     @Resource
     RestHighLevelClient restHighLevelClient;
 
@@ -144,6 +146,7 @@ public class BaseElasticSearchService {
         // 写入结果
         ElasticSearchVo<T> elasticSearchVo = new ElasticSearchVo<>();
         elasticSearchVo.setTotal(response.getHits().getTotalHits().value);
+        elasticSearchVo.setMaxScore(response.getHits().getMaxScore());
         SearchHit[] hits = response.getHits().getHits();
         List<T> result = new ArrayList<>(hits.length);
         for (SearchHit hit : hits) {

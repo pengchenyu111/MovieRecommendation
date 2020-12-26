@@ -23,6 +23,9 @@ public class ElasticSearchVo<T> {
     @ApiModelProperty("结果总数")
     private Long total;
 
+    @ApiModelProperty("最大权重")
+    private float maxScore;
+
     @ApiModelProperty("结果列表")
     private List<T> resultList;
 }

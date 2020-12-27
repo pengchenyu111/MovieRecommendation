@@ -4,12 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.entity.movieDetail.MovieDetailSearchRequest;
 import com.pcy.movierecommendation.es.ElasticSearchVo;
 import com.pcy.movierecommendation.service.MovieDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -114,6 +116,27 @@ public class MovieDetailController extends BaseController {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetail);
+    }
+
+
+    /**
+     * 类豆瓣标签搜索
+     * 基于ES
+     *
+     * @param movieDetailSearchRequest 请求条件实体
+     * @return ES内电影数据
+     */
+    @ApiOperation(value = "类豆瓣标签搜索")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "body", name = "movieDetailSearchRequest", value = "doubanId", required = true, dataType = "MovieDetailSearchRequest")
+    })
+    @PostMapping("/searchByTags")
+    public ApiResponse<ElasticSearchVo<MovieDetail>> searchByTags(@RequestBody MovieDetailSearchRequest movieDetailSearchRequest) {
+        ElasticSearchVo<MovieDetail> result = movieDetailService.searchByTags(movieDetailSearchRequest);
+        if (CollectionUtils.isEmpty(result.getResultList())) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, result);
     }
 
 }

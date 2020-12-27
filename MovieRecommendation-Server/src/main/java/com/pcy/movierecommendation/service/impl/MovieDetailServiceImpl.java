@@ -6,14 +6,15 @@ import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieDetailDao;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.entity.movieDetail.MovieDetailSearchRequest;
 import com.pcy.movierecommendation.es.BaseElasticSearchService;
 import com.pcy.movierecommendation.es.ElasticSearchVo;
 import com.pcy.movierecommendation.service.MovieDetailService;
+import org.apache.hadoop.yarn.webapp.hamlet.Hamlet;
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.index.query.MultiMatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.*;
+import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -186,6 +187,8 @@ public class MovieDetailServiceImpl implements MovieDetailService {
         } catch (IOException e) {
             logger.error("搜索出错:" + e.getMessage());
         }
+        result.setPageNum(pageNum);
+        result.setPageSize(pageSize);
         return result;
     }
 
@@ -209,6 +212,40 @@ public class MovieDetailServiceImpl implements MovieDetailService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    /**
+     * 类豆瓣标签搜索
+     * 这里返回的total不是实际的总数，具体应该以response.getResultList().size()为准
+     *
+     * @param movieDetailSearchRequest 请求条件实体
+     * @return ES内电影数据
+     */
+    @Override
+    public ElasticSearchVo<MovieDetail> searchByTags(MovieDetailSearchRequest movieDetailSearchRequest) {
+        // 设置查询条件
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery()
+                .must(QueryBuilders.matchQuery("types", movieDetailSearchRequest.getTypes()))
+                .must(QueryBuilders.matchQuery("productionCountryArea", movieDetailSearchRequest.getProductionCountryArea()))
+                .must(QueryBuilders.matchQuery("language", movieDetailSearchRequest.getLanguage()))
+                .must(QueryBuilders.rangeQuery("ratingScore")
+                        .gte(movieDetailSearchRequest.getRatingScoreLowerBound())
+                        .lte(movieDetailSearchRequest.getRatingScoreUpperBound()));
+        searchSourceBuilder.query(boolQueryBuilder);
+        // 设置分页
+        searchSourceBuilder.from(movieDetailSearchRequest.getPageNum());
+        searchSourceBuilder.size(movieDetailSearchRequest.getPageSize());
+        // 发起请求并开始处理结果
+        ElasticSearchVo<MovieDetail> result = new ElasticSearchVo<>();
+        try {
+            result = baseElasticSearchService.search(this.SEARCH_INDEX, searchSourceBuilder, MovieDetail.class);
+        } catch (IOException e) {
+            logger.error("搜索出错:" + e.getMessage());
+        }
+        result.setPageNum(movieDetailSearchRequest.getPageNum());
+        result.setPageSize(movieDetailSearchRequest.getPageSize());
         return result;
     }
 }

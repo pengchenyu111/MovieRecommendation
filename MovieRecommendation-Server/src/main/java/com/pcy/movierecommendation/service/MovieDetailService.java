@@ -2,6 +2,7 @@ package com.pcy.movierecommendation.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.entity.movieDetail.MovieDetailSearchRequest;
 import com.pcy.movierecommendation.es.ElasticSearchVo;
 
 import java.util.List;
@@ -99,4 +100,12 @@ public interface MovieDetailService {
      * @return 电影数据
      */
     MovieDetail searchMovieByDoubanId(int doubanId);
+
+    /**
+     * 类豆瓣标签搜索
+     *
+     * @param movieDetailSearchRequest 请求条件实体
+     * @return ES内电影数据
+     */
+    ElasticSearchVo<MovieDetail> searchByTags(MovieDetailSearchRequest movieDetailSearchRequest);
 }

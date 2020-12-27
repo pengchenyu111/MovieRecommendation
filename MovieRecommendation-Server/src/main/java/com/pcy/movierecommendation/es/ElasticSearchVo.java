@@ -23,6 +23,12 @@ public class ElasticSearchVo<T> {
     @ApiModelProperty("结果总数")
     private Long total;
 
+    @ApiModelProperty("第几页")
+    private Integer pageNum;
+
+    @ApiModelProperty("每页大小")
+    private Integer pageSize;
+
     @ApiModelProperty("最大权重")
     private float maxScore;
 

@@ -91,4 +91,12 @@ public interface MovieDetailService {
      * @return ElasticSearchVo<MovieDetail>
      */
     ElasticSearchVo<MovieDetail> searchMovie(String keyword, int pageNum, int pageSize);
+
+    /**
+     * douban_id精准查询
+     *
+     * @param doubanId 豆瓣id
+     * @return 电影数据
+     */
+    MovieDetail searchMovieByDoubanId(int doubanId);
 }

@@ -96,4 +96,24 @@ public class MovieDetailController extends BaseController {
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetailElasticSearchVo);
     }
 
+    /**
+     * 根据 douban_id 精准搜索
+     * 基于ES
+     *
+     * @param doubanId 豆瓣id
+     * @return ES内电影数据
+     */
+    @ApiOperation(value = "douban_id精准搜索")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "doubanId", value = "doubanId", required = true, dataType = "int")
+    })
+    @GetMapping("/search/{doubanId}")
+    public ApiResponse<MovieDetail> searchMovieByDoubanId(@PathVariable("doubanId") int doubanId) {
+        MovieDetail movieDetail = movieDetailService.searchMovieByDoubanId(doubanId);
+        if (movieDetail == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetail);
+    }
+
 }

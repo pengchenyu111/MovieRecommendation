@@ -13,6 +13,7 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -184,6 +185,29 @@ public class MovieDetailServiceImpl implements MovieDetailService {
             result = baseElasticSearchService.search(this.SEARCH_INDEX, searchSourceBuilder, MovieDetail.class);
         } catch (IOException e) {
             logger.error("搜索出错:" + e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * douban_id精准查询
+     *
+     * @param doubanId 豆瓣id
+     * @return 电影数据
+     */
+    @Override
+    public MovieDetail searchMovieByDoubanId(int doubanId) {
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        TermQueryBuilder termQuery = QueryBuilders.termQuery("doubanId", String.valueOf(doubanId));
+        searchSourceBuilder.query(termQuery);
+        searchSourceBuilder.timeout(TimeValue.timeValueSeconds(SEARCH_TIMEOUT));
+        MovieDetail result = new MovieDetail();
+        try {
+            ElasticSearchVo<MovieDetail> response = baseElasticSearchService.search(this.SEARCH_INDEX, searchSourceBuilder, MovieDetail.class);
+            logger.info("查询到的结果集大小:" + response.getResultList().size());
+            result = response.getResultList().get(0);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return result;
     }

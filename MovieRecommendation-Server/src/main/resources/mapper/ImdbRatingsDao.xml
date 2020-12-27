@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcy.movierecommendation.dao.ImdbRatingsDao">
+
+    <resultMap type="com.pcy.movierecommendation.entity.imdbRatings.ImdbRatings" id="ImdbRatingsMap">
+        <result property="imdbId" column="imdb_id" jdbcType="VARCHAR"/>
+        <result property="doubanId" column="douban_id" jdbcType="INTEGER"/>
+        <result property="imdbRating" column="imdb_rating" jdbcType="NUMERIC"/>
+        <result property="ratingScores" column="rating_scores" jdbcType="VARCHAR"/>
+        <result property="ratingScoresWeights" column="rating_scores_weights" jdbcType="VARCHAR"/>
+        <result property="ratingScoresVotes" column="rating_scores_votes" jdbcType="VARCHAR"/>
+        <result property="ageAll" column="age_all" jdbcType="VARCHAR"/>
+        <result property="ageLessThan18" column="age_less_than_18" jdbcType="VARCHAR"/>
+        <result property="age1829" column="age_18_29" jdbcType="VARCHAR"/>
+        <result property="age3044" column="age_30_44" jdbcType="VARCHAR"/>
+        <result property="ageMoreThan45" column="age_more_than_45" jdbcType="VARCHAR"/>
+        <result property="maleRatings" column="male_ratings" jdbcType="VARCHAR"/>
+        <result property="femaleRatings" column="female_ratings" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ImdbRatingsMap">
+        select
+          imdb_id, douban_id, imdb_rating, rating_scores, rating_scores_weights, rating_scores_votes, age_all, age_less_than_18, age_18_29, age_30_44, age_more_than_45, male_ratings, female_ratings
+        from movie_recommendation.imdb_ratings
+        where imdb_id = #{imdbId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ImdbRatingsMap">
+        select
+          imdb_id, douban_id, imdb_rating, rating_scores, rating_scores_weights, rating_scores_votes, age_all, age_less_than_18, age_18_29, age_30_44, age_more_than_45, male_ratings, female_ratings
+        from movie_recommendation.imdb_ratings
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ImdbRatingsMap">
+        select
+        imdb_id, douban_id, imdb_rating, rating_scores, rating_scores_weights, rating_scores_votes, age_all,
+        age_less_than_18, age_18_29, age_30_44, age_more_than_45, male_ratings, female_ratings
+        from movie_recommendation.imdb_ratings
+        <where>
+            <if test="imdbId != null and imdbId != ''">
+                and imdb_id = #{imdbId}
+            </if>
+            <if test="doubanId != null">
+                and douban_id = #{doubanId}
+            </if>
+            <if test="imdbRating != null">
+                and imdb_rating = #{imdbRating}
+            </if>
+            <if test="ratingScores != null and ratingScores != ''">
+                and rating_scores = #{ratingScores}
+            </if>
+            <if test="ratingScoresWeights != null and ratingScoresWeights != ''">
+                and rating_scores_weights = #{ratingScoresWeights}
+            </if>
+            <if test="ratingScoresVotes != null and ratingScoresVotes != ''">
+                and rating_scores_votes = #{ratingScoresVotes}
+            </if>
+            <if test="ageAll != null and ageAll != ''">
+                and age_all = #{ageAll}
+            </if>
+            <if test="ageLessThan18 != null and ageLessThan18 != ''">
+                and age_less_than_18 = #{ageLessThan18}
+            </if>
+            <if test="age1829 != null and age1829 != ''">
+                and age_18_29 = #{age1829}
+            </if>
+            <if test="age3044 != null and age3044 != ''">
+                and age_30_44 = #{age3044}
+            </if>
+            <if test="ageMoreThan45 != null and ageMoreThan45 != ''">
+                and age_more_than_45 = #{ageMoreThan45}
+            </if>
+            <if test="maleRatings != null and maleRatings != ''">
+                and male_ratings = #{maleRatings}
+            </if>
+            <if test="femaleRatings != null and femaleRatings != ''">
+                and female_ratings = #{femaleRatings}
+            </if>
+        </where>
+    </select>
+
+    <!-- 总数 -->
+    <select id="count" resultType="int">
+        select count(*) from imdb_ratings
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="imdbId" useGeneratedKeys="true">
+        insert into movie_recommendation.imdb_ratings(imdb_rating, rating_scores, rating_scores_weights, rating_scores_votes, age_all, age_less_than_18, age_18_29, age_30_44, age_more_than_45, male_ratings, female_ratings)
+        values (#{imdbRating}, #{ratingScores}, #{ratingScoresWeights}, #{ratingScoresVotes}, #{ageAll}, #{ageLessThan18}, #{age1829}, #{age3044}, #{ageMoreThan45}, #{maleRatings}, #{femaleRatings})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="imdbId" useGeneratedKeys="true">
+        insert into movie_recommendation.imdb_ratings(imdb_rating, rating_scores, rating_scores_weights,
+        rating_scores_votes, age_all, age_less_than_18, age_18_29, age_30_44, age_more_than_45, male_ratings,
+        female_ratings)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.imdbRating}, #{entity.ratingScores}, #{entity.ratingScoresWeights}, #{entity.ratingScoresVotes},
+            #{entity.ageAll}, #{entity.ageLessThan18}, #{entity.age1829}, #{entity.age3044}, #{entity.ageMoreThan45},
+            #{entity.maleRatings}, #{entity.femaleRatings})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="imdbId" useGeneratedKeys="true">
+        insert into movie_recommendation.imdb_ratings(imdb_rating, rating_scores, rating_scores_weights,
+        rating_scores_votes, age_all, age_less_than_18, age_18_29, age_30_44, age_more_than_45, male_ratings,
+        female_ratings)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.imdbRating}, #{entity.ratingScores}, #{entity.ratingScoresWeights}, #{entity.ratingScoresVotes},
+            #{entity.ageAll}, #{entity.ageLessThan18}, #{entity.age1829}, #{entity.age3044}, #{entity.ageMoreThan45},
+            #{entity.maleRatings}, #{entity.femaleRatings})
+        </foreach>
+        on duplicate key update
+        imdb_rating = values(imdb_rating) , rating_scores = values(rating_scores) , rating_scores_weights =
+        values(rating_scores_weights) , rating_scores_votes = values(rating_scores_votes) , age_all = values(age_all) ,
+        age_less_than_18 = values(age_less_than_18) , age_18_29 = values(age_18_29) , age_30_44 = values(age_30_44) ,
+        age_more_than_45 = values(age_more_than_45) , male_ratings = values(male_ratings) , female_ratings =
+        values(female_ratings)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_recommendation.imdb_ratings
+        <set>
+            <if test="imdbRating != null">
+                imdb_rating = #{imdbRating},
+            </if>
+            <if test="ratingScores != null and ratingScores != ''">
+                rating_scores = #{ratingScores},
+            </if>
+            <if test="ratingScoresWeights != null and ratingScoresWeights != ''">
+                rating_scores_weights = #{ratingScoresWeights},
+            </if>
+            <if test="ratingScoresVotes != null and ratingScoresVotes != ''">
+                rating_scores_votes = #{ratingScoresVotes},
+            </if>
+            <if test="ageAll != null and ageAll != ''">
+                age_all = #{ageAll},
+            </if>
+            <if test="ageLessThan18 != null and ageLessThan18 != ''">
+                age_less_than_18 = #{ageLessThan18},
+            </if>
+            <if test="age1829 != null and age1829 != ''">
+                age_18_29 = #{age1829},
+            </if>
+            <if test="age3044 != null and age3044 != ''">
+                age_30_44 = #{age3044},
+            </if>
+            <if test="ageMoreThan45 != null and ageMoreThan45 != ''">
+                age_more_than_45 = #{ageMoreThan45},
+            </if>
+            <if test="maleRatings != null and maleRatings != ''">
+                male_ratings = #{maleRatings},
+            </if>
+            <if test="femaleRatings != null and femaleRatings != ''">
+                female_ratings = #{femaleRatings},
+            </if>
+        </set>
+        where imdb_id = #{imdbId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_recommendation.imdb_ratings where imdb_id = #{imdbId}
+    </delete>
+
+</mapper>

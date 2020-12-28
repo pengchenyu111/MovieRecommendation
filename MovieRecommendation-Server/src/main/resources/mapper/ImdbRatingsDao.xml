@@ -88,6 +88,14 @@
         select count(*) from imdb_ratings
     </select>
 
+    <!-- 通过豆瓣id查询单条数据 -->
+    <select id="queryByDoubanId" resultMap="ImdbRatingsMap">
+        select
+          imdb_id, douban_id, imdb_rating, rating_scores, rating_scores_weights, rating_scores_votes, age_all, age_less_than_18, age_18_29, age_30_44, age_more_than_45, male_ratings, female_ratings
+        from movie_recommendation.imdb_ratings
+        where douban_id = #{doubanId}
+    </select>
+
     <!--新增所有列-->
     <insert id="insert" keyProperty="imdbId" useGeneratedKeys="true">
         insert into movie_recommendation.imdb_ratings(imdb_rating, rating_scores, rating_scores_weights, rating_scores_votes, age_all, age_less_than_18, age_18_29, age_30_44, age_more_than_45, male_ratings, female_ratings)

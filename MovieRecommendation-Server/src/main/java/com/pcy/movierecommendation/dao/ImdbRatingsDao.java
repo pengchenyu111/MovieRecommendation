@@ -92,4 +92,11 @@ public interface ImdbRatingsDao {
      */
     int deleteById(String imdbId);
 
+    /**
+     * 通过豆瓣id查询单条数据
+     *
+     * @param doubanId 豆瓣id
+     * @return 单条数据
+     */
+    ImdbRatings queryByDoubanId(String doubanId);
 }

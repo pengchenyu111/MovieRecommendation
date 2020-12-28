@@ -88,4 +88,15 @@ public class ImdbRatingsServiceImpl implements ImdbRatingsService {
     public boolean deleteById(String imdbId) {
         return this.imdbRatingsDao.deleteById(imdbId) > 0;
     }
+
+    /**
+     * 通过豆瓣id查询单条数据
+     *
+     * @param doubanId 豆瓣id
+     * @return 单条数据
+     */
+    @Override
+    public ImdbRatings queryByDoubanId(String doubanId) {
+        return this.imdbRatingsDao.queryByDoubanId(doubanId);
+    }
 }

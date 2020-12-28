@@ -45,9 +45,30 @@ public class ImdbRatingsController extends BaseController {
     public ApiResponse<ImdbRatings> queryByImdbId(@PathVariable("imdbId") String imdbId) {
         ImdbRatings imdbRatings = this.imdbRatingsService.queryById(imdbId);
         if (imdbRatings == null) {
-            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL,null);
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
-        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS,imdbRatings);
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, imdbRatings);
     }
+
+    /**
+     * 通过豆瓣id查询单条数据
+     * 结果没有格式化
+     *
+     * @param doubanId 豆瓣id
+     * @return 单条数据
+     */
+    @ApiOperation(value = "豆瓣id查询", notes = "通过豆瓣id查询查询单条数据，结果没有格式化")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "doubanId", value = "doubanId", required = true, dataType = "String")
+    })
+    @GetMapping("/doubanId/{doubanId}")
+    public ApiResponse<ImdbRatings> queryByDouban(@PathVariable("doubanId") String doubanId) {
+        ImdbRatings imdbRatings = this.imdbRatingsService.queryByDoubanId(doubanId);
+        if (imdbRatings == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, imdbRatings);
+    }
+
 
 }

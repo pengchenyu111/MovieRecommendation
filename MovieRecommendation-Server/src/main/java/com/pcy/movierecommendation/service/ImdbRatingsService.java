@@ -64,6 +64,7 @@ public interface ImdbRatingsService {
 
     /**
      * 通过豆瓣id查询单条数据
+     * 结果没有格式化
      *
      * @param doubanId 豆瓣id
      * @return 单条数据

@@ -52,12 +52,11 @@ public class ImdbRatingsController extends BaseController {
 
     /**
      * 通过豆瓣id查询单条数据
-     * 结果没有格式化
      *
      * @param doubanId 豆瓣id
      * @return 单条数据
      */
-    @ApiOperation(value = "豆瓣id查询", notes = "通过豆瓣id查询查询单条数据，结果没有格式化")
+    @ApiOperation(value = "豆瓣id查询", notes = "通过豆瓣id查询查询单条数据")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "doubanId", value = "doubanId", required = true, dataType = "String")
     })

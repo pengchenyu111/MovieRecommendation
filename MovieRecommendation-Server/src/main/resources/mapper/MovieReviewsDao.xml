@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcy.movierecommendation.dao.MovieReviewsDao">
+
+    <resultMap type="com.pcy.movierecommendation.entity.movieReviews.MovieReviews" id="MovieReviewsMap">
+        <result property="reviewId" column="review_id" jdbcType="VARCHAR"/>
+        <result property="doubanId" column="douban_id" jdbcType="INTEGER"/>
+        <result property="userUniqueName" column="user_unique_name" jdbcType="VARCHAR"/>
+        <result property="userHeadPortraitUrl" column="user_head_portrait_url" jdbcType="VARCHAR"/>
+        <result property="userUrl" column="user_url" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userMovieRating" column="user_movie_rating" jdbcType="INTEGER"/>
+        <result property="userMovieRatingTime" column="user_movie_rating_time" jdbcType="VARCHAR"/>
+        <result property="userMovieRatingAgree" column="user_movie_rating_agree" jdbcType="INTEGER"/>
+        <result property="userMovieRatingContent" column="user_movie_rating_content" jdbcType="VARCHAR"/>
+        <result property="moviePositiveRate" column="movie_positive_rate" jdbcType="VARCHAR"/>
+        <result property="movieGeneralRate" column="movie_general_rate" jdbcType="VARCHAR"/>
+        <result property="movieNegativeRate" column="movie_negative_rate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieReviewsMap">
+        select
+          review_id, douban_id, user_unique_name, user_head_portrait_url, user_url, user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content, movie_positive_rate, movie_general_rate, movie_negative_rate
+        from movie_recommendation.movie_reviews
+        where review_id = #{reviewId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieReviewsMap">
+        select
+          review_id, douban_id, user_unique_name, user_head_portrait_url, user_url, user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content, movie_positive_rate, movie_general_rate, movie_negative_rate
+        from movie_recommendation.movie_reviews
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MovieReviewsMap">
+        select
+        review_id, douban_id, user_unique_name, user_head_portrait_url, user_url, user_name, user_movie_rating,
+        user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content, movie_positive_rate,
+        movie_general_rate, movie_negative_rate
+        from movie_recommendation.movie_reviews
+        <where>
+            <if test="reviewId != null and reviewId != ''">
+                and review_id = #{reviewId}
+            </if>
+            <if test="doubanId != null">
+                and douban_id = #{doubanId}
+            </if>
+            <if test="userUniqueName != null and userUniqueName != ''">
+                and user_unique_name = #{userUniqueName}
+            </if>
+            <if test="userHeadPortraitUrl != null and userHeadPortraitUrl != ''">
+                and user_head_portrait_url = #{userHeadPortraitUrl}
+            </if>
+            <if test="userUrl != null and userUrl != ''">
+                and user_url = #{userUrl}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="userMovieRating != null">
+                and user_movie_rating = #{userMovieRating}
+            </if>
+            <if test="userMovieRatingTime != null and userMovieRatingTime != ''">
+                and user_movie_rating_time = #{userMovieRatingTime}
+            </if>
+            <if test="userMovieRatingAgree != null">
+                and user_movie_rating_agree = #{userMovieRatingAgree}
+            </if>
+            <if test="userMovieRatingContent != null and userMovieRatingContent != ''">
+                and user_movie_rating_content = #{userMovieRatingContent}
+            </if>
+            <if test="moviePositiveRate != null and moviePositiveRate != ''">
+                and movie_positive_rate = #{moviePositiveRate}
+            </if>
+            <if test="movieGeneralRate != null and movieGeneralRate != ''">
+                and movie_general_rate = #{movieGeneralRate}
+            </if>
+            <if test="movieNegativeRate != null and movieNegativeRate != ''">
+                and movie_negative_rate = #{movieNegativeRate}
+            </if>
+        </where>
+    </select>
+
+    <!-- 总数 -->
+    <select id="count" resultType="int">
+        select count(*) from movie_reviews
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="reviewId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_reviews(douban_id, user_unique_name, user_head_portrait_url, user_url, user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content, movie_positive_rate, movie_general_rate, movie_negative_rate)
+        values (#{doubanId}, #{userUniqueName}, #{userHeadPortraitUrl}, #{userUrl}, #{userName}, #{userMovieRating}, #{userMovieRatingTime}, #{userMovieRatingAgree}, #{userMovieRatingContent}, #{moviePositiveRate}, #{movieGeneralRate}, #{movieNegativeRate})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="reviewId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_reviews(douban_id, user_unique_name, user_head_portrait_url, user_url,
+        user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content,
+        movie_positive_rate, movie_general_rate, movie_negative_rate)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.doubanId}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl}, #{entity.userUrl},
+            #{entity.userName}, #{entity.userMovieRating}, #{entity.userMovieRatingTime},
+            #{entity.userMovieRatingAgree}, #{entity.userMovieRatingContent}, #{entity.moviePositiveRate},
+            #{entity.movieGeneralRate}, #{entity.movieNegativeRate})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="reviewId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_reviews(douban_id, user_unique_name, user_head_portrait_url, user_url,
+        user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content,
+        movie_positive_rate, movie_general_rate, movie_negative_rate)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.doubanId}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl}, #{entity.userUrl},
+            #{entity.userName}, #{entity.userMovieRating}, #{entity.userMovieRatingTime},
+            #{entity.userMovieRatingAgree}, #{entity.userMovieRatingContent}, #{entity.moviePositiveRate},
+            #{entity.movieGeneralRate}, #{entity.movieNegativeRate})
+        </foreach>
+        on duplicate key update
+        douban_id = values(douban_id) , user_unique_name = values(user_unique_name) , user_head_portrait_url =
+        values(user_head_portrait_url) , user_url = values(user_url) , user_name = values(user_name) , user_movie_rating
+        = values(user_movie_rating) , user_movie_rating_time = values(user_movie_rating_time) , user_movie_rating_agree
+        = values(user_movie_rating_agree) , user_movie_rating_content = values(user_movie_rating_content) ,
+        movie_positive_rate = values(movie_positive_rate) , movie_general_rate = values(movie_general_rate) ,
+        movie_negative_rate = values(movie_negative_rate)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_recommendation.movie_reviews
+        <set>
+            <if test="doubanId != null">
+                douban_id = #{doubanId},
+            </if>
+            <if test="userUniqueName != null and userUniqueName != ''">
+                user_unique_name = #{userUniqueName},
+            </if>
+            <if test="userHeadPortraitUrl != null and userHeadPortraitUrl != ''">
+                user_head_portrait_url = #{userHeadPortraitUrl},
+            </if>
+            <if test="userUrl != null and userUrl != ''">
+                user_url = #{userUrl},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="userMovieRating != null">
+                user_movie_rating = #{userMovieRating},
+            </if>
+            <if test="userMovieRatingTime != null and userMovieRatingTime != ''">
+                user_movie_rating_time = #{userMovieRatingTime},
+            </if>
+            <if test="userMovieRatingAgree != null">
+                user_movie_rating_agree = #{userMovieRatingAgree},
+            </if>
+            <if test="userMovieRatingContent != null and userMovieRatingContent != ''">
+                user_movie_rating_content = #{userMovieRatingContent},
+            </if>
+            <if test="moviePositiveRate != null and moviePositiveRate != ''">
+                movie_positive_rate = #{moviePositiveRate},
+            </if>
+            <if test="movieGeneralRate != null and movieGeneralRate != ''">
+                movie_general_rate = #{movieGeneralRate},
+            </if>
+            <if test="movieNegativeRate != null and movieNegativeRate != ''">
+                movie_negative_rate = #{movieNegativeRate},
+            </if>
+        </set>
+        where review_id = #{reviewId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_recommendation.movie_reviews where review_id = #{reviewId}
+    </delete>
+
+</mapper>

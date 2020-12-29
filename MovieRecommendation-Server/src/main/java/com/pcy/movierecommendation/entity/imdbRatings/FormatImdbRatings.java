@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormatImagRatings implements Serializable {
+public class FormatImdbRatings implements Serializable {
 
     private static final long serialVersionUID = -6005903637824391070L;
 

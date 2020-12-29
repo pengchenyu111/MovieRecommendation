@@ -1,5 +1,7 @@
 package com.pcy.movierecommendation.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.dao.MovieReviewsDao;
 import com.pcy.movierecommendation.entity.movieReviews.MovieReviews;
 import com.pcy.movierecommendation.service.MovieReviewsService;
@@ -87,5 +89,20 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
     @Override
     public boolean deleteById(String reviewId) {
         return this.movieReviewsDao.deleteById(reviewId) > 0;
+    }
+
+    /**
+     * 根据doubanId分页查询
+     *
+     * @param doubanId 豆瓣id
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @return 分页数据
+     */
+    @Override
+    public PageInfo<MovieReviews> queryByDoubanIdPage(Integer doubanId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<MovieReviews> movieReviewsList = this.movieReviewsDao.queryByDoubanId(doubanId);
+        return new PageInfo<>(movieReviewsList);
     }
 }

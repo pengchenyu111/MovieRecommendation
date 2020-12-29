@@ -1,5 +1,6 @@
 package com.pcy.movierecommendation.service;
 
+import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.entity.movieReviews.MovieReviews;
 
 import java.util.List;
@@ -62,4 +63,13 @@ public interface MovieReviewsService {
      */
     boolean deleteById(String reviewId);
 
+    /**
+     * 根据doubanId分页查询
+     *
+     * @param doubanId 豆瓣id
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @return 分页数据
+     */
+    PageInfo<MovieReviews> queryByDoubanIdPage(Integer doubanId, Integer pageNum, Integer pageSize);
 }

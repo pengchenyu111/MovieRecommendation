@@ -92,4 +92,11 @@ public interface MovieReviewsDao {
      */
     int deleteById(String reviewId);
 
+    /**
+     * 根据doubanId查询
+     *
+     * @param doubanId 豆瓣id
+     * @return 分页数据
+     */
+    List<MovieReviews> queryByDoubanId(Integer doubanId);
 }

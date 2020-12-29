@@ -1,5 +1,6 @@
 package com.pcy.movierecommendation.service;
 
+import com.pcy.movierecommendation.entity.imdbRatings.FormatImdbRatings;
 import com.pcy.movierecommendation.entity.imdbRatings.ImdbRatings;
 
 import java.util.List;
@@ -70,4 +71,13 @@ public interface ImdbRatingsService {
      * @return 单条数据
      */
     ImdbRatings queryByDoubanId(String doubanId);
+
+    /**
+     * 通过豆瓣id查询单条数据
+     * 格式化
+     *
+     * @param doubanId 豆瓣id
+     * @return 单条数据
+     */
+    FormatImdbRatings queryByDoubanIdFormat(String doubanId);
 }

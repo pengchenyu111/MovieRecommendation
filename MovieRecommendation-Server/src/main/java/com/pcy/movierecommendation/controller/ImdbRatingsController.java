@@ -2,6 +2,7 @@ package com.pcy.movierecommendation.controller;
 
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
+import com.pcy.movierecommendation.entity.imdbRatings.FormatImdbRatings;
 import com.pcy.movierecommendation.entity.imdbRatings.ImdbRatings;
 import com.pcy.movierecommendation.service.ImdbRatingsService;
 import io.swagger.annotations.Api;
@@ -61,8 +62,8 @@ public class ImdbRatingsController extends BaseController {
             @ApiImplicitParam(paramType = "query", name = "doubanId", value = "doubanId", required = true, dataType = "String")
     })
     @GetMapping("/doubanId/{doubanId}")
-    public ApiResponse<ImdbRatings> queryByDouban(@PathVariable("doubanId") String doubanId) {
-        ImdbRatings imdbRatings = this.imdbRatingsService.queryByDoubanId(doubanId);
+    public ApiResponse<FormatImdbRatings> queryByDouban(@PathVariable("doubanId") String doubanId) {
+        FormatImdbRatings imdbRatings = this.imdbRatingsService.queryByDoubanIdFormat(doubanId);
         if (imdbRatings == null) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }

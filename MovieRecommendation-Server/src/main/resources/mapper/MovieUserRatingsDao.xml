@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcy.movierecommendation.dao.MovieUserRatingsDao">
+
+    <resultMap type="com.pcy.movierecommendation.entity.movieReviews.MovieUserRatings" id="MovieUserRatingsMap">
+        <result property="reviewId" column="review_id" jdbcType="VARCHAR"/>
+        <result property="doubanId" column="douban_id" jdbcType="INTEGER"/>
+        <result property="userUniqueName" column="user_unique_name" jdbcType="VARCHAR"/>
+        <result property="userMovieRating" column="user_movie_rating" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MovieUserRatingsMap">
+        select
+          review_id, douban_id, user_unique_name, user_movie_rating
+        from movie_recommendation.movie_user_ratings
+        where review_id = #{reviewId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MovieUserRatingsMap">
+        select
+          review_id, douban_id, user_unique_name, user_movie_rating
+        from movie_recommendation.movie_user_ratings
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="MovieUserRatingsMap">
+        select
+        review_id, douban_id, user_unique_name, user_movie_rating
+        from movie_recommendation.movie_user_ratings
+        <where>
+            <if test="reviewId != null and reviewId != ''">
+                and review_id = #{reviewId}
+            </if>
+            <if test="doubanId != null">
+                and douban_id = #{doubanId}
+            </if>
+            <if test="userUniqueName != null and userUniqueName != ''">
+                and user_unique_name = #{userUniqueName}
+            </if>
+            <if test="userMovieRating != null">
+                and user_movie_rating = #{userMovieRating}
+            </if>
+        </where>
+    </select>
+
+    <!-- 总数 -->
+    <select id="count" resultType="int">
+        select count(*) from movie_user_ratings
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="reviewId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_user_ratings(douban_id, user_unique_name, user_movie_rating)
+        values (#{doubanId}, #{userUniqueName}, #{userMovieRating})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="reviewId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_user_ratings(douban_id, user_unique_name, user_movie_rating)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="reviewId" useGeneratedKeys="true">
+        insert into movie_recommendation.movie_user_ratings(douban_id, user_unique_name, user_movie_rating)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating})
+        </foreach>
+        on duplicate key update
+        douban_id = values(douban_id) , user_unique_name = values(user_unique_name) , user_movie_rating =
+        values(user_movie_rating)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update movie_recommendation.movie_user_ratings
+        <set>
+            <if test="doubanId != null">
+                douban_id = #{doubanId},
+            </if>
+            <if test="userUniqueName != null and userUniqueName != ''">
+                user_unique_name = #{userUniqueName},
+            </if>
+            <if test="userMovieRating != null">
+                user_movie_rating = #{userMovieRating},
+            </if>
+        </set>
+        where review_id = #{reviewId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from movie_recommendation.movie_user_ratings where review_id = #{reviewId}
+    </delete>
+
+</mapper>

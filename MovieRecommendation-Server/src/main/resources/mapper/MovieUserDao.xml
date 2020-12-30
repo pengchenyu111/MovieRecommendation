@@ -26,6 +26,14 @@
         where user_id = #{userId}
     </select>
 
+    <!-- 通过user_unique_name查询用户信息 -->
+    <select id="queryByUserUniqueName" resultMap="MovieUserMap">
+        select
+          user_id, user_name, user_unique_name, user_head_portrait_url, user_url, account, password, email, phone, sex, birth, age, profession
+        from movie_recommendation.movie_user
+        where user_unique_name = #{userUniqueName}
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MovieUserMap">
         select

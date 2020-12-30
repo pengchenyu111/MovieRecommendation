@@ -100,4 +100,12 @@ public interface MovieUserService {
      * @return 注册标识
      */
     MovieUser register(MovieUser movieUser);
+
+    /**
+     * 通过user_unique_name查询用户信息
+     *
+     * @param userUniqueName 用户唯一名
+     * @return 单条数据
+     */
+    MovieUser queryByUserUniqueName(String userUniqueName);
 }

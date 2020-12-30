@@ -37,6 +37,7 @@ public interface MovieUserDao {
 
     /**
      * 直接查询全部数据
+     *
      * @return 对象列表
      */
     List<MovieUser> queryAllUsers();
@@ -116,4 +117,12 @@ public interface MovieUserDao {
      * @return 影响行数
      */
     int changePassword(@Param("account") String account, @Param("newPassword") String newPassword);
+
+    /**
+     * 通过user_unique_name查询用户信息
+     *
+     * @param userUniqueName 用户唯一名
+     * @return 单条数据
+     */
+    MovieUser queryByUserUniqueName(String userUniqueName);
 }

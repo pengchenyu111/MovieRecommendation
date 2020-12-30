@@ -48,6 +48,26 @@ public class MovieUserController extends BaseController {
 
 
     /**
+     * 通过user_unique_name查询用户信息
+     *
+     * @param userUniqueName 用户唯一名
+     * @return 单条数据
+     */
+    @ApiOperation(value = "user_unique_name查询", notes = "通过user_unique_name查询用户信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "userUniqueName", value = "用户id", required = true, dataType = "String")
+    })
+    @GetMapping("/uniqueName/{userUniqueName}")
+    public ApiResponse<MovieUser> queryByUserUniqueName(@PathVariable("userUniqueName") String userUniqueName) {
+        MovieUser movieUser = this.movieUserService.queryByUserUniqueName(userUniqueName);
+        if (movieUser == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieUser);
+    }
+
+
+    /**
      * 分页查询
      *
      * @param pageNum   当前页

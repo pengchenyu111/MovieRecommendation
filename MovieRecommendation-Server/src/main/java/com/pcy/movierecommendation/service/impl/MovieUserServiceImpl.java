@@ -193,5 +193,16 @@ public class MovieUserServiceImpl implements MovieUserService {
         return movieUser;
     }
 
+    /**
+     * 通过user_unique_name查询用户信息
+     *
+     * @param userUniqueName 用户唯一名
+     * @return 单条数据
+     */
+    @Override
+    public MovieUser queryByUserUniqueName(String userUniqueName) {
+        return this.movieUserDao.queryByUserUniqueName(userUniqueName);
+    }
+
 
 }

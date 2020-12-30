@@ -57,23 +57,23 @@
         values (#{reviewId}, #{doubanId}, #{userUniqueName}, #{userMovieRating})
     </insert>
 
-    <insert id="insertBatch" keyProperty="reviewId" useGeneratedKeys="true">
-        insert into movie_recommendation.movie_user_ratings(douban_id, user_unique_name, user_movie_rating)
+    <insert id="insertBatch" keyProperty="reviewId" useGeneratedKeys="false">
+        insert into movie_recommendation.movie_user_ratings(review_id, douban_id, user_unique_name, user_movie_rating)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating})
+            (#{entity.reviewId}, #{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating})
         </foreach>
     </insert>
 
-    <insert id="insertOrUpdateBatch" keyProperty="reviewId" useGeneratedKeys="true">
-        insert into movie_recommendation.movie_user_ratings(douban_id, user_unique_name, user_movie_rating)
+    <insert id="insertOrUpdateBatch" keyProperty="reviewId" useGeneratedKeys="false">
+        insert into movie_recommendation.movie_user_ratings(review_id, douban_id, user_unique_name, user_movie_rating)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating})
+            (#{entity.reviewId}, #{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating})
         </foreach>
         on duplicate key update
-        douban_id = values(douban_id) , user_unique_name = values(user_unique_name) , user_movie_rating =
-        values(user_movie_rating)
+        review_id = values(review_id) , douban_id = values(douban_id) , user_unique_name = values(user_unique_name) ,
+        user_movie_rating = values(user_movie_rating)
     </insert>
 
     <!--通过主键修改数据-->

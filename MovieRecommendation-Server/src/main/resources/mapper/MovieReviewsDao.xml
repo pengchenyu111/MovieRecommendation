@@ -103,31 +103,32 @@
         values (#{reviewId}, #{doubanId}, #{userUniqueName}, #{userHeadPortraitUrl}, #{userUrl}, #{userName}, #{userMovieRating}, #{userMovieRatingTime}, #{userMovieRatingAgree}, #{userMovieRatingContent}, #{moviePositiveRate}, #{movieGeneralRate}, #{movieNegativeRate})
     </insert>
 
-    <insert id="insertBatch" keyProperty="reviewId" useGeneratedKeys="true">
-        insert into movie_recommendation.movie_reviews(douban_id, user_unique_name, user_head_portrait_url, user_url,
-        user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content,
-        movie_positive_rate, movie_general_rate, movie_negative_rate)
+    <insert id="insertBatch" keyProperty="reviewId" useGeneratedKeys="false">
+        insert into movie_recommendation.movie_reviews(review_id, douban_id, user_unique_name, user_head_portrait_url,
+        user_url, user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree,
+        user_movie_rating_content, movie_positive_rate, movie_general_rate, movie_negative_rate)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.doubanId}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl}, #{entity.userUrl},
-            #{entity.userName}, #{entity.userMovieRating}, #{entity.userMovieRatingTime},
+            (#{entity.reviewId}, #{entity.doubanId}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl},
+            #{entity.userUrl}, #{entity.userName}, #{entity.userMovieRating}, #{entity.userMovieRatingTime},
             #{entity.userMovieRatingAgree}, #{entity.userMovieRatingContent}, #{entity.moviePositiveRate},
             #{entity.movieGeneralRate}, #{entity.movieNegativeRate})
         </foreach>
     </insert>
 
-    <insert id="insertOrUpdateBatch" keyProperty="reviewId" useGeneratedKeys="true">
-        insert into movie_recommendation.movie_reviews(douban_id, user_unique_name, user_head_portrait_url, user_url,
-        user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content,
-        movie_positive_rate, movie_general_rate, movie_negative_rate)
+    <insert id="insertOrUpdateBatch" keyProperty="reviewId" useGeneratedKeys="false">
+        insert into movie_recommendation.movie_reviews(review_id, douban_id, user_unique_name, user_head_portrait_url,
+        user_url, user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree,
+        user_movie_rating_content, movie_positive_rate, movie_general_rate, movie_negative_rate)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.doubanId}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl}, #{entity.userUrl},
-            #{entity.userName}, #{entity.userMovieRating}, #{entity.userMovieRatingTime},
+            (#{entity.reviewId}, #{entity.doubanId}, #{entity.userUniqueName}, #{entity.userHeadPortraitUrl},
+            #{entity.userUrl},#{entity.userName}, #{entity.userMovieRating}, #{entity.userMovieRatingTime},
             #{entity.userMovieRatingAgree}, #{entity.userMovieRatingContent}, #{entity.moviePositiveRate},
             #{entity.movieGeneralRate}, #{entity.movieNegativeRate})
         </foreach>
         on duplicate key update
+        review_id = values(review_id) ,
         douban_id = values(douban_id) , user_unique_name = values(user_unique_name) , user_head_portrait_url =
         values(user_head_portrait_url) , user_url = values(user_url) , user_name = values(user_name) , user_movie_rating
         = values(user_movie_rating) , user_movie_rating_time = values(user_movie_rating_time) , user_movie_rating_agree

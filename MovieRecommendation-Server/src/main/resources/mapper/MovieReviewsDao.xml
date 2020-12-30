@@ -186,4 +186,11 @@
         delete from movie_recommendation.movie_reviews where review_id = #{reviewId}
     </delete>
 
+    <!-- 用户给评论点赞 -->
+    <update id="agree">
+        update movie_recommendation.movie_reviews
+        set user_movie_rating_agree = user_movie_rating_agree + 1
+        where review_id = #{reviewId}
+    </update>
+
 </mapper>

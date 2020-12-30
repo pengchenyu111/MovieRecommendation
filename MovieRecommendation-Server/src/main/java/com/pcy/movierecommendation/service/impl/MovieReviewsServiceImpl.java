@@ -148,4 +148,15 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
         }
         return movieReviews;
     }
+
+    /**
+     * 用户给评论点赞
+     *
+     * @param reviewId 评论id
+     * @return 评论点赞是否成功
+     */
+    @Override
+    public Boolean agree(String reviewId) {
+        return this.movieReviewsDao.agree(reviewId);
+    }
 }

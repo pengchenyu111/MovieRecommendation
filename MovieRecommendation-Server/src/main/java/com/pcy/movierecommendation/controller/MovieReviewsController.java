@@ -92,4 +92,23 @@ public class MovieReviewsController {
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, review);
     }
 
+    /**
+     * 用户给评论点赞
+     *
+     * @param reviewId 评论id
+     * @return 评论点赞是否成功
+     */
+    @ApiOperation(value = "用户评论点赞", notes = "用户评论点赞")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "reviewId", value = "评论id", required = true, dataType = "String")
+    })
+    @GetMapping("/agree/{reviewId}")
+    public ApiResponse<MovieReviews> agree(@PathVariable("reviewId") String reviewId) {
+        Boolean isSuccess = this.movieReviewsService.agree(reviewId);
+        if (!isSuccess) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.REQUEST_FAIL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, null);
+    }
+
 }

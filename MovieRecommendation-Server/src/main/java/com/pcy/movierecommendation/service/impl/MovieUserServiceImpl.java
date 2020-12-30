@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.utils.EncryptionUtil;
+import com.pcy.movierecommendation.core.utils.IdWorkerUtil;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieUserDao;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
@@ -183,8 +184,14 @@ public class MovieUserServiceImpl implements MovieUserService {
      */
     @Override
     public MovieUser register(MovieUser movieUser) {
+        // 设置账号和密码
         movieUser.setAccount(movieUser.getPhone());
         movieUser.setPassword(EncryptionUtil.sha384HashWithSalt(movieUser.getPassword()));
+        // 设置默认用户唯一名
+        if (StringUtils.isEmpty(movieUser.getUserUniqueName())) {
+            IdWorkerUtil idWorkerUtil = new IdWorkerUtil();
+            movieUser.setUserUniqueName(String.valueOf(idWorkerUtil.nextId()));
+        }
         int row = movieUserDao.insert(movieUser);
         if (row == 0) {
             return null;

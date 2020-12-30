@@ -98,9 +98,9 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="reviewId" useGeneratedKeys="true">
-        insert into movie_recommendation.movie_reviews(douban_id, user_unique_name, user_head_portrait_url, user_url, user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content, movie_positive_rate, movie_general_rate, movie_negative_rate)
-        values (#{doubanId}, #{userUniqueName}, #{userHeadPortraitUrl}, #{userUrl}, #{userName}, #{userMovieRating}, #{userMovieRatingTime}, #{userMovieRatingAgree}, #{userMovieRatingContent}, #{moviePositiveRate}, #{movieGeneralRate}, #{movieNegativeRate})
+    <insert id="insert" keyProperty="reviewId" useGeneratedKeys="false">
+        insert into movie_recommendation.movie_reviews(review_id, douban_id, user_unique_name, user_head_portrait_url, user_url, user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content, movie_positive_rate, movie_general_rate, movie_negative_rate)
+        values (#{reviewId}, #{doubanId}, #{userUniqueName}, #{userHeadPortraitUrl}, #{userUrl}, #{userName}, #{userMovieRating}, #{userMovieRatingTime}, #{userMovieRatingAgree}, #{userMovieRatingContent}, #{moviePositiveRate}, #{movieGeneralRate}, #{movieNegativeRate})
     </insert>
 
     <insert id="insertBatch" keyProperty="reviewId" useGeneratedKeys="true">

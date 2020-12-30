@@ -72,4 +72,12 @@ public interface MovieReviewsService {
      * @return 分页数据
      */
     PageInfo<MovieReviews> queryByDoubanIdPage(Integer doubanId, Integer pageNum, Integer pageSize);
+
+    /**
+     * 用户评论
+     *
+     * @param movieReviews 评论信息
+     * @return 评论信息
+     */
+    MovieReviews review(MovieReviews movieReviews);
 }

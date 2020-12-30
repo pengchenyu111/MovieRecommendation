@@ -10,10 +10,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -74,6 +71,25 @@ public class MovieReviewsController {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieReviewsList);
+    }
+
+    /**
+     * 用户评论
+     *
+     * @param movieReviews 评论信息
+     * @return 评论信息
+     */
+    @ApiOperation(value = "用户评论", notes = "用户评论")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "body", name = "movieReviews", value = "评论信息", required = true, dataType = "MovieReviews")
+    })
+    @PostMapping
+    public ApiResponse<MovieReviews> review(@RequestBody MovieReviews movieReviews) {
+        MovieReviews review = this.movieReviewsService.review(movieReviews);
+        if (review == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.REQUEST_FAIL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, review);
     }
 
 }

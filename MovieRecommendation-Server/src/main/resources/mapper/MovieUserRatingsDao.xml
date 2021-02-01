@@ -7,12 +7,13 @@
         <result property="doubanId" column="douban_id" jdbcType="INTEGER"/>
         <result property="userUniqueName" column="user_unique_name" jdbcType="VARCHAR"/>
         <result property="userMovieRating" column="user_movie_rating" jdbcType="NUMERIC"/>
+        <result property="userMovieRatingTime" column="user_movie_rating_time" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="MovieUserRatingsMap">
         select
-          review_id, douban_id, user_unique_name, user_movie_rating
+          review_id, douban_id, user_unique_name, user_movie_rating, user_movie_rating_time
         from movie_recommendation.movie_user_ratings
         where review_id = #{reviewId}
     </select>
@@ -20,7 +21,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MovieUserRatingsMap">
         select
-          review_id, douban_id, user_unique_name, user_movie_rating
+          review_id, douban_id, user_unique_name, user_movie_rating, user_movie_rating_time
         from movie_recommendation.movie_user_ratings
         limit #{offset}, #{limit}
     </select>
@@ -28,7 +29,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="MovieUserRatingsMap">
         select
-        review_id, douban_id, user_unique_name, user_movie_rating
+        review_id, douban_id, user_unique_name, user_movie_rating, user_movie_rating_time
         from movie_recommendation.movie_user_ratings
         <where>
             <if test="reviewId != null and reviewId != ''">
@@ -43,6 +44,9 @@
             <if test="userMovieRating != null">
                 and user_movie_rating = #{userMovieRating}
             </if>
+            <if test="userMovieRatingTime != null">
+                and user_movie_rating_time = #{userMovieRatingTime}
+            </if>
         </where>
     </select>
 
@@ -53,27 +57,27 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="reviewId" useGeneratedKeys="false">
-        insert into movie_recommendation.movie_user_ratings(review_id, douban_id, user_unique_name, user_movie_rating)
-        values (#{reviewId}, #{doubanId}, #{userUniqueName}, #{userMovieRating})
+        insert into movie_recommendation.movie_user_ratings(review_id, douban_id, user_unique_name, user_movie_rating, user_movie_rating_time)
+        values (#{reviewId}, #{doubanId}, #{userUniqueName}, #{userMovieRating}, #{userMovieRatingTime})
     </insert>
 
     <insert id="insertBatch" keyProperty="reviewId" useGeneratedKeys="false">
-        insert into movie_recommendation.movie_user_ratings(review_id, douban_id, user_unique_name, user_movie_rating)
+        insert into movie_recommendation.movie_user_ratings(review_id, douban_id, user_unique_name, user_movie_rating, user_movie_rating_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.reviewId}, #{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating})
+            (#{entity.reviewId}, #{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating}, {entity.userMovieRatingTime})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="reviewId" useGeneratedKeys="false">
-        insert into movie_recommendation.movie_user_ratings(review_id, douban_id, user_unique_name, user_movie_rating)
+        insert into movie_recommendation.movie_user_ratings(review_id, douban_id, user_unique_name, user_movie_rating, user_movie_rating_time)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.reviewId}, #{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating})
+            (#{entity.reviewId}, #{entity.doubanId}, #{entity.userUniqueName}, #{entity.userMovieRating}, #{entity.userMovieRatingTime})
         </foreach>
         on duplicate key update
         review_id = values(review_id) , douban_id = values(douban_id) , user_unique_name = values(user_unique_name) ,
-        user_movie_rating = values(user_movie_rating)
+        user_movie_rating = values(user_movie_rating) , user_movie_rating_time = values(user_movie_rating_time)
     </insert>
 
     <!--通过主键修改数据-->
@@ -88,6 +92,9 @@
             </if>
             <if test="userMovieRating != null">
                 user_movie_rating = #{userMovieRating},
+            </if>
+            <if test="userMovieRatingTime != null">
+                user_movie_rating_time = #{userMovieRatingTime}
             </if>
         </set>
         where review_id = #{reviewId}

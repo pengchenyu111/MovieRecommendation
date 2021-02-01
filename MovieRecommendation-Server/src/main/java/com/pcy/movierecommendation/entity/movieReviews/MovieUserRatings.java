@@ -34,5 +34,8 @@ public class MovieUserRatings implements Serializable {
     @ApiModelProperty("用户评分")
     private Double userMovieRating;
 
+    @ApiModelProperty("评分时间")
+    private String userMovieRatingTime;
+
 
 }

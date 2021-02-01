@@ -5,7 +5,7 @@
       <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/src/main/scala/com/pcy/movierecommendation/spark/service/MovieTypeService.scala" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/src/main/scala/com/pcy/movierecommendation/spark/util/EnvUtil.scala" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/src/main/scala/com/pcy/movierecommendation/spark/util/JDBCUtil.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DBHandler/MovieUserRatingsHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/DBHandler/MovieUserRatingsHandler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +18,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DBHandler/MovieUserRatingsHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-752">
+            <state relative-caret-position="-572">
               <caret column="37" lean-forward="true" selection-start-column="37" selection-end-column="37" />
             </state>
           </provider>
@@ -335,7 +335,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608565536647</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="处理用户评分表缺少评论时间字段的问题.">
+      <created>1612182262870</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1612182262871</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -347,7 +354,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32968128" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30793992" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30793992" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -412,7 +419,8 @@
     <MESSAGE value="增加停用词集." />
     <MESSAGE value="改善——关闭数据库连接." />
     <MESSAGE value="处理movie_detail表中img_list字段含有括号的情况." />
-    <option name="LAST_COMMIT_MESSAGE" value="处理movie_detail表中img_list字段含有括号的情况." />
+    <MESSAGE value="处理用户评分表缺少评论时间字段的问题." />
+    <option name="LAST_COMMIT_MESSAGE" value="处理用户评分表缺少评论时间字段的问题." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/WordCloudHandler/word_cloud_imgs/1291868.jpg">
@@ -586,7 +594,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DBHandler/MovieUserRatingsHandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-752">
+        <state relative-caret-position="-572">
           <caret column="37" lean-forward="true" selection-start-column="37" selection-end-column="37" />
         </state>
       </provider>

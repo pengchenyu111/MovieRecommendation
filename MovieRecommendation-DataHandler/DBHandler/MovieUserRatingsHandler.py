@@ -17,5 +17,26 @@ def insert_data():
         connection.close()
 
 
+# 由于上面的方面少写了个评论时间的字段，不得不重新插入
+def insert_timestamp_data():
+    sql = '''
+        UPDATE movie_user_ratings
+        SET movie_user_ratings.user_movie_rating_time = (
+            SELECT movie_reviews.user_movie_rating_time FROM movie_reviews WHERE movie_reviews.review_id = movie_user_ratings.review_id)
+        WHERE movie_user_ratings.review_id;'''
+    try:
+        cursor = connection.cursor()
+        rows = cursor.execute(sql)
+        print('{}行记录已更新'.format(rows))
+        connection.commit()
+    except Exception as e:
+        print(e)
+        connection.rollback()
+    finally:
+        print('数据库连接已关闭')
+        connection.close()
+
+
 if __name__ == '__main__':
-    insert_data()
+    # insert_data()
+    insert_timestamp_data()

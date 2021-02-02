@@ -19,9 +19,9 @@ public class DBConstant {
      */
     public static final String MONGO_COLLECTION_HISTORY_TOP_20 = "history_top_20";
     /**
-     * 近期热门电影TOP20表
+     * 近期热门电影TOP表
      */
-    public static final String MONGO_COLLECTION_RECENTLY_TOP_20 = "recently_top_20";
+    public static final String MONGO_COLLECTION_RECENTLY_TOP = "recently_top";
 
 
     /**
@@ -36,6 +36,10 @@ public class DBConstant {
      * 电影详情表
      */
     public static final String MYSQL_TABLE_MOVIE_DETAIL = "movie_detail";
+    /**
+     * 用户评分表
+     */
+    public static final String MYSQL_TABLE_MOVIE_USER_RATINGS = "movie_user_ratings";
 
 
 }

@@ -44,4 +44,19 @@ public class RecommendController extends BaseController {
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
     }
+
+    /**
+     * 近期Top20电影
+     *
+     * @return Top20数据
+     */
+    @ApiOperation(value = "近期Top20电影", notes = "近期Top20电影")
+    @GetMapping("/recentlyTop20")
+    public ApiResponse<List<MovieDetail>> recentlyTop20() {
+        List<MovieDetail> movieDetails = this.recommendService.recentlyTop20();
+        if (movieDetails == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
+    }
 }

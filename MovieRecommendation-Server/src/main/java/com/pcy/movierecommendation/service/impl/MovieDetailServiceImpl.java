@@ -78,6 +78,17 @@ public class MovieDetailServiceImpl implements MovieDetailService {
     }
 
     /**
+     * 通过多个ID查询数据
+     *
+     * @param doubanIdList 主键列表
+     * @return 对象列表
+     */
+    @Override
+    public List<MovieDetail> queryByIdList(List<Integer> doubanIdList) {
+        return this.movieDetailDao.queryByIdList(doubanIdList);
+    }
+
+    /**
      * 查询多条数据
      *
      * @param offset 查询起始位置

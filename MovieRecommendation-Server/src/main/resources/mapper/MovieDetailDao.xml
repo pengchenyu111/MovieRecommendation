@@ -37,6 +37,24 @@
         where douban_id = #{doubanId}
     </select>
 
+    <!--多个id查询-->
+    <!--order by field(douban_id, ..., ...) 是为了保持in()列表中的顺序-->
+    <select id="queryByIdList" resultMap="MovieDetailMap">
+        select
+          douban_id, title, brief_instruction, directors, screenwriters, casts, types, production_country_area, language, publish_date, runtime, rating_score, rating_star, rating_num, rating_5_star_weight, rating_4_star_weight, rating_3_star_weight, rating_2_star_weight, rating_1_star_weight, better_than, douban_url, cover_url, imdb_url, img_list
+        from movie_recommendation.movie_detail
+        where douban_id in (
+            <foreach collection="doubanIdList" separator="," item="douban_id">
+                #{douban_id}
+            </foreach>
+        )
+        order by field(douban_id,
+            <foreach collection="doubanIdList" separator="," item="douban_id">
+                #{douban_id}
+            </foreach>
+        )
+    </select>
+
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MovieDetailMap">
         select

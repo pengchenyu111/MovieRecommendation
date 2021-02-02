@@ -18,4 +18,12 @@ public interface RecommendService {
      * @return 对象列表
      */
     List<MovieDetail> historyTop20();
+
+
+    /**
+     * 近期热门Top20电影
+     *
+     * @return 对象列表
+     */
+    List<MovieDetail> recentlyTop20();
 }

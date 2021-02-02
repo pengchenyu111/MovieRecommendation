@@ -50,6 +50,10 @@ spring:
         max-idle: 10
         min-idle: 2
         max-wait: 10000
+  # MongoDB配置
+  data:
+    mongodb:
+      uri: mongodb://49.232.218.99:27017/recommender
 
 # ElasticSearch配置
 elasticsearch:

@@ -73,6 +73,13 @@
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
         </dependency>
+
+        <!--MongoDB-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
         <!-- 消息队列 -->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.kafka</groupId>-->

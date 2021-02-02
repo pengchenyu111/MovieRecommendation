@@ -17,9 +17,10 @@ import org.slf4j.{Logger, LoggerFactory}
 object StatisticsRecommender {
 
   def main(args: Array[String]): Unit = {
+    historyTop20()
+  }
 
-    // 日志配置
-    val logger: Logger = LoggerFactory.getLogger(getClass)
+  private def initEnv = {
     // 环境配置
     val sparkConf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("StatisticsRecommeder")
     val spark: SparkSession = SparkSession.builder()
@@ -28,8 +29,15 @@ object StatisticsRecommender {
       .config("spark.mongodb.output.uri", DBConstant.MONGO_URL)
       .getOrCreate()
     import spark.implicits._
+    spark
+  }
 
-
+  /**
+   * 计算历史热门电影Top20
+   *
+   */
+  def historyTop20(): Unit = {
+    val spark: SparkSession = initEnv
     // 从MySQL加载数据
     val df: DataFrame = spark.read
       .format("jdbc")
@@ -51,11 +59,8 @@ object StatisticsRecommender {
 
     // 存入结果到MongoDB
     MongoDBUtil.storeDFInMongoDB(resultDF, DBConstant.MONGO_COLLECTION_HISTORY_TOP_20)
-    logger.info("计算历史热门电影并存入MongoDB")
 
-    //关闭环境
-    spark.stop()
+    // 关闭环境
+    spark.close()
   }
-
-
 }

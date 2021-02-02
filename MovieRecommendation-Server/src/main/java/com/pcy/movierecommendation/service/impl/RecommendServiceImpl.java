@@ -44,10 +44,8 @@ public class RecommendServiceImpl implements RecommendService {
         // 从MongoDB中查询出近期的前20条电影
         Query query = new Query(new Criteria()).limit(20);
         List<RecentlyTop> recentlyTops = mongoTemplate.find(query, RecentlyTop.class, DBConstant.MONGO_COLLECTION_RECENTLY_TOP);
-        logger.info(recentlyTops.toString());
         // 提取出其douban_id
         List<Integer> doubanIdList = recentlyTops.stream().map(RecentlyTop::getDoubanId).collect(Collectors.toList());
-        logger.info(doubanIdList.toString());
         // 去数据库查询得出最终详细结果
         List<MovieDetail> movieDetails = movieDetailService.queryByIdList(doubanIdList);
         logger.info("【MongoDB查询-近期热门Top20】:" + movieDetails.toString());

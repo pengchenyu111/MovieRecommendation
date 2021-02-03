@@ -2,6 +2,8 @@ package com.pcy.movierecommendation.service.impl;
 
 import com.pcy.movierecommendation.core.constants.DBConstant;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.entity.recommend.BaseRecommendation;
+import com.pcy.movierecommendation.entity.recommend.GenreTop;
 import com.pcy.movierecommendation.entity.recommend.RecentlyTop;
 import com.pcy.movierecommendation.service.MovieDetailService;
 import com.pcy.movierecommendation.service.RecommendService;
@@ -13,6 +15,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,6 +52,22 @@ public class RecommendServiceImpl implements RecommendService {
         // 去数据库查询得出最终详细结果
         List<MovieDetail> movieDetails = movieDetailService.queryByIdList(doubanIdList);
         logger.info("【MongoDB查询-近期热门Top20】:" + movieDetails.toString());
+        return movieDetails;
+    }
+
+    @Override
+    public List<MovieDetail> genreTop10(String genre) {
+        // 从MongoDB中找出该类别
+        Query query = Query.query(Criteria.where("genre").is(genre));
+        GenreTop genreTop = mongoTemplate.findOne(query, GenreTop.class, DBConstant.MONGO_COLLECTION_GENRE_TOP);
+        // 判空
+        if (genreTop == null) {
+            return new ArrayList<MovieDetail>();
+        }
+        logger.info("【MongoDB查询-类别Top10】:" + genreTop.toString());
+        // 取出doubanId
+        List<Integer> doubanIdList = genreTop.getRecommendations().stream().map(BaseRecommendation::getId).collect(Collectors.toList());
+        List<MovieDetail> movieDetails = movieDetailService.queryByIdList(doubanIdList);
         return movieDetails;
     }
 }

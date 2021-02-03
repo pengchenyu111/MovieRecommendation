@@ -26,4 +26,13 @@ public interface RecommendService {
      * @return 对象列表
      */
     List<MovieDetail> recentlyTop20();
+
+
+    /**
+     * 分类Top10电影
+     *
+     * @param genre 分类名
+     * @return 对象列表
+     */
+    List<MovieDetail> genreTop10(String genre);
 }

@@ -4,9 +4,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 import com.pcy.movierecommendation.core.constants.DBConstant
+import com.pcy.movierecommendation.spark.entity.{BaseRecommendation, GenreTop10}
 import com.pcy.movierecommendation.spark.util.MongoDBUtil
 import org.apache.spark.SparkConf
-import org.apache.spark.sql.{DataFrame, SparkSession}
+import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.catalyst.util.StringUtils
+import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 import org.slf4j.{Logger, LoggerFactory}
 
 
@@ -22,6 +25,7 @@ object StatisticsRecommender {
   def main(args: Array[String]): Unit = {
     //historyTop20()
     //recentlyTop()
+    genreTop10()
   }
 
   /**
@@ -112,6 +116,78 @@ object StatisticsRecommender {
 
     // 存入结果到MongoDB
     MongoDBUtil.storeDFInMongoDB(resultDF, DBConstant.MONGO_COLLECTION_RECENTLY_TOP)
+
+    // 关闭环境
+    spark.close()
+  }
+
+  /**
+   * 计算给类别电影Top10
+   */
+  def genreTop10(): Unit = {
+    val spark: SparkSession = initEnv
+    // 从MySQL加载数据
+    val tagDF: DataFrame = spark.read
+      .format("jdbc")
+      .option("url", DBConstant.MYSQL_URL)
+      .option("driver", DBConstant.MYSQL_DRIVER)
+      .option("user", DBConstant.MYSQL_USER)
+      .option("password", DBConstant.MYSQL_PWD)
+      .option("dbtable", DBConstant.MYSQL_TABLE_MOVIE_TAG)
+      .load()
+    tagDF.createOrReplaceTempView("movie_tag")
+
+    val movieDetailDF: DataFrame = spark.read
+      .format("jdbc")
+      .option("url", DBConstant.MYSQL_URL)
+      .option("driver", DBConstant.MYSQL_DRIVER)
+      .option("user", DBConstant.MYSQL_USER)
+      .option("password", DBConstant.MYSQL_PWD)
+      .option("dbtable", DBConstant.MYSQL_TABLE_MOVIE_DETAIL)
+      .load()
+    movieDetailDF.createOrReplaceTempView("movie_detail")
+
+    // 提取分类标签
+    val genresRDD: RDD[Row] = spark.sql(
+      """
+        |select tag_name from movie_tag
+        |""".stripMargin)
+      .rdd
+
+    // 提起电影信息，过滤types为空的电影
+    val movieRDD: RDD[Row] = spark.sql(
+      """
+        |select douban_id, rating_score, types from movie_detail
+        |""".stripMargin)
+      .rdd
+      .filter(!_.getAs[String]("types").isEmpty)
+
+    // 电影信息和类别做笛卡尔积
+    val genresMovieRDD: RDD[(Row, Row)] = genresRDD.cartesian(movieRDD)
+
+    import spark.implicits._
+
+    // 开始计算各类别Top10
+    val resultDF: DataFrame = genresMovieRDD
+      .filter {
+        // 过滤出电影类别包含该类别的电影
+        case (genreRow, movieRow) => movieRow.getAs[String]("types").contains(genreRow.getAs[String]("tag_name"))
+      }
+      .map {
+        // 转为(剧情,(12589643,8.3))的格式
+        case (genreRow, movieRow) => (genreRow.getAs[String]("tag_name"), (movieRow.getAs[Int]("douban_id"), movieRow.getAs[Double]("rating_score")))
+      }
+      .groupByKey()
+      .map {
+        case (genre, iter) => GenreTop10(
+          genre,
+          iter.toList.sortWith(_._2 > _._2).take(10).map(item => BaseRecommendation(item._1, item._2))
+        )
+      }
+      .toDF()
+
+    // 存入结果到MongoDB
+    MongoDBUtil.storeDFInMongoDB(resultDF, DBConstant.MONGO_COLLECTION_GENRE_TOP)
 
     // 关闭环境
     spark.close()

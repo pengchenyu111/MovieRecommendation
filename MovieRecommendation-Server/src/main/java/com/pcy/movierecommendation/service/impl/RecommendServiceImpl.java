@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,11 +49,11 @@ public class RecommendServiceImpl implements RecommendService {
         // 从MongoDB中查询出近期的前20条电影
         Query query = new Query(new Criteria()).limit(20);
         List<RecentlyTop> recentlyTops = mongoTemplate.find(query, RecentlyTop.class, DBConstant.MONGO_COLLECTION_RECENTLY_TOP);
+        logger.info("【MongoDB查询-近期热门Top20】:" + recentlyTops.toString());
         // 提取出其douban_id
         List<Integer> doubanIdList = recentlyTops.stream().map(RecentlyTop::getDoubanId).collect(Collectors.toList());
         // 去数据库查询得出最终详细结果
         List<MovieDetail> movieDetails = movieDetailService.queryByIdList(doubanIdList);
-        logger.info("【MongoDB查询-近期热门Top20】:" + movieDetails.toString());
         return movieDetails;
     }
 
@@ -67,7 +69,25 @@ public class RecommendServiceImpl implements RecommendService {
         logger.info("【MongoDB查询-类别Top10】:" + genreTop.toString());
         // 取出doubanId
         List<Integer> doubanIdList = genreTop.getRecommendations().stream().map(BaseRecommendation::getId).collect(Collectors.toList());
-        List<MovieDetail> movieDetails = movieDetailService.queryByIdList(doubanIdList);
-        return movieDetails;
+        return movieDetailService.queryByIdList(doubanIdList);
+    }
+
+    @Override
+    public List<MovieDetail> genreCompositeTop10(List<String> genreList) {
+        // 从MongoDB中找出该类别
+        Query query = Query.query(Criteria.where("genre").in(genreList));
+        List<GenreTop> genreTopList = mongoTemplate.find(query, GenreTop.class, DBConstant.MONGO_COLLECTION_GENRE_TOP);
+        // 合并内部list，去重，按照score排序,取前10个
+        List<BaseRecommendation> baseRecommendationList = genreTopList.stream()
+                .map(GenreTop::getRecommendations)
+                .flatMap(Collection::stream)
+                .distinct()
+                .sorted(Comparator.comparing(BaseRecommendation::getScore).reversed())
+                .collect(Collectors.toList());
+        baseRecommendationList = baseRecommendationList.size() <= 10 ? baseRecommendationList : baseRecommendationList.subList(0, 10);
+        List<Integer> doubanIdList = baseRecommendationList.stream().map(BaseRecommendation::getId).collect(Collectors.toList());
+        logger.info(doubanIdList.toString());
+        // 根据id列表查询
+        return movieDetailService.queryByIdList(doubanIdList);
     }
 }

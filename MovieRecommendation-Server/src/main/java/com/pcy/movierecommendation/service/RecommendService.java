@@ -35,4 +35,13 @@ public interface RecommendService {
      * @return 对象列表
      */
     List<MovieDetail> genreTop10(String genre);
+
+
+    /**
+     * 多分类综合Top10
+     *
+     * @param genreList 分类列表
+     * @return 对象列表
+     */
+    List<MovieDetail> genreCompositeTop10(List<String> genreList);
 }

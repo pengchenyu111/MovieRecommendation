@@ -77,6 +77,7 @@ public class RecommendServiceImpl implements RecommendService {
         // 从MongoDB中找出该类别
         Query query = Query.query(Criteria.where("genre").in(genreList));
         List<GenreTop> genreTopList = mongoTemplate.find(query, GenreTop.class, DBConstant.MONGO_COLLECTION_GENRE_TOP);
+        logger.info("【MongoDB查询-多类别Top10】:" + genreTopList.toString());
         // 合并内部list，去重，按照score排序,取前10个
         List<BaseRecommendation> baseRecommendationList = genreTopList.stream()
                 .map(GenreTop::getRecommendations)
@@ -86,7 +87,6 @@ public class RecommendServiceImpl implements RecommendService {
                 .collect(Collectors.toList());
         baseRecommendationList = baseRecommendationList.size() <= 10 ? baseRecommendationList : baseRecommendationList.subList(0, 10);
         List<Integer> doubanIdList = baseRecommendationList.stream().map(BaseRecommendation::getId).collect(Collectors.toList());
-        logger.info(doubanIdList.toString());
         // 根据id列表查询
         return movieDetailService.queryByIdList(doubanIdList);
     }

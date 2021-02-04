@@ -44,4 +44,12 @@ public interface RecommendService {
      * @return 对象列表
      */
     List<MovieDetail> genreCompositeTop10(List<String> genreList);
+
+    /**
+     * 用户感兴趣标签推荐Top10
+     *
+     * @param userId 用户id
+     * @return 对象列表
+     */
+    List<MovieDetail> userPreferGenreTop10(Integer userId);
 }

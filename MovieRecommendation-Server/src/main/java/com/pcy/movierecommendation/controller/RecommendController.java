@@ -80,4 +80,24 @@ public class RecommendController extends BaseController {
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
     }
+
+
+    /**
+     * 用户感兴趣标签推荐Top10
+     *
+     * @param userId 用户id
+     * @return Top10数据
+     */
+    @ApiOperation(value = "用户感兴趣标签推荐Top10", notes = "用户感兴趣标签推荐Top10")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "userId", value = "用户id", required = true, dataType = "Integer")
+    })
+    @GetMapping("/userPreferGenreTop10/{userId}")
+    public ApiResponse<List<MovieDetail>> userPreferGenreTop10(@PathVariable("userId") Integer userId) {
+        List<MovieDetail> movieDetails = this.recommendService.userPreferGenreTop10(userId);
+        if (movieDetails == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
+    }
 }

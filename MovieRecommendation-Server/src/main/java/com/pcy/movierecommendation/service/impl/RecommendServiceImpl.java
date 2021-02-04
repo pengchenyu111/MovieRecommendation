@@ -1,12 +1,17 @@
 package com.pcy.movierecommendation.service.impl;
 
 import com.pcy.movierecommendation.core.constants.DBConstant;
+import com.pcy.movierecommendation.core.utils.ObjectUtil;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
+import com.pcy.movierecommendation.entity.movieTag.MovieTag;
+import com.pcy.movierecommendation.entity.movieTag.UserTagPrefer;
 import com.pcy.movierecommendation.entity.recommend.BaseRecommendation;
 import com.pcy.movierecommendation.entity.recommend.GenreTop;
 import com.pcy.movierecommendation.entity.recommend.RecentlyTop;
 import com.pcy.movierecommendation.service.MovieDetailService;
+import com.pcy.movierecommendation.service.MovieTagService;
 import com.pcy.movierecommendation.service.RecommendService;
+import com.pcy.movierecommendation.service.UserTagPreferService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -36,6 +41,10 @@ public class RecommendServiceImpl implements RecommendService {
     private MongoTemplate mongoTemplate;
     @Resource
     private MovieDetailService movieDetailService;
+    @Resource
+    private UserTagPreferService userTagPreferService;
+    @Resource
+    private MovieTagService movieTagService;
 
     @Override
     public List<MovieDetail> historyTop20() {
@@ -89,5 +98,19 @@ public class RecommendServiceImpl implements RecommendService {
         List<Integer> doubanIdList = baseRecommendationList.stream().map(BaseRecommendation::getId).collect(Collectors.toList());
         // 根据id列表查询
         return movieDetailService.queryByIdList(doubanIdList);
+    }
+
+    @Override
+    public List<MovieDetail> userPreferGenreTop10(Integer userId) {
+        // 获取用户的喜好列表
+        UserTagPrefer userTagPrefer = userTagPreferService.queryById(userId);
+        String tags = userTagPrefer.getTagList();
+        List<Integer> tagList = ObjectUtil.transforString2List(tags, ",").stream().map(Integer::parseInt).collect(Collectors.toList());
+        // 获取中文分类名
+        List<MovieTag> movieTagList = movieTagService.queryByIdList(tagList);
+        List<String> tagNameList = movieTagList.stream().map(MovieTag::getTagName).collect(Collectors.toList());
+        logger.info("[用户喜好分类查询]-userId:" + userId + "-tagList:" + tagNameList.toString());
+        // 调用多分类综合Top10算法
+        return this.genreCompositeTop10(tagNameList);
     }
 }

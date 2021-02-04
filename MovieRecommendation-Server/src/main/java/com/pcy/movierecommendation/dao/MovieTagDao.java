@@ -33,6 +33,14 @@ public interface MovieTagDao {
     MovieTag queryById(Integer tagId);
 
     /**
+     * 通过ID列表查询多条数据
+     *
+     * @param tagIdList 主键列表
+     * @return 实例对象
+     */
+    List<MovieTag> queryByIdList(@Param("tagIdList") List<Integer> tagIdList);
+
+    /**
      * 查询指定行数据
      *
      * @param offset 查询起始位置

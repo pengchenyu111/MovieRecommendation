@@ -31,6 +31,17 @@ public class MovieTagServiceImpl implements MovieTagService {
     }
 
     /**
+     * 通过ID列表查询多条数据
+     *
+     * @param tagIdList 主键列表
+     * @return 实例对象
+     */
+    @Override
+    public List<MovieTag> queryByIdList(List<Integer> tagIdList) {
+        return this.movieTagDao.queryByIdList(tagIdList);
+    }
+
+    /**
      * 查询多条数据
      *
      * @param offset 查询起始位置

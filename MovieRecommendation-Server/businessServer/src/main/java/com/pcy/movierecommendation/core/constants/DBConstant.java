@@ -11,7 +11,7 @@ public class DBConstant {
     /**
      * MongoDB配置
      */
-    public static final String MONGO_URL = "mongodb://49.232.218.99:27017/recommender";
+    public static final String MONGO_URL = "mongodb://81.70.252.155:27017/recommender";
     public static final String MONGO_DB = "recommender";
 
     /**
@@ -31,7 +31,7 @@ public class DBConstant {
     /**
      * MySQL配置
      */
-    public static final String MYSQL_URL = "jdbc:mysql://49.232.218.99:3306/movie_recommendation?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true";
+    public static final String MYSQL_URL = "jdbc:mysql://81.70.252.155:3306/movie_recommendation?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true";
     public static final String MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
     public static final String MYSQL_USER = "root";
     public static final String MYSQL_PWD = "Pcy90321.";

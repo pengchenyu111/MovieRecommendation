@@ -11,7 +11,7 @@ object DBConstant {
   /**
    * MongoDB配置
    */
-  val MONGO_URL = "mongodb://49.232.218.99:27017/recommender";
+  val MONGO_URL = "mongodb://81.70.252.155:27017/recommender";
   val MONGO_DB = "recommender";
 
   /**
@@ -33,7 +33,7 @@ object DBConstant {
   /**
    * MySQL配置
    */
-  val MYSQL_URL = "jdbc:mysql://49.232.218.99:3306/movie_recommendation?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true";
+  val MYSQL_URL = "jdbc:mysql://81.70.252.155/movie_recommendation?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true";
   val MYSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
   val MYSQL_USER = "root";
   val MYSQL_PWD = "Pcy90321.";

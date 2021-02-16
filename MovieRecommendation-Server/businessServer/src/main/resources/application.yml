@@ -11,7 +11,7 @@ server:
 spring:
   # 数据源配置
   datasource:
-    url: jdbc:mysql://49.232.218.99:3306/movie_recommendation?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    url: jdbc:mysql://81.70.252.155:3306/movie_recommendation?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
     username: root
     password: Pcy90321.
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -39,7 +39,7 @@ spring:
   # Redis配置
   redis:
     database: 0
-    host: 49.232.218.99
+    host: 81.70.252.155
     port: 6379
     password: Pcy903215488
     timeout: 5000
@@ -53,11 +53,11 @@ spring:
   # MongoDB配置
   data:
     mongodb:
-      uri: mongodb://49.232.218.99:27017/recommender
+      uri: mongodb://81.70.252.155:27017/recommender
 
 # ElasticSearch配置
 elasticsearch:
-  hostname: 101.37.173.73
+  hostname: 81.70.252.155
   port: 9200
   scheme: http
 

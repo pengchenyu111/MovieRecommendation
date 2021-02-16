@@ -3,7 +3,7 @@ package com.pcy.movierecommendation.service.impl;
 import com.pcy.movierecommendation.core.utils.AliyunMessageUtil;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.service.VerificationCodeService;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

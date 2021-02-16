@@ -4,7 +4,7 @@ import com.pcy.movierecommendation.core.utils.ObjectUtil;
 import com.pcy.movierecommendation.dao.ImdbRatingsDao;
 import com.pcy.movierecommendation.entity.imdbRatings.*;
 import com.pcy.movierecommendation.service.ImdbRatingsService;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

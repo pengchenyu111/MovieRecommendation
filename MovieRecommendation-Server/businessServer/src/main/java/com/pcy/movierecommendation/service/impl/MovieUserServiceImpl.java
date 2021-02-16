@@ -10,7 +10,7 @@ import com.pcy.movierecommendation.dao.MovieUserDao;
 import com.pcy.movierecommendation.entity.movieUser.MovieUser;
 import com.pcy.movierecommendation.service.MovieUserService;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

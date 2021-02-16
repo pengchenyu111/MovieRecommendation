@@ -1,16 +1,14 @@
 package com.pcy.movierecommendation.spark.service
 
 import java.text.SimpleDateFormat
-import java.util.Date
 
-import com.pcy.movierecommendation.core.constants.DBConstant
+import com.pcy.movierecommendation.spark.constant.DBConstant
 import com.pcy.movierecommendation.spark.entity.{BaseRecommendation, GenreTop10}
 import com.pcy.movierecommendation.spark.util.MongoDBUtil
+import org.apache.log4j.Logger
 import org.apache.spark.SparkConf
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.catalyst.util.StringUtils
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
-import org.slf4j.{Logger, LoggerFactory}
 
 
 /**
@@ -22,18 +20,12 @@ import org.slf4j.{Logger, LoggerFactory}
 
 object StatisticsRecommender {
 
-  def main(args: Array[String]): Unit = {
-    //historyTop20()
-    //recentlyTop()
-    genreTop10()
-  }
+  // 日志
+  private val logger: Logger = Logger.getLogger(getClass)
 
-  /**
-   * 环境配置
-   *
-   * @return
-   */
-  private def initEnv = {
+  def main(args: Array[String]): Unit = {
+
+    // 环境配置
     val sparkConf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("StatisticsRecommeder")
     val spark: SparkSession = SparkSession.builder()
       .config(sparkConf)
@@ -41,15 +33,22 @@ object StatisticsRecommender {
       .config("spark.mongodb.output.uri", DBConstant.MONGO_URL)
       .getOrCreate()
     import spark.implicits._
-    spark
+
+    // 统计服务算法
+    historyTop20(spark)
+    recentlyTop(spark)
+    genreTop10(spark)
+
+    // 关闭环境
+    spark.close()
   }
+
 
   /**
    * 计算历史热门电影Top20
    *
    */
-  def historyTop20(): Unit = {
-    val spark: SparkSession = initEnv
+  def historyTop20(spark: SparkSession): Unit = {
     // 从MySQL加载数据
     val df: DataFrame = spark.read
       .format("jdbc")
@@ -61,27 +60,24 @@ object StatisticsRecommender {
       .load()
 
     // 分析数据
-    df.createOrReplaceTempView("movie")
+    df.createOrReplaceTempView("movie_detail")
     val resultDF: DataFrame = spark.sql(
       """
-        |select * from movie order by rating_num DESC
+        |select * from movie_detail order by rating_num DESC
         |""".stripMargin)
       .limit(20)
       .toDF()
 
     // 存入结果到MongoDB
     MongoDBUtil.storeDFInMongoDB(resultDF, DBConstant.MONGO_COLLECTION_HISTORY_TOP_20)
-
-    // 关闭环境
-    spark.close()
+    logger.info("【historyTop20】计算完毕")
   }
 
   /**
    * 计算近期热门电影Top
    * douban_id | count | yearmonth
    */
-  def recentlyTop(): Unit = {
-    val spark: SparkSession = initEnv
+  def recentlyTop(spark: SparkSession): Unit = {
     // 从MySQL加载数据
     val df: DataFrame = spark.read
       .format("jdbc")
@@ -116,16 +112,13 @@ object StatisticsRecommender {
 
     // 存入结果到MongoDB
     MongoDBUtil.storeDFInMongoDB(resultDF, DBConstant.MONGO_COLLECTION_RECENTLY_TOP)
-
-    // 关闭环境
-    spark.close()
+    logger.info("【recentlyTop】计算完毕")
   }
 
   /**
    * 计算给类别电影Top10
    */
-  def genreTop10(): Unit = {
-    val spark: SparkSession = initEnv
+  def genreTop10(spark: SparkSession): Unit = {
     // 从MySQL加载数据
     val tagDF: DataFrame = spark.read
       .format("jdbc")
@@ -188,8 +181,6 @@ object StatisticsRecommender {
 
     // 存入结果到MongoDB
     MongoDBUtil.storeDFInMongoDB(resultDF, DBConstant.MONGO_COLLECTION_GENRE_TOP)
-
-    // 关闭环境
-    spark.close()
+    logger.info("【genreTop10】计算完毕")
   }
 }

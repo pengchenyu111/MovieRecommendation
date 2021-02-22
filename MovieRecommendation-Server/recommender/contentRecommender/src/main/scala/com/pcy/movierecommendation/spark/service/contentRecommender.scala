@@ -24,7 +24,7 @@ object contentRecommender {
 
   def main(args: Array[String]): Unit = {
     // 环境配置
-    val sparkConf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("StatisticsRecommeder")
+    val sparkConf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("ContentRecommeder")
     val spark: SparkSession = SparkSession.builder()
       .config(sparkConf)
       .config("spark.mongodb.input.uri", DBConstant.MONGO_URL)

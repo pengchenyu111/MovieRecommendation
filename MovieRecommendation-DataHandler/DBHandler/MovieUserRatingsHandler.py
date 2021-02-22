@@ -37,6 +37,28 @@ def insert_timestamp_data():
         connection.close()
 
 
+# 将表中user_unique_name替换为user_id,之后删除user_unique_name字段
+def replace_name_to_id():
+    sql = '''
+        UPDATE movie_user_ratings a
+        INNER JOIN(SELECT movie_user_ratings.review_id, movie_user.user_id FROM movie_user,movie_user_ratings  
+            WHERE movie_user_ratings.user_unique_name = movie_user.user_unique_name) b
+        ON a.review_id = b.review_id
+        SET a.user_id = b.user_id;'''
+    try:
+        cursor = connection.cursor()
+        rows = cursor.execute(sql)
+        print('{}行记录已更新'.format(rows))
+        connection.commit()
+    except Exception as e:
+        print(e)
+        connection.rollback()
+    finally:
+        print('数据库连接已关闭')
+        connection.close()
+
+
 if __name__ == '__main__':
     # insert_data()
-    insert_timestamp_data()
+    # insert_timestamp_data()
+    replace_name_to_id()

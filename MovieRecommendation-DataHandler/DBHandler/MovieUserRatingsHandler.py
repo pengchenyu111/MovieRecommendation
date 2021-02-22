@@ -37,7 +37,8 @@ def insert_timestamp_data():
         connection.close()
 
 
-# 将表中user_unique_name替换为user_id,之后删除user_unique_name字段
+# 将表中user_unique_name替换为user_id
+# 之后删除user_unique_name字段
 def replace_name_to_id():
     sql = '''
         UPDATE movie_user_ratings a

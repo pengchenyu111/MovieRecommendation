@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.utils.IdWorkerUtil;
 import com.pcy.movierecommendation.dao.MovieReviewsDao;
+import com.pcy.movierecommendation.dao.MovieUserDao;
 import com.pcy.movierecommendation.dao.MovieUserRatingsDao;
 import com.pcy.movierecommendation.entity.movieReviews.MovieReviews;
 import com.pcy.movierecommendation.entity.movieReviews.MovieUserRatings;
@@ -30,6 +31,8 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
     private MovieReviewsDao movieReviewsDao;
     @Resource
     private MovieUserRatingsDao movieUserRatingsDao;
+    @Resource
+    private MovieUserDao movieUserDao;
 
     /**
      * 通过ID查询单条数据
@@ -140,7 +143,7 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
         MovieUserRatings movieUserRatings = new MovieUserRatings();
         movieUserRatings.setReviewId(String.valueOf(nextId));
         movieUserRatings.setDoubanId(movieReviews.getDoubanId());
-        movieUserRatings.setUserUniqueName(movieReviews.getUserUniqueName());
+        movieUserRatings.setUserId(movieUserDao.queryByUserUniqueName(movieReviews.getUserUniqueName()).getUserId());
         movieUserRatings.setUserMovieRating((double) (movieReviews.getUserMovieRating() / 10));
         int rowFlag2 = this.movieUserRatingsDao.insert(movieUserRatings);
         if (rowFlag2 == 1) {

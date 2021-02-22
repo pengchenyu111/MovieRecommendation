@@ -28,8 +28,8 @@ public class MovieUserRatings implements Serializable {
     @ApiModelProperty("电影豆瓣id")
     private Integer doubanId;
 
-    @ApiModelProperty("用户唯一名字标志，短评上没有id，以此做唯一标识")
-    private String userUniqueName;
+    @ApiModelProperty("用户id")
+    private Integer userId;
 
     @ApiModelProperty("用户评分")
     private Double userMovieRating;

@@ -14,6 +14,7 @@
     <modules>
         <module>statisticRecommender</module>
         <module>contentRecommender</module>
+        <module>offlineRecommender</module>
     </modules>
 
     <dependencyManagement>
@@ -38,6 +39,11 @@
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-streaming_2.12</artifactId>
                 <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scalanlp</groupId>
+                <artifactId>jblas</artifactId>
+                <version>${jblas.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.codehaus.janino</groupId>

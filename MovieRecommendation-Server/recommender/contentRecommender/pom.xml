@@ -28,7 +28,6 @@
         <dependency>
             <groupId>org.scalanlp</groupId>
             <artifactId>jblas</artifactId>
-            <version>${jblas.version}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.janino</groupId>

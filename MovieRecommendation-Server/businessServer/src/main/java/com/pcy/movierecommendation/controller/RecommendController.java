@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,7 +41,7 @@ public class RecommendController extends BaseController {
     @GetMapping("/historyTop20")
     public ApiResponse<List<MovieDetail>> historyTop20() {
         List<MovieDetail> movieDetails = this.recommendService.historyTop20();
-        if (movieDetails == null) {
+        if (CollectionUtils.isEmpty(movieDetails)) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
@@ -55,7 +56,7 @@ public class RecommendController extends BaseController {
     @GetMapping("/recentlyTop20")
     public ApiResponse<List<MovieDetail>> recentlyTop20() {
         List<MovieDetail> movieDetails = this.recommendService.recentlyTop20();
-        if (movieDetails == null) {
+        if (CollectionUtils.isEmpty(movieDetails)) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
@@ -75,7 +76,7 @@ public class RecommendController extends BaseController {
     public ApiResponse<List<MovieDetail>> genreTop10(@RequestBody Map<String, String> map) {
         String genre = map.get("genre");
         List<MovieDetail> movieDetails = this.recommendService.genreTop10(genre);
-        if (movieDetails == null) {
+        if (CollectionUtils.isEmpty(movieDetails)) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
@@ -95,7 +96,26 @@ public class RecommendController extends BaseController {
     @GetMapping("/userPreferGenreTop10/{userId}")
     public ApiResponse<List<MovieDetail>> userPreferGenreTop10(@PathVariable("userId") Integer userId) {
         List<MovieDetail> movieDetails = this.recommendService.userPreferGenreTop10(userId);
-        if (movieDetails == null) {
+        if (CollectionUtils.isEmpty(movieDetails)) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
+    }
+
+    /**
+     * 基于内容的TF-IDF电影推荐
+     *
+     * @param doubanId 豆瓣id
+     * @return Top10数据
+     */
+    @ApiOperation(value = "基于内容的电影推荐", notes = "基于内容的电影推荐")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "doubanId", value = "豆瓣id", required = true, dataType = "Integer")
+    })
+    @GetMapping("/content/{doubanId}")
+    public ApiResponse<List<MovieDetail>> contentTop(@PathVariable("doubanId") Integer doubanId) {
+        List<MovieDetail> movieDetails = this.recommendService.contentTFIDF(doubanId);
+        if (CollectionUtils.isEmpty(movieDetails)) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);

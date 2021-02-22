@@ -26,6 +26,10 @@ public class DBConstant {
      * 近期热门电影TOP表
      */
     public static final String MONGO_COLLECTION_GENRE_TOP = "genre_top";
+    /**
+     * 基于内容的电影推荐表
+     */
+    public static final String MONGO_COLLECTION_CONTENT = "content_top";
 
 
     /**

@@ -7,11 +7,13 @@ import com.pcy.movierecommendation.entity.movieTag.MovieTag;
 import com.pcy.movierecommendation.entity.movieTag.UserTagPrefer;
 import com.pcy.movierecommendation.entity.recommend.BaseRecommendation;
 import com.pcy.movierecommendation.entity.recommend.GenreTop;
+import com.pcy.movierecommendation.entity.recommend.MovieRecs;
 import com.pcy.movierecommendation.entity.recommend.RecentlyTop;
 import com.pcy.movierecommendation.service.MovieDetailService;
 import com.pcy.movierecommendation.service.MovieTagService;
 import com.pcy.movierecommendation.service.RecommendService;
 import com.pcy.movierecommendation.service.UserTagPreferService;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -113,4 +115,31 @@ public class RecommendServiceImpl implements RecommendService {
         // 调用多分类综合Top10算法
         return this.genreCompositeTop10(tagNameList);
     }
+
+    @Override
+    public List<MovieDetail> contentTFIDF(Integer doubanId) {
+        // 从MongoDB中找出该douban_id,取前20个
+        Query query = Query.query(Criteria.where("douban_id").is(doubanId));
+        List<MovieRecs> movieRecsList = mongoTemplate.find(query, MovieRecs.class, DBConstant.MONGO_COLLECTION_CONTENT);
+        logger.info("【MongoDB查询-内容推荐contentTop】:" + movieRecsList.toString());
+        // 判空
+        if (CollectionUtils.isEmpty(movieRecsList)) {
+            return new ArrayList<MovieDetail>();
+        }
+        // 取出doubanId列表，去数据库查询
+        List<Integer> doubanIdList = movieRecsList.stream()
+                .map(MovieRecs::getRecommendations)
+                .flatMap(Collection::stream)
+                .map(BaseRecommendation::getId)
+                .collect(Collectors.toList());
+        // 截取小于等于20长度的列表
+        doubanIdList = doubanIdList.size() <= 20 ? doubanIdList : doubanIdList.subList(0, 20);
+        // 查询数据库
+        List<MovieDetail> result = movieDetailService.queryByIdList(doubanIdList);
+        // 结果按照电影评分降序排序
+        result.sort(Comparator.comparing(MovieDetail::getRatingScore).reversed());
+        return result;
+    }
+
+
 }

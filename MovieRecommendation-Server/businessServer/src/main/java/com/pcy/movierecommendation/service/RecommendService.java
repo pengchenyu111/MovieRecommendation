@@ -52,4 +52,11 @@ public interface RecommendService {
      * @return 对象列表
      */
     List<MovieDetail> userPreferGenreTop10(Integer userId);
+
+    /**
+     * 基于内容的TF-IDF电影推荐
+     * @param doubanId 豆瓣id
+     * @return 对象列表
+     */
+    List<MovieDetail> contentTFIDF(Integer doubanId);
 }

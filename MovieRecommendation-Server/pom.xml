@@ -34,6 +34,7 @@
         <fastjson.version>1.2.9</fastjson.version>
         <scala.version>2.12.12</scala.version>
         <spark.version>3.0.0</spark.version>
+        <jblas.version>1.2.1</jblas.version>
         <janino.version>3.0.8</janino.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.bootstrap-ui.version>1.9.6</swagger.bootstrap-ui.version>

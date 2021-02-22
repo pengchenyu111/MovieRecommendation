@@ -30,6 +30,11 @@ DBConstant {
    */
   val MONGO_COLLECTION_GENRE_TOP = "genre_top";
 
+  /**
+   * 基于内容的电影推荐表
+   */
+  val MONGO_COLLECTION_CONTENT = "content_top";
+
 
   /**
    * MySQL配置

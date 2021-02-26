@@ -92,4 +92,12 @@ public interface MovieUserRatingsDao {
      */
     int deleteById(String reviewId);
 
+    /**
+     * 获取用户最近的K次评分数据(简要信息)
+     *
+     * @param userId 用户id
+     * @param k      数据量
+     * @return 数据列表
+     */
+    List<MovieUserRatings> kRecentRatingsShort(@Param("userId") Integer userId, @Param("k") Integer k);
 }

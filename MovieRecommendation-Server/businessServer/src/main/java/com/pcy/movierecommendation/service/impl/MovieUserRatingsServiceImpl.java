@@ -1,8 +1,13 @@
 package com.pcy.movierecommendation.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieUserRatingsDao;
 import com.pcy.movierecommendation.entity.movieReviews.MovieUserRatings;
 import com.pcy.movierecommendation.service.MovieUserRatingsService;
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,8 +21,15 @@ import java.util.List;
  */
 @Service("movieUserRatingsService")
 public class MovieUserRatingsServiceImpl implements MovieUserRatingsService {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Resource
     private MovieUserRatingsDao movieUserRatingsDao;
+    @Resource
+    RedisUtil redisUtil;
+
+    private static final int DEFAULT_REDIS_DB = 0;
 
     /**
      * 通过ID查询单条数据
@@ -87,5 +99,31 @@ public class MovieUserRatingsServiceImpl implements MovieUserRatingsService {
     @Override
     public boolean deleteById(String reviewId) {
         return this.movieUserRatingsDao.deleteById(reviewId) > 0;
+    }
+
+    /**
+     * 获取用户最近的K次评分数据(简要信息)
+     *
+     * @param userId 用户id
+     * @param k      数据量
+     * @return 数据列表
+     */
+    @Override
+    public List<MovieUserRatings> kRecentRatingsShort(Integer userId, Integer k) {
+        List<MovieUserRatings> movieUserRatingsList = null;
+        // 首先去Redis里面去找
+        String key = "rec:rating:" + userId + ":" + k;
+        logger.info("[redis查询]-[key]-" + key);
+        if (redisUtil.exists(key)) {
+            String str = redisUtil.get(key, DEFAULT_REDIS_DB);
+            return JSON.parseArray(str, MovieUserRatings.class);
+        }
+        // 没有则从数据库中查询，并存入redis
+        movieUserRatingsList = movieUserRatingsDao.kRecentRatingsShort(userId, k);
+        if (CollectionUtils.isNotEmpty(movieUserRatingsList)) {
+            String json = JSON.toJSONString(movieUserRatingsList);
+            redisUtil.set(key, json, DEFAULT_REDIS_DB);
+        }
+        return movieUserRatingsList;
     }
 }

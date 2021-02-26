@@ -1,8 +1,10 @@
 package com.pcy.movierecommendation.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.utils.IdWorkerUtil;
+import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieReviewsDao;
 import com.pcy.movierecommendation.dao.MovieUserDao;
 import com.pcy.movierecommendation.dao.MovieUserRatingsDao;
@@ -33,6 +35,10 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
     private MovieUserRatingsDao movieUserRatingsDao;
     @Resource
     private MovieUserDao movieUserDao;
+    @Resource
+    RedisUtil redisUtil;
+
+    private static final int DEFAULT_REDIS_DB = 0;
 
     /**
      * 通过ID查询单条数据
@@ -161,5 +167,17 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
     @Override
     public Boolean agree(String reviewId) {
         return this.movieReviewsDao.agree(reviewId);
+    }
+
+    /**
+     * 获取用户最近的K次评分数据
+     *
+     * @param userId 用户id
+     * @param k      数据量
+     * @return 数据列表
+     */
+    @Override
+    public List<MovieReviews> kRecentRatings(Integer userId, Integer k) {
+        return this.movieReviewsDao.kRecentRatings(userId, k);
     }
 }

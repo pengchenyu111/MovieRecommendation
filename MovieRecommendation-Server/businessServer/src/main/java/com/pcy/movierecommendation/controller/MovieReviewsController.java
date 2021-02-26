@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
 import com.pcy.movierecommendation.entity.movieReviews.MovieReviews;
+import com.pcy.movierecommendation.entity.movieReviews.MovieUserRatings;
 import com.pcy.movierecommendation.service.MovieReviewsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -109,6 +110,27 @@ public class MovieReviewsController {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.REQUEST_FAIL, null);
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, null);
+    }
+
+    /**
+     * 获取用户最近的K次评分数据
+     *
+     * @param userId 用户id
+     * @param k      数据量
+     * @return 数据列表
+     */
+    @ApiOperation(value = "获取用户最近的K次评分数据", notes = "获取用户最近的K次评分数据")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "userId", value = "用户id", required = true, dataType = "Integer"),
+            @ApiImplicitParam(paramType = "query", name = "k", value = "评论数据量", required = true, dataType = "Integer")
+    })
+    @GetMapping("recent/{userId}/{k}")
+    public ApiResponse<List<MovieReviews>> kRecentRatings(@PathVariable("userId") Integer userId, @PathVariable("k") Integer k) {
+        List<MovieReviews> movieReviewsList = this.movieReviewsService.kRecentRatings(userId, k);
+        if (CollectionUtils.isEmpty(movieReviewsList)) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieReviewsList);
     }
 
 }

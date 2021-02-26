@@ -88,4 +88,13 @@ public interface MovieReviewsService {
      * @return 评论点赞是否成功
      */
     Boolean agree(String reviewId);
+
+    /**
+     * 获取用户最近的K次评分数据
+     *
+     * @param userId 用户id
+     * @param k      数据量
+     * @return 数据列表
+     */
+    List<MovieReviews> kRecentRatings(Integer userId, Integer k);
 }

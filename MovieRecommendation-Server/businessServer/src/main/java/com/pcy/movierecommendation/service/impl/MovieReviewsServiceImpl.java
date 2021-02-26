@@ -36,9 +36,10 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
     @Resource
     private MovieUserDao movieUserDao;
     @Resource
-    RedisUtil redisUtil;
+    private RedisUtil redisUtil;
 
     private static final int DEFAULT_REDIS_DB = 0;
+    private static final int DEFAULT_RATING_K = 20;
 
     /**
      * 通过ID查询单条数据
@@ -149,12 +150,21 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
         MovieUserRatings movieUserRatings = new MovieUserRatings();
         movieUserRatings.setReviewId(String.valueOf(nextId));
         movieUserRatings.setDoubanId(movieReviews.getDoubanId());
-        movieUserRatings.setUserId(movieUserDao.queryByUserUniqueName(movieReviews.getUserUniqueName()).getUserId());
+        Integer userId = movieUserDao.queryByUserUniqueName(movieReviews.getUserUniqueName()).getUserId();
+        movieUserRatings.setUserId(userId);
         movieUserRatings.setUserMovieRating((double) (movieReviews.getUserMovieRating() / 10));
         int rowFlag2 = this.movieUserRatingsDao.insert(movieUserRatings);
         if (rowFlag2 == 1) {
             logger.info("插入movie_user_ratings表成功");
         }
+        // 再更新redis中的用户最近k次评分数据
+        String key = "rec:rating:" + userId + ":" + DEFAULT_RATING_K;
+        List<MovieUserRatings> movieUserRatingsList = this.movieUserRatingsDao.kRecentRatingsShort(userId, DEFAULT_RATING_K);
+        String json = JSON.toJSONString(movieUserRatingsList);
+        redisUtil.set(key, json, DEFAULT_REDIS_DB);
+        redisUtil.persist(key);
+        logger.info("[更新Redis中用户最近K次评分成功]-" + key);
+
         return movieReviews;
     }
 

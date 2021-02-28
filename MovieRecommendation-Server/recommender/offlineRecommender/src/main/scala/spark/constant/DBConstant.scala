@@ -35,6 +35,16 @@ DBConstant {
    */
   val MONGO_COLLECTION_CONTENT = "content_top";
 
+  /**
+   * 基于ALS的用户推荐表
+   */
+  val MONGO_COLLECTION_ALS_USER_RECS = "als_user_recs";
+
+  /**
+   * 基于ALS的电影相似度列表
+   */
+  val MONGO_COLLECTION_ALS_MOVIE_SIM = "als_movie_sim";
+
 
   /**
    * MySQL配置

@@ -15,6 +15,7 @@
         <module>statisticRecommender</module>
         <module>contentRecommender</module>
         <module>offlineRecommender</module>
+        <module>steamingRecommender</module>
     </modules>
 
     <dependencyManagement>

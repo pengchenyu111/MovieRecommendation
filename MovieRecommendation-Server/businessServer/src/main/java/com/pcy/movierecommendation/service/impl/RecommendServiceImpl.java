@@ -5,10 +5,7 @@ import com.pcy.movierecommendation.core.utils.ObjectUtil;
 import com.pcy.movierecommendation.entity.movieDetail.MovieDetail;
 import com.pcy.movierecommendation.entity.movieTag.MovieTag;
 import com.pcy.movierecommendation.entity.movieTag.UserTagPrefer;
-import com.pcy.movierecommendation.entity.recommend.BaseRecommendation;
-import com.pcy.movierecommendation.entity.recommend.GenreTop;
-import com.pcy.movierecommendation.entity.recommend.MovieRecs;
-import com.pcy.movierecommendation.entity.recommend.RecentlyTop;
+import com.pcy.movierecommendation.entity.recommend.*;
 import com.pcy.movierecommendation.service.MovieDetailService;
 import com.pcy.movierecommendation.service.MovieTagService;
 import com.pcy.movierecommendation.service.RecommendService;
@@ -38,6 +35,7 @@ import java.util.stream.Collectors;
 public class RecommendServiceImpl implements RecommendService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final long MAX_REC_SIZE = 20;
 
     @Resource
     private MongoTemplate mongoTemplate;
@@ -139,6 +137,53 @@ public class RecommendServiceImpl implements RecommendService {
         // 结果按照电影评分降序排序
         result.sort(Comparator.comparing(MovieDetail::getRatingScore).reversed());
         return result;
+    }
+
+    /**
+     * 基于ALS的用户电影推荐
+     *
+     * @param userId 用户id
+     * @return 推荐列表
+     */
+    @Override
+    public List<MovieDetail> alsUserRecs(Integer userId) {
+        // 从MongoDB中找出该用户对应的推荐列表
+        Query query = Query.query(Criteria.where("user_id").is(userId));
+        MovieUserRecs movieUserRecs = mongoTemplate.findOne(query, MovieUserRecs.class, DBConstant.MONGO_COLLECTION_ALS_USER_RECS);
+        // 判空
+        if (movieUserRecs == null) {
+            return new ArrayList<MovieDetail>();
+        }
+        logger.info("【MongoDB查询-基于ALS的用户电影推荐】:" + movieUserRecs.toString());
+        // 取出doubanId列表，去数据库查询
+        List<Integer> doubanIdList = movieUserRecs.getRecommendations().stream()
+                .map(BaseRecommendation::getId)
+                .collect(Collectors.toList());
+        return movieDetailService.queryByIdList(doubanIdList);
+    }
+
+    /**
+     * 基于ALS的电影相似度推荐
+     *
+     * @param doubanId 豆瓣id
+     * @return 推荐列表
+     */
+    @Override
+    public List<MovieDetail> alsMovieSimRecs(Integer doubanId) {
+        // 从MongoDB中找出该douban_id
+        Query query = Query.query(Criteria.where("douban_id").is(doubanId));
+        MovieRecs movieRecs = mongoTemplate.findOne(query, MovieRecs.class, DBConstant.MONGO_COLLECTION_ALS_MOVIE_SIM);
+        // 判空
+        if (movieRecs == null) {
+            return new ArrayList<MovieDetail>();
+        }
+        logger.info("【MongoDB查询-基于ALS的电影相似度推荐】:" + movieRecs.toString());
+        // 取出doubanId列表，去数据库查询
+        List<Integer> doubanIdList = movieRecs.getRecommendations().stream()
+                .map(BaseRecommendation::getId)
+                .limit(MAX_REC_SIZE)
+                .collect(Collectors.toList());
+        return movieDetailService.queryByIdList(doubanIdList);
     }
 
 

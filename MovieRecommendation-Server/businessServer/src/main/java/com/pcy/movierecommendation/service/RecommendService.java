@@ -55,8 +55,25 @@ public interface RecommendService {
 
     /**
      * 基于内容的TF-IDF电影推荐
+     *
      * @param doubanId 豆瓣id
      * @return 对象列表
      */
     List<MovieDetail> contentTFIDF(Integer doubanId);
+
+    /**
+     * 基于ALS的用户电影推荐
+     *
+     * @param userId 用户id
+     * @return 推荐列表
+     */
+    List<MovieDetail> alsUserRecs(Integer userId);
+
+    /**
+     * 基于ALS的电影相似度推荐
+     *
+     * @param doubanId 豆瓣id
+     * @return 推荐列表
+     */
+    List<MovieDetail> alsMovieSimRecs(Integer doubanId);
 }

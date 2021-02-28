@@ -30,6 +30,14 @@ public class DBConstant {
      * 基于内容的电影推荐表
      */
     public static final String MONGO_COLLECTION_CONTENT = "content_top";
+    /**
+     * 基于ALS的用户推荐表
+     */
+    public static final String MONGO_COLLECTION_ALS_USER_RECS = "als_user_recs";
+    /**
+     * 基于ALS的电影相似度列表
+     */
+    public static final String MONGO_COLLECTION_ALS_MOVIE_SIM = "als_movie_sim";
 
 
     /**

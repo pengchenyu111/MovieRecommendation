@@ -186,5 +186,28 @@ public class RecommendServiceImpl implements RecommendService {
         return movieDetailService.queryByIdList(doubanIdList);
     }
 
+    /**
+     * 基于ItemCF的电影相似度推荐
+     *
+     * @param doubanId 豆瓣id
+     * @return 推荐列表
+     */
+    @Override
+    public List<MovieDetail> itemCFRecs(Integer doubanId) {
+        // 从MongoDB中找出该douban_id
+        Query query = Query.query(Criteria.where("douban_id").is(doubanId));
+        MovieRecs movieRecs = mongoTemplate.findOne(query, MovieRecs.class, DBConstant.MONGO_COLLECTION_ITEM_CF_MOVIE_RECS);
+        // 判空
+        if (movieRecs == null) {
+            return new ArrayList<MovieDetail>();
+        }
+        logger.info("【MongoDB查询-基于ItemCF的电影相似度推荐】:" + movieRecs.toString());
+        // 取出doubanId列表，去数据库查询
+        List<Integer> doubanIdList = movieRecs.getRecommendations().stream()
+                .map(BaseRecommendation::getId)
+                .collect(Collectors.toList());
+        return movieDetailService.queryByIdList(doubanIdList);
+    }
+
 
 }

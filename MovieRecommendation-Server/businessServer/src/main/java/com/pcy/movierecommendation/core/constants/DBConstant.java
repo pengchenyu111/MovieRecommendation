@@ -38,6 +38,10 @@ public class DBConstant {
      * 基于ALS的电影相似度列表
      */
     public static final String MONGO_COLLECTION_ALS_MOVIE_SIM = "als_movie_sim";
+    /**
+     * 基于ALS的电影相似度列表
+     */
+    public static final String  MONGO_COLLECTION_ITEM_CF_MOVIE_RECS = "item_cf_movie_recs";
 
 
     /**

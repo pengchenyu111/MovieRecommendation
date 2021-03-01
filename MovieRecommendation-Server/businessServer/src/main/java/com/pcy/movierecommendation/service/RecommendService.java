@@ -76,4 +76,12 @@ public interface RecommendService {
      * @return 推荐列表
      */
     List<MovieDetail> alsMovieSimRecs(Integer doubanId);
+
+    /**
+     * 基于ItemCF的电影相似度推荐
+     *
+     * @param doubanId 豆瓣id
+     * @return 推荐列表
+     */
+    List<MovieDetail> itemCFRecs(Integer doubanId);
 }

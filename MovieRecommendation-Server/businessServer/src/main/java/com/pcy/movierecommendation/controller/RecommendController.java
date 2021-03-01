@@ -158,4 +158,25 @@ public class RecommendController extends BaseController {
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
     }
+
+    /**
+     * 基于ItemCF的电影相似度推荐
+     *
+     * @param doubanId 豆瓣id
+     * @return 推荐列表
+     */
+    @ApiOperation(value = "基于ItemCF的电影相似度推荐", notes = "基于ItemCF的电影相似度推荐")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "doubanId", value = "豆瓣id", required = true, dataType = "Integer")
+    })
+    @GetMapping("/itemCFRecs/{doubanId}")
+    public ApiResponse<List<MovieDetail>> itemCFRecs(@PathVariable("doubanId") Integer doubanId) {
+        List<MovieDetail> movieDetails = this.recommendService.itemCFRecs(doubanId);
+        if (CollectionUtils.isEmpty(movieDetails)) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
+    }
+
+
 }

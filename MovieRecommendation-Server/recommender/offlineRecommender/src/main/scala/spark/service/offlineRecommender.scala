@@ -53,6 +53,9 @@ object offlineRecommender {
     // 设置参数(由ALSTrainer训练得出最优参数)，训练模型
     val (rank, iterations, lambda) = (50, 3, 0.34)
     val model: MatrixFactorizationModel = ALS.train(trainRDD, rank, iterations, lambda)
+
+
+    // 调用框架的recommendProductsForUsers方法，为所有用户推荐20条电影
     val userRecsDF: DataFrame = model.recommendProductsForUsers(20).map {
       case (user_id, arr) =>
         UserRecs(user_id, arr.sortWith(_.rating > _.rating).map(x => BaseRecommendation(x.product, x.rating)))
@@ -97,10 +100,10 @@ object offlineRecommender {
           (a._1, (b._1, sim))
         }
       }
-      .filter(_._2._2 > 0.8)
+      .filter(_._2._2 > 0.7)
       .groupByKey()
       .map {
-        case (mid, recs) => MovieRecs(mid, recs.toList.sortWith(_._2 > _._2).map(x => BaseRecommendation(x._1, x._2)))
+        case (mid, recs) => MovieRecs(mid, recs.toList.sortWith(_._2 > _._2).take(500).map(x => BaseRecommendation(x._1, x._2)))
       }
       .toDF()
 

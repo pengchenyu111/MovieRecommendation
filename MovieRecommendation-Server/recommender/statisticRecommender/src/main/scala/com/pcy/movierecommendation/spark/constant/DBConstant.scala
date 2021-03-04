@@ -11,7 +11,7 @@ object DBConstant {
   /**
    * MongoDB配置
    */
-  val MONGO_URL = "mongodb://81.70.252.155:27017/recommender";
+  val MONGO_URL = "mongodb://pcy:Pcy548890321!,.@81.70.252.155:27017/recommender";
   val MONGO_DB = "recommender";
 
   /**

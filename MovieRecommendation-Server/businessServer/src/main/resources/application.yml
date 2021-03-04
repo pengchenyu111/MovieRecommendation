@@ -53,7 +53,7 @@ spring:
   # MongoDB配置
   data:
     mongodb:
-      uri: mongodb://81.70.252.155:27017/recommender
+      uri: mongodb://pcy:Pcy548890321!,.@81.70.252.155:27017/recommender
 
 # ElasticSearch配置
 elasticsearch:

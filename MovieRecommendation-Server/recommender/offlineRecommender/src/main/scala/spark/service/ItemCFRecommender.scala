@@ -17,7 +17,7 @@ object ItemCFRecommender {
 
   def main(args: Array[String]): Unit = {
     // 环境配置
-    val sparkConf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("OfflineRecommeder")
+    val sparkConf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("ItemCFRecommeder")
     val spark: SparkSession = SparkSession.builder()
       .config(sparkConf)
       .config("spark.mongodb.input.uri", DBConstant.MONGO_URL)

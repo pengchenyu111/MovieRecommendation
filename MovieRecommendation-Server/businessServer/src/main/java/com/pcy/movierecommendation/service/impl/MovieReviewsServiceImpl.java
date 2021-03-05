@@ -3,6 +3,7 @@ package com.pcy.movierecommendation.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pcy.movierecommendation.core.utils.DateFormatUtil;
 import com.pcy.movierecommendation.core.utils.IdWorkerUtil;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieReviewsDao;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -142,6 +144,7 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
         movieReviews.setReviewId(String.valueOf(nextId));
         // 设置评分
         movieReviews.setUserMovieRating(movieReviews.getUserMovieRating() * 10);
+        // 用户个人信息和评分时间在前端有保存，由前端传入到movieReviews对象中
         int rowFlag1 = this.movieReviewsDao.insert(movieReviews);
         if (rowFlag1 == 1) {
             logger.info("插入movie_reviews表成功");
@@ -158,12 +161,10 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
             logger.info("插入movie_user_ratings表成功");
         }
         // 再更新redis中的用户最近k次评分数据
-        String key = "rec:rating:" + userId + ":" + DEFAULT_RATING_K;
-        List<MovieUserRatings> movieUserRatingsList = this.movieUserRatingsDao.kRecentRatingsShort(userId, DEFAULT_RATING_K);
-        String json = JSON.toJSONString(movieUserRatingsList);
-        redisUtil.set(key, json, DEFAULT_REDIS_DB);
-        redisUtil.persist(key);
-        logger.info("[更新Redis中用户最近K次评分成功]-" + key);
+        String key = "rec:rating:userId:" + userId;
+        String value = movieUserRatings.getDoubanId() + ":" + movieUserRatings.getUserMovieRating();
+        Long valueCountInList = redisUtil.lpush(DEFAULT_REDIS_DB, key, value);
+        logger.info("[更新Redis中用户最近K次评分成功]-" + key + "[队列中个数为]-" + valueCountInList);
 
         return movieReviews;
     }

@@ -30,6 +30,7 @@ public class MovieUserRatingsServiceImpl implements MovieUserRatingsService {
     RedisUtil redisUtil;
 
     private static final int DEFAULT_REDIS_DB = 0;
+    private static final int DEFAULT_REDIS_RANG_START = 0;
 
     /**
      * 通过ID查询单条数据
@@ -110,20 +111,6 @@ public class MovieUserRatingsServiceImpl implements MovieUserRatingsService {
      */
     @Override
     public List<MovieUserRatings> kRecentRatingsShort(Integer userId, Integer k) {
-        List<MovieUserRatings> movieUserRatingsList = null;
-        // 首先去Redis里面去找
-        String key = "rec:rating:" + userId + ":" + k;
-        logger.info("[redis查询]-[key]-" + key);
-        if (redisUtil.exists(key)) {
-            String str = redisUtil.get(key, DEFAULT_REDIS_DB);
-            return JSON.parseArray(str, MovieUserRatings.class);
-        }
-        // 没有则从数据库中查询，并存入redis
-        movieUserRatingsList = movieUserRatingsDao.kRecentRatingsShort(userId, k);
-        if (CollectionUtils.isNotEmpty(movieUserRatingsList)) {
-            String json = JSON.toJSONString(movieUserRatingsList);
-            redisUtil.set(key, json, DEFAULT_REDIS_DB);
-        }
-        return movieUserRatingsList;
+        return movieUserRatingsDao.kRecentRatingsShort(userId, k);
     }
 }

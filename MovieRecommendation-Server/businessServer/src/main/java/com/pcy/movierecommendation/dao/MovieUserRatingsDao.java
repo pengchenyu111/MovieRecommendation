@@ -100,4 +100,12 @@ public interface MovieUserRatingsDao {
      * @return 数据列表
      */
     List<MovieUserRatings> kRecentRatingsShort(@Param("userId") Integer userId, @Param("k") Integer k);
+
+    /**
+     * 根据userId查询该用户历来评分数据
+     *
+     * @param userId 用户id
+     * @return 该用户历来评分数据
+     */
+    List<MovieUserRatings> queryByUserId(Integer userId);
 }

@@ -70,4 +70,12 @@ public interface MovieUserRatingsService {
      * @return 数据列表
      */
     List<MovieUserRatings> kRecentRatingsShort(Integer userId, Integer k);
+
+    /**
+     * 将用户最近的评分数据存入Redis
+     *
+     * @param userId 用户id
+     * @return 当前用户的评论数
+     */
+    Long loadIntoRedis(Integer userId);
 }

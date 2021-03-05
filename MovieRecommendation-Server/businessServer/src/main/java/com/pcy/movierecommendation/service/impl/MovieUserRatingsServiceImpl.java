@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * (MovieUserRatings)表服务实现类
@@ -112,5 +113,29 @@ public class MovieUserRatingsServiceImpl implements MovieUserRatingsService {
     @Override
     public List<MovieUserRatings> kRecentRatingsShort(Integer userId, Integer k) {
         return movieUserRatingsDao.kRecentRatingsShort(userId, k);
+    }
+
+    /**
+     * 将用户最近的评分数据存入Redis
+     *
+     * @param userId 用户id
+     * @return 是否成功信息
+     */
+    @Override
+    public Long loadIntoRedis(Integer userId) {
+        List<MovieUserRatings> movieUserRatingsList = this.movieUserRatingsDao.queryByUserId(userId);
+        String key = "rec:rating:userId:" + userId;
+        String[] data = movieUserRatingsList.stream()
+                .map(x -> x.getDoubanId() + ":" + x.getUserMovieRating())
+                .toArray(String[]::new);
+        if (data.length == 0) {
+            logger.info(String.format("[将用户最近的评分数据存入Redis]-用户%d无评分数据", userId));
+            return -1L;
+        }
+        // 先清空再存入
+        redisUtil.ltrim(key,1,0);
+        Long ratingCount = redisUtil.lpush(DEFAULT_REDIS_DB, key, data);
+        logger.info(String.format("[将用户最近的评分数据存入Redis]-用户%d-历史评分数%d", userId, ratingCount));
+        return ratingCount;
     }
 }

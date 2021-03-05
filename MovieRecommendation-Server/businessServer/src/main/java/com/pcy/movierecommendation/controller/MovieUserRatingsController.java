@@ -75,4 +75,23 @@ public class MovieUserRatingsController extends BaseController {
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieUserRatingsList);
     }
 
+    /**
+     * 将用户最近的评分数据存入Redis
+     *
+     * @param userId 用户id
+     * @return 是否成功信息
+     */
+    @ApiOperation(value = "将用户最近的评分数据存入Redis", notes = "将用户最近的评分数据存入Redis")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "userId", value = "用户id", required = true, dataType = "Integer")
+    })
+    @GetMapping("loadIntoRedis/{userId}")
+    public ApiResponse<Long> loadIntoRedis(@PathVariable("userId") Integer userId) {
+        Long ratingCount = this.movieUserRatingsService.loadIntoRedis(userId);
+        if (ratingCount == -1L) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.REQUEST_FAIL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, ratingCount);
+    }
+
 }

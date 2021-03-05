@@ -12,6 +12,16 @@ import java.util.Date;
  */
 public class DateFormatUtil {
 
+
+    /**
+     * 获取当前时间
+     * @return 当前时间，格式为 yyyy-MM-dd HH:mm:ss
+     */
+    public static String getNowTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return simpleDateFormat.format(new Date());
+    }
+
     /**
      * 转化成日期 + 时间的格式： yyyy-MM-dd HH:mm:ss
      *

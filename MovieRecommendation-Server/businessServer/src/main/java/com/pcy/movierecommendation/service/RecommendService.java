@@ -84,4 +84,12 @@ public interface RecommendService {
      * @return 推荐列表
      */
     List<MovieDetail> itemCFRecs(Integer doubanId);
+
+    /**
+     * 基于实时评分的电影推荐
+     *
+     * @param userId 用户id
+     * @return 推荐列表
+     */
+    List<MovieDetail> ratingRecs(Integer userId);
 }

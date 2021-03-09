@@ -209,5 +209,28 @@ public class RecommendServiceImpl implements RecommendService {
         return movieDetailService.queryByIdList(doubanIdList);
     }
 
+    /**
+     * 基于实时评分的电影推荐
+     *
+     * @param userId 用户id
+     * @return 推荐列表
+     */
+    @Override
+    public List<MovieDetail> ratingRecs(Integer userId) {
+        // 从MongoDB中找出该用户对应的推荐列表
+        Query query = Query.query(Criteria.where("user_id").is(userId));
+        MovieUserRecs movieUserRecs = mongoTemplate.findOne(query, MovieUserRecs.class, DBConstant.MONGO_COLLECTION_STREAMING_RATING_USER_RECS);
+        // 判空
+        if (movieUserRecs == null) {
+            return new ArrayList<MovieDetail>();
+        }
+        logger.info("【MongoDB查询-基于实时评分的电影推荐】:" + movieUserRecs.toString());
+        // 取出doubanId列表，去数据库查询
+        List<Integer> doubanIdList = movieUserRecs.getRecommendations().stream()
+                .map(BaseRecommendation::getId)
+                .collect(Collectors.toList());
+        return movieDetailService.queryByIdList(doubanIdList);
+    }
+
 
 }

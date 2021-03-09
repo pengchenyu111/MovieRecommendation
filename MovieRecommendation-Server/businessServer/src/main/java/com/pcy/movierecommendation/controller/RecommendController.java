@@ -179,4 +179,24 @@ public class RecommendController extends BaseController {
     }
 
 
+    /**
+     * 基于实时评分的电影推荐
+     *
+     * @param userId 用户id
+     * @return 推荐列表
+     */
+    @ApiOperation(value = "基于实时评分的电影推荐", notes = "基于实时评分的电影推荐")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "userId", value = "用户id", required = true, dataType = "Integer")
+    })
+    @GetMapping("/ratingRecs/{userId}")
+    public ApiResponse<List<MovieDetail>> ratingRecs(@PathVariable("userId") Integer userId) {
+        List<MovieDetail> movieDetails = this.recommendService.ratingRecs(userId);
+        if (CollectionUtils.isEmpty(movieDetails)) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetails);
+    }
+
+
 }

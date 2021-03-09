@@ -42,6 +42,10 @@ public class DBConstant {
      * 基于ALS的电影相似度列表
      */
     public static final String  MONGO_COLLECTION_ITEM_CF_MOVIE_RECS = "item_cf_movie_recs";
+    /**
+     * 基于实时评分的用户电影推荐列表
+     */
+    public static final String  MONGO_COLLECTION_STREAMING_RATING_USER_RECS = "streaming_rating_user_recs";
 
 
     /**

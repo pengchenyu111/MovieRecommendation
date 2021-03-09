@@ -8,7 +8,6 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.jblas.DoubleMatrix
 import spark.constant.DBConstant
 import spark.entity.{BaseRecommendation, MovieRecs, MovieUserRatings, UserRecs}
-import spark.service.ALSTrainer.getClass
 import spark.util.MongoDBUtil
 
 /**
@@ -53,6 +52,8 @@ object offlineRecommender {
     // 设置参数(由ALSTrainer训练得出最优参数)，训练模型
     val (rank, iterations, lambda) = (50, 3, 0.34)
     val model: MatrixFactorizationModel = ALS.train(trainRDD, rank, iterations, lambda)
+
+    //model.save(spark.sparkContext,"/usr/local/spark_ml_model/als_movie_rating_model")
 
 
     // 调用框架的recommendProductsForUsers方法，为所有用户推荐20条电影

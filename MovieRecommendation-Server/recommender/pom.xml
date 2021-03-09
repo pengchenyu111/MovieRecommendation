@@ -66,6 +66,11 @@
                 <artifactId>mongo-spark-connector_2.12</artifactId>
                 <version>${mongodb-connector.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.mongodb.scala</groupId>
+                <artifactId>mongo-scala-driver_2.12</artifactId>
+                <version>${mongo-scala-driver.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

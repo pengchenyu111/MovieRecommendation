@@ -6,4 +6,8 @@ package com.pcy.movierecommendation.spark.entity
  * @author PengChenyu
  * @since 2021-02-03 15:36:37
  */
-case class BaseRecommendation(id: Int, score: Double)
+//object BaseRecommendation {
+//  def apply(id: Int, score: Double): UserRecs =
+//    BaseRecommendation(id, score)
+//}
+case class BaseRecommendation(id: Int, score: Double) extends Serializable

@@ -11,7 +11,8 @@ object DBConstant {
   /**
    * MongoDB配置
    */
-  val MONGO_URL = "mongodb://81.70.252.155:27017/recommender";
+  val MONGO_URL = "mongodb://pcy:Pcy548890321!,.@81.70.252.155:27017/recommender";
+  val MONGO_SCALA_DRIVER_CONNECT_URL = "mongodb://pcy:Pcy548890321!,.@81.70.252.155:27017/?authSource=recommender"
   val MONGO_DB = "recommender";
 
   /**
@@ -44,6 +45,10 @@ object DBConstant {
    */
   val MONGO_COLLECTION_ALS_MOVIE_SIM = "als_movie_sim";
 
+  /**
+   * 基于实时评分的用户电影推荐列表
+   */
+  val MONGO_COLLECTION_STREAMING_RATING_USER_RECS = "streaming_rating_user_recs";
 
   /**
    * MySQL配置

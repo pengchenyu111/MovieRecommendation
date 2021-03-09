@@ -40,6 +40,7 @@
         <swagger.bootstrap-ui.version>1.9.6</swagger.bootstrap-ui.version>
         <scala-maven-plugin.version>3.3.1</scala-maven-plugin.version>
         <mongodb-connector.version>3.0.0</mongodb-connector.version>
+        <mongo-scala-driver.version>4.2.0</mongo-scala-driver.version>
         <lombok.version>1.18.16</lombok.version>
         <string-util.version>3.11</string-util.version>
     </properties>
@@ -96,6 +97,11 @@
                 <groupId>org.mongodb.spark</groupId>
                 <artifactId>mongo-spark-connector_2.12</artifactId>
                 <version>${mongodb-connector.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mongodb.scala</groupId>
+                <artifactId>mongo-scala-driver_2.12</artifactId>
+                <version>${mongo-scala-driver.version}</version>
             </dependency>
 
 

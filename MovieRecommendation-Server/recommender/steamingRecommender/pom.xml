@@ -39,11 +39,15 @@
             <groupId>org.mongodb.spark</groupId>
             <artifactId>mongo-spark-connector_2.12</artifactId>
         </dependency>
-
-        <!-- MySQL-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.mongodb.scala</groupId>
+            <artifactId>mongo-scala-driver_2.12</artifactId>
+        </dependency>
+
+        <!--Redis-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
         </dependency>
 
         <!--kafka-->

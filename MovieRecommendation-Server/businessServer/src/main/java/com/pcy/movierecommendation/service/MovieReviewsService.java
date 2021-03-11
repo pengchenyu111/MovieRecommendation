@@ -97,4 +97,14 @@ public interface MovieReviewsService {
      * @return 数据列表
      */
     List<MovieReviews> kRecentRatings(Integer userId, Integer k);
+
+    /**
+     * 根据userId分页查询用户历史评论
+     *
+     * @param userId   用户id
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @return 分页数据
+     */
+    PageInfo<MovieReviews> userHistoryReviews(Integer userId, Integer pageNum, Integer pageSize);
 }

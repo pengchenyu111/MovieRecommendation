@@ -59,7 +59,7 @@ public class MovieReviewsController {
      * @param pageSize 每页多少数据
      * @return 分页数据
      */
-    @ApiOperation(value = "主键查询", notes = "通过主键查询单条数据")
+    @ApiOperation(value = "doubanId分页查询", notes = "doubanId分页查询")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "doubanId", value = "豆瓣id", required = true, dataType = "Integer"),
             @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页", required = true, dataType = "Integer"),
@@ -68,6 +68,29 @@ public class MovieReviewsController {
     @GetMapping("/doubanId/{doubanId}/page/{pageNum}/{pageSize}")
     public ApiResponse<PageInfo<MovieReviews>> queryByDoubanIdPage(@PathVariable("doubanId") Integer doubanId, @PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
         PageInfo<MovieReviews> movieReviewsList = this.movieReviewsService.queryByDoubanIdPage(doubanId, pageNum, pageSize);
+        if (movieReviewsList.getTotal() == 0L) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieReviewsList);
+    }
+
+    /**
+     * 根据userId分页查询用户历史评论
+     *
+     * @param userId   用户id
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @return 分页数据
+     */
+    @ApiOperation(value = "用户历史评论", notes = "用户历史评论")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "userId", value = "用户id", required = true, dataType = "Integer"),
+            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页", required = true, dataType = "Integer"),
+            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页的数量", required = true, dataType = "Integer")
+    })
+    @GetMapping("/userHistoryReviews/{userId}/page/{pageNum}/{pageSize}")
+    public ApiResponse<PageInfo<MovieReviews>> userHistoryReviews(@PathVariable("userId") Integer userId, @PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
+        PageInfo<MovieReviews> movieReviewsList = this.movieReviewsService.userHistoryReviews(userId, pageNum, pageSize);
         if (movieReviewsList.getTotal() == 0L) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }

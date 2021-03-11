@@ -116,4 +116,12 @@ public interface MovieReviewsDao {
      * @return 数据列表
      */
     List<MovieReviews> kRecentRatings(@Param("userId") Integer userId, @Param("k") Integer k);
+
+    /**
+     * 根据userId分页查询用户历史评论
+     *
+     * @param userId 用户id
+     * @return 用户历史评论
+     */
+    List<MovieReviews> userHistoryReviews(Integer userId);
 }

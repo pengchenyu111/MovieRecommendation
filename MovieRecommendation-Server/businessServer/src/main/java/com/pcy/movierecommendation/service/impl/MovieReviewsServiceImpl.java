@@ -191,4 +191,19 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
     public List<MovieReviews> kRecentRatings(Integer userId, Integer k) {
         return this.movieReviewsDao.kRecentRatings(userId, k);
     }
+
+    /**
+     * 根据userId分页查询用户历史评论
+     *
+     * @param userId   用户id
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @return 分页数据
+     */
+    @Override
+    public PageInfo<MovieReviews> userHistoryReviews(Integer userId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<MovieReviews> movieReviewsList = this.movieReviewsDao.userHistoryReviews(userId);
+        return new PageInfo<>(movieReviewsList);
+    }
 }

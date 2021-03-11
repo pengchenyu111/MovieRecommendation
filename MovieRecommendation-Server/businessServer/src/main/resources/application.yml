@@ -58,7 +58,7 @@ spring:
 # ElasticSearch配置
 elasticsearch:
   hostname: 81.70.252.155
-  port: 9200
+  port: 9999
   scheme: http
 
 # MyBatis配置

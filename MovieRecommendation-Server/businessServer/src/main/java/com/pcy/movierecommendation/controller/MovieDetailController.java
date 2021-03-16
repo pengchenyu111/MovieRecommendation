@@ -68,6 +68,9 @@ public class MovieDetailController extends BaseController {
     @GetMapping("/page/{pageNum}/{pageSize}")
     public ApiResponse<PageInfo<MovieDetail>> queryPageMovie(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
         PageInfo<MovieDetail> movieDetailPageInfo = movieDetailService.queryPageMovie(pageNum, pageSize);
+        if (movieDetailPageInfo.getTotal() == 0L) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetailPageInfo);
     }
 
@@ -89,6 +92,9 @@ public class MovieDetailController extends BaseController {
     @PostMapping("/page/{pageNum}/{pageSize}")
     public ApiResponse<PageInfo<MovieDetail>> queryPage(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @RequestBody MovieDetail movieDetail) {
         PageInfo<MovieDetail> movieDetailPageInfo = movieDetailService.queryPage(pageNum, pageSize, movieDetail);
+        if (movieDetailPageInfo.getTotal() == 0L) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetailPageInfo);
     }
 

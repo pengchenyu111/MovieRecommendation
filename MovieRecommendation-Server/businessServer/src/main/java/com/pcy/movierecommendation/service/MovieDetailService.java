@@ -81,6 +81,15 @@ public interface MovieDetailService {
     boolean deleteById(Integer doubanId);
 
     /**
+     * 分页获取电影详情
+     *
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @return 分页数据
+     */
+    PageInfo<MovieDetail> queryPageMovie(int pageNum, int pageSize);
+
+    /**
      * 分页查询
      *
      * @param pageNum     当前页

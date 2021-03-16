@@ -155,6 +155,20 @@ public class MovieDetailServiceImpl implements MovieDetailService {
     }
 
     /**
+     * 分页获取电影详情
+     *
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @return 分页数据
+     */
+    @Override
+    public PageInfo<MovieDetail> queryPageMovie(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<MovieDetail> movieDetailList = movieDetailDao.queryAllMovieDetails();
+        return new PageInfo<>(movieDetailList);
+    }
+
+    /**
      * 分页查询
      *
      * @param pageNum     当前页

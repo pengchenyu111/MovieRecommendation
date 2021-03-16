@@ -54,6 +54,25 @@ public class MovieDetailController extends BaseController {
 
 
     /**
+     * 分页获取电影详情
+     *
+     * @param pageNum  当前页
+     * @param pageSize 每页多少数据
+     * @return 分页数据
+     */
+    @ApiOperation(value = "分页获取电影详情")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "pageNum", value = "当前页", required = true, dataType = "int"),
+            @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页的数量", required = true, dataType = "int")
+    })
+    @GetMapping("/page/{pageNum}/{pageSize}")
+    public ApiResponse<PageInfo<MovieDetail>> queryPageMovie(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
+        PageInfo<MovieDetail> movieDetailPageInfo = movieDetailService.queryPageMovie(pageNum, pageSize);
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieDetailPageInfo);
+    }
+
+
+    /**
      * 分页查询
      *
      * @param pageNum     当前页

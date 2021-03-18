@@ -15,8 +15,8 @@
       show-password>
     </el-input>
     <div class="others">
-      <el-link :underline="false" class="others-item" style="float: left">现在注册</el-link>
-      <el-link :underline="false" class="others-item" style="float: right">忘记密码</el-link>
+      <el-link :underline="false" class="others-item" style="float: left" @click="toRegister">现在注册</el-link>
+      <el-link :underline="false" class="others-item" style="float: right" @click="toForgetPassword">忘记密码</el-link>
     </div>
     <el-button
       class="loginBtn"
@@ -29,6 +29,9 @@
 </template>
 
 <script>
+import {login} from "@/api/user/userLoginRegister";
+import {ElMessage} from 'element-plus'
+
 export default {
   name: "LoginBox",
   data() {
@@ -39,7 +42,24 @@ export default {
   },
   methods: {
     login() {
-      console.log('dlogin');
+      login(this.account, this.password)
+        .then(res => {
+          if (!res.data.success) {
+            ElMessage.error("账号或密码错误！")
+          }
+          ElMessage.success("登录成功！")
+          this.$router.replace('/home')
+        }).catch(err => {
+        console.log(err);
+      })
+    },
+    toRegister() {
+      let href = this.$router.resolve({path: '/register'});
+      window.open(href.href, '_blank')
+    },
+    toForgetPassword() {
+      let href = this.$router.resolve({path: '/forgetPassword'});
+      window.open(href.href, '_blank')
     }
   }
 }

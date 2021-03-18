@@ -21,6 +21,9 @@ export default {
     return {
       loginBgUrl: {backgroundImage: 'url(' + ImgConstants.LOGIN_BACKGROUND + ')'}
     }
+  },
+  methods: {
+
   }
 }
 </script>
@@ -41,6 +44,7 @@ export default {
   position: absolute;
   left: 69%;
 }
+
 .title-text {
   float: right;
   margin-top: 28px;

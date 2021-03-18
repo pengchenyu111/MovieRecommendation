@@ -1,6 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 const Login = () => import('../views/Login.vue')
+const Home = () => import('../views/home/Home')
+const Register = () => import('../views/user/Register')
+const ForgetPassword = () => import('../views/user/ForgetPassword')
 
 const routes = [
   {
@@ -12,6 +15,21 @@ const routes = [
     component: Login,
     meta: {title: '登录'},
   },
+  {
+    path: '/register',
+    component: Register,
+    meta: {title: '注册'},
+  },
+  {
+    path: '/forgetPassword',
+    component: ForgetPassword,
+    meta: {title: '忘记密码'},
+  },
+  {
+    path: '/home',
+    component: Home,
+    meta: {title: '首页'}
+  }
 ]
 
 const router = createRouter({

@@ -1,4 +1,12 @@
-@import "./normalize.css";
+/*@import "./normalize.css";*/
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
 
 :root {
   --color-text: #666;
@@ -18,13 +26,9 @@
 }
 
 body {
-  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-  user-select: auto;
-  -webkit-tap-highlight-color: transparent; /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
-  background: var(--color-background);
-  color: var(--color-text);
-  /* rem vw/vh */
-  width: 100vw;
+  /*font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;"Copperplate";*/
+  -webkit-tap-highlight-color: transparent;
+  /*background: var(--color-background);*/
 }
 
 a {

@@ -1,13 +1,14 @@
 <template>
-  <div id="app">
+  <div>
     <router-view/>
   </div>
 
 </template>
 
-<style>
-
-</style>
 <script>
 export default {}
 </script>
+
+<style>
+@import "assets/css/base.css";
+</style>

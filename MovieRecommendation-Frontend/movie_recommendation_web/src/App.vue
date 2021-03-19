@@ -2,13 +2,21 @@
   <div>
     <router-view/>
   </div>
-
 </template>
 
 <script>
-export default {}
+
+export default {
+  name: 'App',
+
+  components: {},
+
+  data: () => ({
+    //
+  }),
+};
 </script>
 
-<style>
+<style scoped>
 @import "assets/css/base.css";
 </style>

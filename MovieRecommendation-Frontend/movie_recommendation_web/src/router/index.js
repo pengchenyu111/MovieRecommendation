@@ -1,9 +1,12 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import Vue from 'vue'
+import Router from 'vue-router'
 
 const Login = () => import('../views/Login.vue')
 const Home = () => import('../views/home/Home')
 const Register = () => import('../views/user/Register')
 const ForgetPassword = () => import('../views/user/ForgetPassword')
+
+Vue.use(Router)
 
 const routes = [
   {
@@ -32,9 +35,9 @@ const routes = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+const router = new Router({
+  routes,
+  mode: 'history'
 })
 
 // 设置页面标题

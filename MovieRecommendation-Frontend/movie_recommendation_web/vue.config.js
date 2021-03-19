@@ -5,12 +5,15 @@ module.exports = {
     },
     resolve: {
       alias: {
-        'assets':'@/assets',
-        'api':'@/api',
-        'common':'@/common',
-        'components':'@/components',
-        'views':'@/views',
+        'assets': '@/assets',
+        'api': '@/api',
+        'common': '@/common',
+        'components': '@/components',
+        'views': '@/views',
       }
     }
-  }
+  },
+  transpileDependencies: [
+    'vuetify'
+  ]
 }

@@ -30,7 +30,6 @@
 
 <script>
 import {login} from "@/api/user/userLoginRegister";
-import {ElMessage} from 'element-plus'
 import * as types from "@/store/mutations_types";
 
 export default {
@@ -46,9 +45,9 @@ export default {
       login(this.account, this.password)
         .then(res => {
           if (!res.data.success) {
-            ElMessage.error("账号或密码错误！")
+            this.$message.error("账号或密码错误！")
           } else {
-            ElMessage.success("登录成功！")
+            this.$message.success("登录成功！")
             // 存储用户信息到Vuex
             this.$store.commit(types.SET_IS_AUTHENTICATED, true)
             this.$store.commit(types.SET_CURRENT_USER, res.data.data)

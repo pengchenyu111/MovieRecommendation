@@ -12,7 +12,7 @@ body {
   --color-text: #666;
   --color-high-text: #ff5777;
   --color-tint: #ff8198;
-  --color-background: #fff;
+  --color-background: #545454;
   --font-size: 14px;
   --line-height: 1.5;
 }
@@ -28,7 +28,7 @@ body {
 body {
   /*font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;"Copperplate";*/
   -webkit-tap-highlight-color: transparent;
-  /*background: var(--color-background);*/
+  background: var(--color-background);
 }
 
 a {

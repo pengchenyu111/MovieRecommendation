@@ -1,7 +1,11 @@
-import {createStore} from 'vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
+
 import mutations from './mutations'
 
-const store = createStore({
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
 
   state: {
     // 用户登录信息

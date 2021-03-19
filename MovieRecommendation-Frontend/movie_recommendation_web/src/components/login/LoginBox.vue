@@ -31,6 +31,7 @@
 <script>
 import {login} from "@/api/user/userLoginRegister";
 import {ElMessage} from 'element-plus'
+import * as types from "@/store/mutations_types";
 
 export default {
   name: "LoginBox",
@@ -46,9 +47,16 @@ export default {
         .then(res => {
           if (!res.data.success) {
             ElMessage.error("账号或密码错误！")
+          } else {
+            ElMessage.success("登录成功！")
+            // 存储用户信息到Vuex
+            this.$store.commit(types.SET_IS_AUTHENTICATED, true)
+            this.$store.commit(types.SET_CURRENT_USER, res.data.data)
+            // 存储用户信息到sessionStorage
+            sessionStorage.setItem("isAuthenticated", "true")
+            sessionStorage.setItem("currentUser", JSON.stringify(res.data.data))
+            this.$router.replace('/home')
           }
-          ElMessage.success("登录成功！")
-          this.$router.replace('/home')
         }).catch(err => {
         console.log(err);
       })

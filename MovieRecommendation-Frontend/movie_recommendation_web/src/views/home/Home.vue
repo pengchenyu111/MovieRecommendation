@@ -1,33 +1,26 @@
 <template>
   <div>
-    <v-chip-group v-model="dialogVisible" column multiple>
-      <v-chip filter outlined>Elevator</v-chip>
-      <v-chip filter outlined>Elevator</v-chip>
-      <v-chip filter outlined>Elevator</v-chip>
-      <v-chip filter outlined>Elevator</v-chip>
-    </v-chip-group>
+    <movie-tag :tag-list="tagList" :dialog-visible="dialogVisible"/>
   </div>
-
 </template>
 
 <script>
-import * as userTagPrefer from "@/api/tag/tagPrefer";
-import * as tag from "@/api/tag/tag";
-import colorUtil from "@/common/utils/colorUtil";
+import * as userTagPreferApi from "@/api/tag/tagPreferApi";
+import * as tagApi from "@/api/tag/tagApi";
+import MovieTag from "@/components/tag/MovieTag";
 
 export default {
   name: "Home",
+  components: {MovieTag},
   data() {
     return {
       userInfo: JSON.parse(sessionStorage.getItem("currentUser")),
-      dialogVisible: true,
-      checkboxGroup: [],
+      dialogVisible: false,
       tagList: [],
-      checkboxBgColor: {backgroundColor: colorUtil.randomColorPicker()}
     }
   },
   created() {
-    userTagPrefer.queryUserTagPreferById(this.userInfo.userId)
+    userTagPreferApi.queryUserTagPreferById(this.userInfo.userId)
       .then(res => {
         if (!res.data.success) {
           // 如果用户没有喜好标签数据，则打开对话框让用户选择
@@ -36,7 +29,7 @@ export default {
       }).catch(err => {
       console.log(err);
     })
-    tag.queryAllTags()
+    tagApi.queryAllTags()
       .then(res => {
         this.tagList = res.data.data
       }).catch(err => {
@@ -48,7 +41,4 @@ export default {
 </script>
 
 <style scoped>
-.dialog-footer {
-  margin-top: 80px;
-}
 </style>

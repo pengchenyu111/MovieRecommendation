@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import {login} from "@/api/user/userLoginRegister";
+import {login} from "@/api/user/userLoginRegisterApi";
 import * as types from "@/store/mutations_types";
 
 export default {

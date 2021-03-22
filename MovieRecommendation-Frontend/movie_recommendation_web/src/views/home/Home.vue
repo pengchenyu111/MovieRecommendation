@@ -3,6 +3,7 @@
     <div class="top-background" :style="bannerUrl">
       <div>
         <img src="../../assets/img/login/login_logo.svg" class="icon-style">
+        <user-avatar class="avatar-style"/>
       </div>
       <div class="home-main-title">
         MOVIE ME
@@ -39,11 +40,12 @@ import * as userTagPreferApi from "@/api/tag/tagPreferApi";
 import * as tagApi from "@/api/tag/tagApi";
 import MovieTag from "@/components/tag/MovieTag";
 import ImgConstants from "@/common/constant/ImgConstants";
+import UserAvatar from "@/components/user/UserAvatar";
 
 
 export default {
   name: "Home",
-  components: {MovieTag},
+  components: {UserAvatar, MovieTag},
   data() {
     return {
       bannerUrl: {backgroundImage: 'url(' + ImgConstants.HOME_BANNER_URL + ')'},
@@ -127,6 +129,12 @@ export default {
 .top-btn-style:hover {
   border: solid 2px #000000;
   background: #848484;
+}
+
+.avatar-style {
+  margin-top: 50px;
+  margin-right: 80px;
+  float: right;
 }
 
 </style>

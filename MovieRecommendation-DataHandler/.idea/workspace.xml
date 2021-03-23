@@ -2,74 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24eb3076-3953-4d0d-ae43-1ac7930e4d95" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/recommender/offlineRecommender/src/main/scala/spark/entity/MovieUserRatings.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/recommender/offlineRecommender/src/main/scala/spark/service/ALSTrainer.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/recommender/offlineRecommender/src/main/scala/spark/service/offlineRecommender.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/csv-plugin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DBHandler/ImgHandler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DBHandler/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/src/api/recommend/recommenderApi.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/src/components/rank/RankBoard.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Spider/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Spider/.idea/MovieRecommendation-Spider.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Spider/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Spider/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MovieRecommendation-Spider/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/controller/MovieUserRatingsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/controller/MovieUserRatingsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/entity/movieReviews/MovieUserRatings.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/entity/movieReviews/MovieUserRatings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/service/MovieUserRatingsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/service/MovieUserRatingsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/service/impl/MovieReviewsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/service/impl/MovieReviewsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/service/impl/MovieUserRatingsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/java/com/pcy/movierecommendation/service/impl/MovieUserRatingsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/resources/mapper/MovieUserRatingsDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Server/businessServer/src/main/resources/mapper/MovieUserRatingsDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DBHandler/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/DBHandler/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/src/assets/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/src/assets/css/base.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/src/views/home/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../MovieRecommendation-Frontend/movie_recommendation_web/src/views/home/Home.vue" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/DBHandler/MovieUserRatingsHandler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="39" column="31" lean-forward="true" selection-start-line="39" selection-start-column="2" selection-end-line="39" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WordCloudHandler/movie_reviews_word_cloud.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1710">
-              <caret line="63" selection-start-line="63" selection-end-line="63" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DBHandler/UserHandler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="13" column="12" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DBHandler/MovieDetailHandler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="750">
-              <caret line="25" column="26" lean-forward="true" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DBHandler/database.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -104,6 +57,7 @@
     <option name="width" value="1300" />
     <option name="height" value="1410" />
   </component>
+  <component name="ProjectId" id="1q7ajB21Hkk4CiTWLrOPMWbZDw6" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -136,8 +90,20 @@
       <pane id="Scope" />
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -147,19 +113,29 @@
       <recent name="D:\MyOwnCodes\FinalDesign\MovieRecommendation-DataHandler\WordCloudHandler\bg" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Python.MovieUserRatingsHandler">
+  <component name="RunManager" selected="Python.ImgHandler">
+    <configuration name="ImgHandler" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MovieRecommendation-DataHandler" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DBHandler" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DBHandler/ImgHandler.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="MovieDetailHandler" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MovieRecommendation-DataHandler" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,6 +148,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DBHandler/MovieDetailHandler.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -193,28 +170,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DBHandler/MovieUserRatingsHandler.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="UserHandler" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MovieRecommendation-DataHandler" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DBHandler" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DBHandler/UserHandler.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -235,7 +192,30 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/WordCloudHandler/movie_reviews_word_cloud.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MovieRecommendation-DataHandler" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DBHandler" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DBHandler/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -246,13 +226,15 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ImgHandler" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.MovieUserRatingsHandler" />
         <item itemvalue="Python.MovieDetailHandler" />
         <item itemvalue="Python.movie_reviews_word_cloud" />
-        <item itemvalue="Python.UserHandler" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -263,6 +245,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1607875068358</updated>
+      <workItem from="1616433244382" duration="16988000" />
     </task>
     <task id="LOCAL-00001" summary="初始化项目.">
       <created>1607875187863</created>
@@ -389,27 +372,15 @@
       <window_info anchor="right" id="Word Book" order="3" side_tool="true" />
     </layout>
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="1" />
-                  <option value="2" />
-                  <option value="3" />
-                </list>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -428,6 +399,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="初始化项目." />
@@ -442,6 +414,10 @@
     <MESSAGE value="处理用户评分表缺少评论时间字段的问题." />
     <MESSAGE value="将表中user_unique_name替换为user_id并删除user_unique_name字段." />
     <option name="LAST_COMMIT_MESSAGE" value="将表中user_unique_name替换为user_id并删除user_unique_name字段." />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MovieRecommendation_DataHandler$test.coverage" NAME="test Coverage Results" MODIFIED="1616442436143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DBHandler" />
+    <SUITE FILE_PATH="coverage/MovieRecommendation_DataHandler$ImgHandler.coverage" NAME="ImgHandler Coverage Results" MODIFIED="1616486249530" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DBHandler" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/WordCloudHandler/word_cloud_imgs/1291868.jpg">

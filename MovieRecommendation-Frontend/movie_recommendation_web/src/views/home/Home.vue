@@ -16,21 +16,15 @@
         <v-btn tile text rounded color="#FFFFFF" class="top-btn-style">全部榜单</v-btn>
       </div>
     </div>
-    <div>22222222222222222</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
-    <div>333333333333333333</div>
+    <rank-board :movie-list="alsUserRecMovieList" get-more-url="rank/als_user" class="rank-board">
+      <div slot="rank-title">专属推荐</div>
+    </rank-board>
+    <rank-board :movie-list="recentTopMovieList" get-more-url="rank/rencent" class="rank-board">
+      <div slot="rank-title">近期热门</div>
+    </rank-board>
+    <rank-board :movie-list="historyTopMovieList" get-more-url="rank/history" class="rank-board">
+      <div slot="rank-title">历史榜单</div>
+    </rank-board>
     <movie-tag :tag-list="tagList" :dialog-visible="dialogVisible"/>
   </div>
 </template>
@@ -38,25 +32,49 @@
 <script>
 import * as userTagPreferApi from "@/api/tag/tagPreferApi";
 import * as tagApi from "@/api/tag/tagApi";
+import * as recommenderApi from "@/api/recommend/recommenderApi";
 import MovieTag from "@/components/tag/MovieTag";
 import ImgConstants from "@/common/constant/ImgConstants";
 import UserAvatar from "@/components/user/UserAvatar";
+import RankBoard from "@/components/rank/RankBoard";
 
 
 export default {
   name: "Home",
-  components: {UserAvatar, MovieTag},
+  components: {RankBoard, UserAvatar, MovieTag},
   data() {
     return {
       bannerUrl: {backgroundImage: 'url(' + ImgConstants.HOME_BANNER_URL + ')'},
       userInfo: JSON.parse(sessionStorage.getItem("currentUser")),
       dialogVisible: false,
       tagList: [],
-      drawer: true,
-      mini: true
+      recentTopMovieList: [],
+      alsUserRecMovieList: [],
+      historyTopMovieList: [],
     }
   },
   created() {
+    // 加载电影近期热门Top20
+    recommenderApi.queryRecentlyTop20()
+      .then(res => {
+        this.recentTopMovieList = res.data.data
+      }).catch(err => {
+      console.log(err);
+    })
+    // 加载基于ALS的用户电影推荐列表
+    recommenderApi.queryALSUserRecs(this.userInfo.userId)
+      .then(res => {
+        this.alsUserRecMovieList = res.data.data
+      }).catch(err => {
+      console.log(err);
+    })
+    // 加载历史榜单电影列表
+    recommenderApi.queryHistoryTop20()
+      .then(res => {
+        this.historyTopMovieList = res.data.data
+      }).catch(err => {
+      console.log(err);
+    })
 
 
     //以下两个方法是为了加载用户喜好的电影分类
@@ -83,7 +101,7 @@ export default {
 <style scoped>
 .top-background {
   width: 100vw;
-  height: 100vh;
+  height: 85vh;
   position: relative;
   background-size: cover;
   background-position: center;
@@ -135,6 +153,11 @@ export default {
   margin-top: 50px;
   margin-right: 80px;
   float: right;
+}
+
+.rank-board {
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <top-bar></top-bar>
     <el-row style="height: 100vh; width: 100%; position: relative">
       <el-col :span="5">
         <div class="left_navi_container">
@@ -38,8 +39,10 @@
 </template>
 
 <script>
+import TopBar from "@/components/topbar/TopBar";
 export default {
   name: "Rank",
+  components: {TopBar},
   data() {
      return{
 

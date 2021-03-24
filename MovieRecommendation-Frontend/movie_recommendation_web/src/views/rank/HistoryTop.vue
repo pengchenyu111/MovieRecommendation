@@ -35,6 +35,6 @@ export default {
 
 <style scoped>
 .history-page-container {
-  margin-top: 80px;
+  margin-top: 5vh;
 }
 </style>

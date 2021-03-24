@@ -13,16 +13,16 @@
       </div>
       <div class="btn-container">
         <v-btn tile text rounded color="#FFFFFF" class="top-btn-style">全部电影</v-btn>
-        <v-btn tile text rounded color="#FFFFFF" class="top-btn-style">全部榜单</v-btn>
+        <v-btn tile text rounded color="#FFFFFF" class="top-btn-style" @click="toRankPage">全部榜单</v-btn>
       </div>
     </div>
-    <rank-board :movie-list="alsUserRecMovieList" get-more-url="rank/als_user" class="rank-board">
+    <rank-board :movie-list="alsUserRecMovieList" get-more-url="rank/als_user_top" class="rank-board">
       <div slot="rank-title">专属推荐</div>
     </rank-board>
-    <rank-board :movie-list="recentTopMovieList" get-more-url="rank/rencent" class="rank-board">
+    <rank-board :movie-list="recentTopMovieList" get-more-url="rank/rencent_top" class="rank-board">
       <div slot="rank-title">近期热门</div>
     </rank-board>
-    <rank-board :movie-list="historyTopMovieList" get-more-url="rank/history" class="rank-board">
+    <rank-board :movie-list="historyTopMovieList" get-more-url="rank/history_top" class="rank-board">
       <div slot="rank-title">历史榜单</div>
     </rank-board>
     <movie-tag :tag-list="tagList" :dialog-visible="dialogVisible"/>
@@ -94,7 +94,11 @@ export default {
       console.log(err);
     })
   },
-  methods: {}
+  methods: {
+    toRankPage() {
+      this.$router.push('/rank')
+    }
+  }
 }
 </script>
 

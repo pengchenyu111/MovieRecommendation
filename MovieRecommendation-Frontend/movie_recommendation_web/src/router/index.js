@@ -5,6 +5,12 @@ const Login = () => import('../views/Login.vue')
 const Home = () => import('../views/home/Home')
 const Register = () => import('../views/user/Register')
 const ForgetPassword = () => import('../views/user/ForgetPassword')
+const Rank = () => import('../views/rank/Rank')
+const HistoryTop = () => import('../views/rank/HistoryTop')
+const RecentTop = () => import('../views/rank/RecentTop')
+const AlsUserTop = () => import('../views/rank/AlsUserTop')
+const PerTagTop = () => import('../views/rank/PerTagTop')
+const StreamRatingTop = () => import('../views/rank/StreamRatingTop')
 
 Vue.use(Router)
 
@@ -32,6 +38,37 @@ const routes = [
     path: '/home',
     component: Home,
     meta: {title: '首页'}
+  },
+  {
+    path: '/rank',
+    component: Rank,
+    meta: {title: '全部榜单'},
+    children: [
+      {
+        path: '',
+        redirect: 'history_top'
+      },
+      {
+        path: 'history_top',
+        component: HistoryTop
+      },
+      {
+        path: 'recent_top',
+        component: RecentTop
+      },
+      {
+        path: 'per_tag_top',
+        component: PerTagTop
+      },
+      {
+        path: 'als_user_top',
+        component: AlsUserTop
+      },
+      {
+        path: 'stream_rating_top',
+        component: StreamRatingTop
+      }
+    ]
   }
 ]
 

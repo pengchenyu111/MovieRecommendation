@@ -1,12 +1,16 @@
 package com.pcy.movierecommendation.service.impl;
 
+import com.pcy.movierecommendation.dao.MovieTagDao;
 import com.pcy.movierecommendation.dao.UserTagPreferDao;
+import com.pcy.movierecommendation.entity.movieTag.MovieTag;
 import com.pcy.movierecommendation.entity.movieTag.UserTagPrefer;
 import com.pcy.movierecommendation.service.UserTagPreferService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * (UserTagPrefer)表服务实现类
@@ -18,6 +22,8 @@ import java.util.List;
 public class UserTagPreferServiceImpl implements UserTagPreferService {
     @Resource
     private UserTagPreferDao userTagPreferDao;
+    @Resource
+    MovieTagDao movieTagDao;
 
     /**
      * 通过ID查询单条数据
@@ -87,5 +93,20 @@ public class UserTagPreferServiceImpl implements UserTagPreferService {
     @Override
     public boolean deleteById(Integer userId) {
         return this.userTagPreferDao.deleteById(userId) > 0;
+    }
+
+    /**
+     * 通过主键查询详细用户喜好标签数据
+     *
+     * @param userId 主键
+     * @return 标签列表数据
+     */
+    @Override
+    public List<MovieTag> queryFullInfoById(Integer userId) {
+        UserTagPrefer userTagPrefer = this.userTagPreferDao.queryById(userId);
+        List<Integer> idList = Arrays.stream(userTagPrefer.getTagList().split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        return this.movieTagDao.queryByIdList(idList);
     }
 }

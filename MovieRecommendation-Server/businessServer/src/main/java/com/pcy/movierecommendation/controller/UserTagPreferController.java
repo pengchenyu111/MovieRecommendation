@@ -2,15 +2,18 @@ package com.pcy.movierecommendation.controller;
 
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
+import com.pcy.movierecommendation.entity.movieTag.MovieTag;
 import com.pcy.movierecommendation.entity.movieTag.UserTagPrefer;
 import com.pcy.movierecommendation.service.UserTagPreferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (UserTagPrefer)表控制层
@@ -45,6 +48,25 @@ public class UserTagPreferController extends BaseController {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, userTagPrefer);
+    }
+
+    /**
+     * 通过主键查询详细用户喜好标签数据
+     *
+     * @param userId 主键
+     * @return 标签列表数据
+     */
+    @ApiOperation(value = "主键查询", notes = "通过主键查询单条数据")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "userId", value = "用户id", required = true, dataType = "Integer")
+    })
+    @GetMapping("/detail/{userId}")
+    public ApiResponse<List<MovieTag>> queryFullInfoById(@PathVariable("userId") Integer userId) {
+        List<MovieTag> movieTagList = this.userTagPreferService.queryFullInfoById(userId);
+        if (CollectionUtils.isEmpty(movieTagList)) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieTagList);
     }
 
     /**

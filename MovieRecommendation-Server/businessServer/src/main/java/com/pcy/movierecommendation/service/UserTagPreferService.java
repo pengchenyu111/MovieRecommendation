@@ -1,5 +1,6 @@
 package com.pcy.movierecommendation.service;
 
+import com.pcy.movierecommendation.entity.movieTag.MovieTag;
 import com.pcy.movierecommendation.entity.movieTag.UserTagPrefer;
 
 import java.util.List;
@@ -62,4 +63,11 @@ public interface UserTagPreferService {
      */
     boolean deleteById(Integer userId);
 
+    /**
+     * 通过主键查询详细用户喜好标签数据
+     *
+     * @param userId 主键
+     * @return 标签列表数据
+     */
+    List<MovieTag> queryFullInfoById(Integer userId);
 }

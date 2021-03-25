@@ -5,6 +5,6 @@ export default {
   },
 
   stringToNumberList(str, division) {
-    return str.split(division)
+    return str.split(division).map(Number)
   }
 }

@@ -26,3 +26,30 @@ export const queryALSUserRecs = (userId) => {
   const url = `alsUserRecs/${userId}`
   return httpFetch.get(url)
 }
+
+/**
+ * 实时评分电影推荐
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const queryStreamRatingRecs = (userId) => {
+  const url = `ratingRecs/${userId}`
+  return httpFetch.get(url)
+}
+
+/**
+ * 用户感兴趣电影标签电影推荐
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const queryUserPreferGenreRecs = (userId) => {
+  const url = `userPreferGenreTop10/${userId}`
+  return httpFetch.get(url)
+}
+
+/**
+ * 类别电影的Top10
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const queryPerTagRecs = (genre) => {
+  const url = 'genreTop10'
+  return httpFetch.post(url,{genre: genre})
+}

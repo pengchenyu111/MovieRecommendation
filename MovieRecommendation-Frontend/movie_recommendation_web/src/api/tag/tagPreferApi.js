@@ -10,6 +10,11 @@ export const queryUserTagPreferById = (userId) => {
   return httpFetch.get(url)
 }
 
+export const queryUserTagPreferDetailById = (userId) => {
+  const url = `tagPrefer/detail/${userId}`
+  return httpFetch.get(url)
+}
+
 /**
  * 新增一个
  */

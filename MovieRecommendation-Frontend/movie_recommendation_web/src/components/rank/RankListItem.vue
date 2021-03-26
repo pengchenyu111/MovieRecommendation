@@ -9,7 +9,7 @@
       </el-col>
       <!--封面-->
       <el-col :span="3" style="text-align: center">
-        <el-image :src="movieDetail.coverUrl" style="height: 150px; width: 100px">
+        <el-image :src="movieDetail.coverUrl" style="height: 150px; width: 100px" class="grow-shadow" @click="toMovieDetailPage">
           <div slot="error" style="text-align: center; line-height: 150px">
             <i class="el-icon-picture-outline"></i>
           </div>
@@ -19,7 +19,7 @@
       <el-col :span="20">
         <el-row>
           <el-col :span="18">
-            <div style="color: black; margin-bottom: 10px">{{ movieDetail.title }}</div>
+            <div @click="toMovieDetailPage" class="title-style">{{ movieDetail.title }}</div>
             <el-row>
               <el-col :span="2"><span class="prop-style">导演：</span></el-col>
               <el-col :span="22"><span class="prop-content-style">{{ movieDetail.directors }}</span></el-col>
@@ -83,6 +83,12 @@ export default {
     ratingStarNum() {
       return this.movieDetail.ratingStar / 10.0
     }
+  },
+  methods: {
+    toMovieDetailPage(doubanId) {
+      let href = this.$router.resolve({path: `/movie/${doubanId}`});
+      window.open(href.href, '_blank')
+    }
   }
 }
 </script>
@@ -96,6 +102,16 @@ export default {
   font-size: 25px;
   font-family: Fantasy;
   color: #000000;
+}
+
+.title-style {
+  color: black;
+  margin-bottom: 10px;
+}
+
+.title-style:hover {
+  color: dodgerblue;
+  margin-bottom: 10px;
 }
 
 .rank-order-bg-1 {
@@ -133,5 +149,22 @@ export default {
 
 .rating-star-style {
   text-align: center;
+}
+
+.grow-shadow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: box-shadow;
+  transition-property: box-shadow;
+}
+.grow-shadow:hover {
+  box-shadow: 0 5px 5px 3px rgba(0, 0, 0, 0.6);
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
 }
 </style>

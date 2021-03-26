@@ -11,6 +11,7 @@ const RecentTop = () => import('../views/rank/RecentTop')
 const AlsUserTop = () => import('../views/rank/AlsUserTop')
 const PerTagTop = () => import('../views/rank/PerTagTop')
 const StreamRatingTop = () => import('../views/rank/StreamRatingTop')
+const MovieHome = () => import('../views/movie/MovieHome')
 
 Vue.use(Router)
 
@@ -69,6 +70,11 @@ const routes = [
         component: StreamRatingTop
       }
     ]
+  },
+  {
+    path: '/movie/:doubanId',
+    component: MovieHome,
+    meta: {title: '电影详情'}
   }
 ]
 

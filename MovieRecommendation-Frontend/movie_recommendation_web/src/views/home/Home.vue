@@ -125,6 +125,7 @@ export default {
   text-align: center;
   font-family: Bahnschrift, cursive;
   margin-top: 60px;
+  user-select: none;
 }
 
 .home-main-text {
@@ -133,6 +134,7 @@ export default {
   text-align: center;
   font-family: "Microsoft YaHei UI", cursive;
   margin-top: 10px;
+  user-select: none;
 }
 
 .btn-container {

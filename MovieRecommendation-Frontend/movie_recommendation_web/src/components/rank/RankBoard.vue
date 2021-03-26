@@ -1,5 +1,6 @@
 <template>
   <div>
+    <link rel="stylesheet" type="text/css" href="https://ianlunn.github.io/Hover/css/hover.css">
     <div class="rank-title-style">
       <slot name="rank-title"></slot>
     </div>
@@ -16,6 +17,7 @@
         v-for="item in movieList"
         :key="item.doubanId"
         :image="item.coverUrl"
+        class="hvr-grow-shadow"
         :link="movieDetailUrl(item.doubanId)">
         <template v-slot:content>
           <div class="movie-title-container-style">
@@ -50,7 +52,7 @@ export default {
   },
   computed: {
     movieDetailUrl() {
-      return (id) => 'movie_detail/' + id
+      return (id) => 'movie/' + id
     },
     moreUrl() {
       return this.getMoreUrl

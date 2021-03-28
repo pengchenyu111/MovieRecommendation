@@ -11,8 +11,12 @@ const RecentTop = () => import('../views/rank/RecentTop')
 const AlsUserTop = () => import('../views/rank/AlsUserTop')
 const PerTagTop = () => import('../views/rank/PerTagTop')
 const StreamRatingTop = () => import('../views/rank/StreamRatingTop')
-const MovieHome = () => import('../views/movie/MovieHome')
+const MovieHome = () => import('../views/movie/detail/MovieHome')
 const MovieSearchHome = () => import("@/views/movie/search/MovieSearchHome")
+const MovieInfo = () => import("@/views/movie/detail/MovieInfo")
+const MovieStatistic = () => import("@/views/movie/detail/MovieStatistic")
+const MovieReview = () => import("@/views/movie/detail/MovieReview")
+const MovieGallery = () => import("@/views/movie/detail/MovieGallery")
 
 Vue.use(Router)
 
@@ -75,7 +79,29 @@ const routes = [
   {
     path: '/movie/:doubanId',
     component: MovieHome,
-    meta: {title: '电影详情'}
+    meta: {title: '电影详情'},
+    children: [
+      {
+        path: '',
+        redirect: 'info'
+      },
+      {
+        path: 'info',
+        component: MovieInfo,
+      },
+      {
+        path: 'statistic',
+        component: MovieStatistic,
+      },
+      {
+        path: 'gallery',
+        component: MovieGallery,
+      },
+      {
+        path: 'review',
+        component: MovieReview,
+      }
+    ]
   },
   {
     path: '/search',

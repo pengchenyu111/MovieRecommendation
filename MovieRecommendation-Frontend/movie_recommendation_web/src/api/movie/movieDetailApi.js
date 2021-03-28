@@ -23,3 +23,15 @@ export const searchByTags = (searchRequest) => {
   const url = 'movieDetail/searchByTags'
   return httpFetch.post(url, searchRequest)
 }
+
+
+/**
+ * 豆瓣id查询电影详情
+ *
+ * @param doubanId
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const searchByDoubanId = (doubanId) => {
+  const url = `movieDetail/${doubanId}`
+  return httpFetch.get(url)
+}

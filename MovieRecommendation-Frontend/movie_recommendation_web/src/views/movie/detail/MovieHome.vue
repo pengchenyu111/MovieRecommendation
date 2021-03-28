@@ -8,28 +8,28 @@
           <span class="title-style" @click="backToHomePage">MOVIE ME</span>
         </el-col>
         <el-col :span="20">
-            <span class="nav-style">
-              <el-menu default-active="1"
-                       mode="horizontal"
-                       @select="handleSelect"
-                       background-color="#262626"
-                       text-color="#FFFFFF"
-                       active-text-color="#ec0607">
-                <el-menu-item index="1">
-                  <router-link :to="`/movie/${$route.params.doubanId}/info`">详情</router-link>
-                </el-menu-item>
-                <el-menu-item index="2">
-                  <router-link :to="`/movie/${$route.params.doubanId}/statistic`">统计</router-link>
-                </el-menu-item>
-                <el-menu-item index="3">演员</el-menu-item>
-                <el-menu-item index="4">
-                   <router-link :to="`/movie/${$route.params.doubanId}/gallery`">剧照</router-link>
-                </el-menu-item>
-                <el-menu-item index="5">
-                  <router-link :to="`/movie/${$route.params.doubanId}/review`">评论</router-link>
-                </el-menu-item>
-              </el-menu>
-            </span>
+          <el-menu default-active="1"
+                   mode="horizontal"
+                   @select="handleSelect"
+                   class="nav-style"
+                   background-color="#262626"
+                   text-color="#FFFFFF"
+                   active-text-color="#ec0607">
+            <el-menu-item index="1">
+              <router-link :to="`/movie/${$route.params.doubanId}/info`">详情</router-link>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <router-link :to="`/movie/${$route.params.doubanId}/statistic`">统计</router-link>
+            </el-menu-item>
+            <el-menu-item index="3">演员</el-menu-item>
+            <el-menu-item index="4">
+              <router-link :to="`/movie/${$route.params.doubanId}/gallery`">剧照</router-link>
+            </el-menu-item>
+            <el-menu-item index="5">
+              <router-link :to="`/movie/${$route.params.doubanId}/review`">评论</router-link>
+            </el-menu-item>
+          </el-menu>
+
         </el-col>
         <el-col :span="1">
           <user-avatar class="avatar-style"></user-avatar>

@@ -12,7 +12,7 @@
         这是一个影像的时代，视听的时代，机械复制的时代，灵光消逝的时代
       </div>
       <div class="btn-container">
-        <v-btn tile text rounded color="#FFFFFF" class="top-btn-style">全部电影</v-btn>
+        <v-btn tile text rounded color="#FFFFFF" class="top-btn-style" @click="toMovieSearchPage">全部电影</v-btn>
         <v-btn tile text rounded color="#FFFFFF" class="top-btn-style" @click="toRankPage">全部榜单</v-btn>
       </div>
     </div>
@@ -97,6 +97,9 @@ export default {
   methods: {
     toRankPage() {
       this.$router.push('/rank')
+    },
+    toMovieSearchPage() {
+      this.$router.push('/search')
     }
   }
 }

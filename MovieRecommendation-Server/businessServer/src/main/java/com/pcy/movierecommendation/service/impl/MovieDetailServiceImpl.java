@@ -257,7 +257,7 @@ public class MovieDetailServiceImpl implements MovieDetailService {
                         .lte(movieDetailSearchRequest.getRatingScoreUpperBound()));
         searchSourceBuilder.query(boolQueryBuilder);
         // 设置分页
-        searchSourceBuilder.from(movieDetailSearchRequest.getPageNum());
+        searchSourceBuilder.from(movieDetailSearchRequest.getPageNum() * movieDetailSearchRequest.getPageSize());
         searchSourceBuilder.size(movieDetailSearchRequest.getPageSize());
         // 发起请求并开始处理结果
         ElasticSearchVo<MovieDetail> result = new ElasticSearchVo<>();
@@ -268,6 +268,7 @@ public class MovieDetailServiceImpl implements MovieDetailService {
         }
         result.setPageNum(movieDetailSearchRequest.getPageNum());
         result.setPageSize(movieDetailSearchRequest.getPageSize());
+        logger.info("[ES标签搜索]===>" + result);
         return result;
     }
 }

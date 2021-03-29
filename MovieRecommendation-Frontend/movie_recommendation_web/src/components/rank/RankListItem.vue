@@ -9,7 +9,7 @@
       </el-col>
       <!--封面-->
       <el-col :span="3" style="text-align: center">
-        <el-image :src="movieDetail.coverUrl" style="height: 150px; width: 100px" class="grow-shadow" @click="toMovieDetailPage">
+        <el-image :src="movieDetail.coverUrl" style="height: 150px; width: 100px" class="grow-shadow" @click="toMovieDetailPage(movieDetail.doubanId)">
           <div slot="error" style="text-align: center; line-height: 150px">
             <i class="el-icon-picture-outline"></i>
           </div>
@@ -19,7 +19,7 @@
       <el-col :span="20">
         <el-row>
           <el-col :span="18">
-            <div @click="toMovieDetailPage" class="title-style">{{ movieDetail.title }}</div>
+            <div @click="toMovieDetailPage(movieDetail.doubanId)" class="title-style">{{ movieDetail.title }}</div>
             <el-row>
               <el-col :span="2"><span class="prop-style">导演：</span></el-col>
               <el-col :span="22"><span class="prop-content-style">{{ movieDetail.directors }}</span></el-col>

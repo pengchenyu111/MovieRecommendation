@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * (ImdbRatings)表服务实现类
@@ -185,5 +186,22 @@ public class ImdbRatingsServiceImpl implements ImdbRatingsService {
         ratingVote = StringUtils.isNotEmpty(imdbRatings.getFemaleRatings()) == Boolean.TRUE ? ratingVoteTransfer(imdbRatings.getFemaleRatings()) : new RatingVote();
         allSexRatingVote.setFemaleRatings(ratingVote);
         return allSexRatingVote;
+    }
+
+
+    /**
+     * 通过豆瓣id查询评分人数总数
+     *
+     * @param doubanId 豆瓣id
+     * @return 评分人数总数
+     */
+    @Override
+    public Integer queryVotes(Integer doubanId) {
+        ImdbRatings imdbRatings = imdbRatingsDao.queryByDoubanId(String.valueOf(doubanId));
+         return ObjectUtil.transforString2List(imdbRatings.getRatingScoresVotes(), "\\|")
+                .stream()
+                .map(Integer::parseInt)
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 }

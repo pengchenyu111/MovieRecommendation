@@ -80,4 +80,12 @@ public interface ImdbRatingsService {
      * @return 单条数据
      */
     FormatImdbRatings queryByDoubanIdFormat(String doubanId);
+
+    /**
+     * 通过豆瓣id查询评分人数总数
+     *
+     * @param doubanId 豆瓣id
+     * @return 评分人数总数
+     */
+    Integer queryVotes(Integer doubanId);
 }

@@ -70,5 +70,24 @@ public class ImdbRatingsController extends BaseController {
         return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, imdbRatings);
     }
 
+    /**
+     * 通过豆瓣id查询评分人数总数
+     *
+     * @param doubanId 豆瓣id
+     * @return 评分人数总数
+     */
+    @ApiOperation(value = "通过豆瓣id查询评分人数总数", notes = "通过豆瓣id查询评分人数总数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "doubanId", value = "doubanId", required = true, dataType = "Integer")
+    })
+    @GetMapping("/vote/doubanId/{doubanId}")
+    public ApiResponse<Integer> queryVotes(@PathVariable("doubanId") Integer doubanId) {
+        Integer votes = this.imdbRatingsService.queryVotes(doubanId);
+        if (votes == null) {
+            return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
+        }
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, votes);
+    }
+
 
 }

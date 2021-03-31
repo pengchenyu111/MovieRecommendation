@@ -18,34 +18,36 @@ import {
 // 按需导入echarts的图形类型
 import {
   BarChart,
-  PieChart
+  PieChart,
+  PictorialBarChart
 } from 'echarts/charts'
 // 按需导入工具部分
 import {
   GridComponent,
-  ToolboxComponent,
   TooltipComponent,
   TitleComponent,
-  MarkPointComponent,
-  MarkLineComponent,
   LegendComponent,
-  DataZoomComponent,
-  VisualMapComponent
+  //ToolboxComponent,
+  //MarkPointComponent,
+  //MarkLineComponent,
+  //DataZoomComponent,
+  //VisualMapComponent
 } from 'echarts/components';
 
 use([
   CanvasRenderer,
   BarChart,
   PieChart,
+  PictorialBarChart,
   GridComponent,
-  ToolboxComponent,
   TooltipComponent,
   TitleComponent,
-  MarkPointComponent,
-  MarkLineComponent,
   LegendComponent,
-  DataZoomComponent,
-  VisualMapComponent
+  //ToolboxComponent,
+  //MarkPointComponent,
+  //MarkLineComponent,
+  //DataZoomComponent,
+  //VisualMapComponent
 ]);
 // 全局注册chart组件
 Vue.component('VueEcharts', ECharts)

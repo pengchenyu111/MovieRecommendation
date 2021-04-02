@@ -105,7 +105,7 @@
                   </el-row>
                 </el-col>
                 <el-col :span="12">
-                  <div style="margin-top: 15px">
+                  <div style="margin-top: 15px" v-if="movieDetail.betterThan !== ''">
                     <div v-for="(item, index) in getBetterThan" :key="index">
                       好于 <span style="color: #e88856">{{ item }}</span>
                     </div>

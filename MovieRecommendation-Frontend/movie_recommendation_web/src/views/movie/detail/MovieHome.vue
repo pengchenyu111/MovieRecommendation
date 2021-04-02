@@ -21,11 +21,10 @@
             <el-menu-item index="2">
               <router-link :to="`/movie/${$route.params.doubanId}/statistic`">统计</router-link>
             </el-menu-item>
-            <el-menu-item index="3">演员</el-menu-item>
-            <el-menu-item index="4">
+            <el-menu-item index="3">
               <router-link :to="`/movie/${$route.params.doubanId}/gallery`">剧照</router-link>
             </el-menu-item>
-            <el-menu-item index="5">
+            <el-menu-item index="4">
               <router-link :to="`/movie/${$route.params.doubanId}/review`">评论</router-link>
             </el-menu-item>
           </el-menu>

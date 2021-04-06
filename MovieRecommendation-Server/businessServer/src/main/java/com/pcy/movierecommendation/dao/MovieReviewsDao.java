@@ -101,6 +101,14 @@ public interface MovieReviewsDao {
     List<MovieReviews> queryByDoubanId(Integer doubanId);
 
     /**
+     * 根据doubanId查询， 默认按赞同数（降序），时间（降序）排序
+     *
+     * @param doubanId 豆瓣id
+     * @return 分页数据
+     */
+    List<MovieReviews> queryByDoubanIdWithSort(Integer doubanId);
+
+    /**
      * 用户给评论点赞
      *
      * @param reviewId 评论id

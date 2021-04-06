@@ -124,7 +124,7 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
     @Override
     public PageInfo<MovieReviews> queryByDoubanIdPage(Integer doubanId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<MovieReviews> movieReviewsList = this.movieReviewsDao.queryByDoubanId(doubanId);
+        List<MovieReviews> movieReviewsList = this.movieReviewsDao.queryByDoubanIdWithSort(doubanId);
         return new PageInfo<>(movieReviewsList);
     }
 

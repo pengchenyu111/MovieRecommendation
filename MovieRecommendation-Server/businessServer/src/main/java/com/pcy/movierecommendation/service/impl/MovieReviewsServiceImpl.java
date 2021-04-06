@@ -1,9 +1,7 @@
 package com.pcy.movierecommendation.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.pcy.movierecommendation.core.utils.DateFormatUtil;
 import com.pcy.movierecommendation.core.utils.IdWorkerUtil;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieReviewsDao;
@@ -17,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -173,11 +170,12 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
      * 用户给评论点赞
      *
      * @param reviewId 评论id
-     * @return 评论点赞是否成功
+     * @return 修改后的数据
      */
     @Override
-    public Boolean agree(String reviewId) {
-        return this.movieReviewsDao.agree(reviewId);
+    public MovieReviews agree(String reviewId) {
+        this.movieReviewsDao.agree(reviewId);
+        return this.movieReviewsDao.queryById(reviewId);
     }
 
     /**

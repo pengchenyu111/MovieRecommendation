@@ -128,11 +128,11 @@ public class MovieReviewsController {
     })
     @GetMapping("/agree/{reviewId}")
     public ApiResponse<MovieReviews> agree(@PathVariable("reviewId") String reviewId) {
-        Boolean isSuccess = this.movieReviewsService.agree(reviewId);
-        if (!isSuccess) {
+        MovieReviews updatedMovieReviews = this.movieReviewsService.agree(reviewId);
+        if (updatedMovieReviews == null) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.REQUEST_FAIL, null);
         }
-        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, null);
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, updatedMovieReviews);
     }
 
     /**

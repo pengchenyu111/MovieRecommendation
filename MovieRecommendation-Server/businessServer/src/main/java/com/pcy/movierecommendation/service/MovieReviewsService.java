@@ -87,7 +87,7 @@ public interface MovieReviewsService {
      * @param reviewId 评论id
      * @return 评论点赞是否成功
      */
-    Boolean agree(String reviewId);
+    MovieReviews agree(String reviewId);
 
     /**
      * 获取用户最近的K次评分数据

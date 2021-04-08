@@ -2,6 +2,7 @@ package com.pcy.movierecommendation.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pcy.movierecommendation.core.utils.DateFormatUtil;
 import com.pcy.movierecommendation.core.utils.IdWorkerUtil;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
 import com.pcy.movierecommendation.dao.MovieReviewsDao;
@@ -141,6 +142,8 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
         movieReviews.setReviewId(String.valueOf(nextId));
         // 设置评分
         movieReviews.setUserMovieRating(movieReviews.getUserMovieRating() * 10);
+        // 设置评分时间
+        movieReviews.setUserMovieRatingTime(DateFormatUtil.getNowTime());
         // 用户个人信息和评分时间在前端有保存，由前端传入到movieReviews对象中
         int rowFlag1 = this.movieReviewsDao.insert(movieReviews);
         if (rowFlag1 == 1) {
@@ -153,16 +156,26 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
         Integer userId = movieUserDao.queryByUserUniqueName(movieReviews.getUserUniqueName()).getUserId();
         movieUserRatings.setUserId(userId);
         movieUserRatings.setUserMovieRating((double) (movieReviews.getUserMovieRating() / 10));
+        movieUserRatings.setUserMovieRatingTime(DateFormatUtil.getNowTime());
         int rowFlag2 = this.movieUserRatingsDao.insert(movieUserRatings);
         if (rowFlag2 == 1) {
             logger.info("插入movie_user_ratings表成功");
         }
         // 再更新redis中的用户最近k次评分数据
         String key = "rec:rating:userId:" + userId;
-        String value = movieUserRatings.getDoubanId() + ":" + movieUserRatings.getUserMovieRating();
-        Long valueCountInList = redisUtil.lpush(DEFAULT_REDIS_DB, key, value);
-        logger.info("[更新Redis中用户最近K次评分成功]-" + key + "[队列中个数为]-" + valueCountInList);
-
+        // 如果redis中没有之前的评分数据，还得先存入之前的数据
+        if (!redisUtil.exists(key)) {
+            List<MovieUserRatings> movieUserRatingsList = this.movieUserRatingsDao.queryByUserId(userId);
+            String[] data = movieUserRatingsList.stream()
+                    .map(x -> x.getDoubanId() + ":" + x.getUserMovieRating())
+                    .toArray(String[]::new);
+            Long ratingCount = redisUtil.lpush(DEFAULT_REDIS_DB, key, data);
+            logger.info(String.format("[将用户最近的评分数据存入Redis]-用户%d-历史评分数%d", userId, ratingCount));
+        } else {
+            String value = movieUserRatings.getDoubanId() + ":" + movieUserRatings.getUserMovieRating();
+            Long valueCountInList = redisUtil.lpush(DEFAULT_REDIS_DB, key, value);
+            logger.info("[更新Redis中用户最近K次评分成功]-" + key + "[队列中个数为]-" + valueCountInList);
+        }
         return movieReviews;
     }
 

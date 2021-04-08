@@ -22,3 +22,15 @@ export const reviewAgree = (reviewId) => {
   const url = `movieReviews/agree/${reviewId}`
   return httpFetch.get(url)
 }
+
+/**
+ * 评论
+ *
+ * @param request
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const review = (request) => {
+  const url = 'movieReviews'
+  return httpFetch.post(url, request)
+}
+

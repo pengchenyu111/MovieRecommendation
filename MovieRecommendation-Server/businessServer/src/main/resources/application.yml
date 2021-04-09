@@ -55,6 +55,21 @@ spring:
     mongodb:
       uri: mongodb://pcy:Pcy548890321!,.@81.70.252.155:27017/recommender
 
+  #Kafka配置
+  kafka:
+    bootstrap-servers: 81.70.252.155:9092
+    #生产者配置
+    producer:
+      retries: 0
+      acks: 1
+      batch-size: 16384
+      properties:
+        linger:
+          ms: 0
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
 # ElasticSearch配置
 elasticsearch:
   hostname: 81.70.252.155

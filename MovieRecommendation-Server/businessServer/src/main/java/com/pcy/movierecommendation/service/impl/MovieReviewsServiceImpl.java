@@ -2,6 +2,7 @@ package com.pcy.movierecommendation.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pcy.movierecommendation.core.constants.MessageConstant;
 import com.pcy.movierecommendation.core.utils.DateFormatUtil;
 import com.pcy.movierecommendation.core.utils.IdWorkerUtil;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
@@ -13,6 +14,7 @@ import com.pcy.movierecommendation.entity.movieReviews.MovieUserRatings;
 import com.pcy.movierecommendation.service.MovieReviewsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,6 +39,8 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
     private MovieUserDao movieUserDao;
     @Resource
     private RedisUtil redisUtil;
+    @Resource
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
     private static final int DEFAULT_REDIS_DB = 0;
     private static final int DEFAULT_RATING_K = 20;
@@ -176,6 +180,20 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
             Long valueCountInList = redisUtil.lpush(DEFAULT_REDIS_DB, key, value);
             logger.info("[更新Redis中用户最近K次评分成功]-" + key + "[队列中个数为]-" + valueCountInList);
         }
+
+        // 发送消息给Kafka
+        StringBuilder builder = new StringBuilder();
+        String message = builder.append(userId).append("|")
+                .append(movieUserRatings.getDoubanId()).append("|")
+                .append(movieUserRatings.getUserMovieRating()).append("|")
+                .append(movieUserRatings.getUserMovieRatingTime()).toString();
+        kafkaTemplate.send(MessageConstant.TOPIC_MOVIE_REC_SYS_RATING, message)
+                .addCallback(success -> {
+                            logger.info(String.format("[发送评分消息成功]-%s", message));
+                        }, failure -> {
+                            logger.info(String.format("[发送评分消息失败]-%s", message));
+                        }
+                );
         return movieReviews;
     }
 

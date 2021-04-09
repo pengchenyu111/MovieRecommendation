@@ -102,7 +102,8 @@ export default {
   data() {
     return {
       imdbRatingInfo: {},
-      imdbTotalVotes: 0
+      imdbTotalVotes: 0,
+      colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
     }
   },
   computed: {

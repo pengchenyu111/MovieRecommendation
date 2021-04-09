@@ -8,6 +8,7 @@
       class="no-shadow"
       :autoplay="true"
       :duration="4000"
+      :slideMultiple="true"
       :visible-slides="5"
       :slide-ratio="1 / 4"
       :gap="3"

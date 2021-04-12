@@ -53,3 +53,21 @@ export const queryPerTagRecs = (genre) => {
   const url = 'genreTop10'
   return httpFetch.post(url,{genre: genre})
 }
+
+/**
+ * 基于内容的电影推荐
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const queryContentRecs = (doubanId) => {
+  const url = `content/${doubanId}`
+  return httpFetch.get(url)
+}
+
+/**
+ * 基于Item-CF的电影推荐
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const queryItemCFRecs = (doubanId) => {
+  const url = `itemCFRecs/${doubanId}`
+  return httpFetch.get(url)
+}

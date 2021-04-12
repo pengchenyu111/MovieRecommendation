@@ -27,6 +27,9 @@
             <el-menu-item index="4">
               <router-link :to="`/movie/${$route.params.doubanId}/review`">评论</router-link>
             </el-menu-item>
+            <el-menu-item index="5">
+              <router-link :to="`/movie/${$route.params.doubanId}/single_recommend`">推荐</router-link>
+            </el-menu-item>
           </el-menu>
 
         </el-col>

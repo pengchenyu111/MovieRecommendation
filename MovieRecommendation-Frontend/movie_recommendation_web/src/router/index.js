@@ -17,6 +17,7 @@ const MovieInfo = () => import("@/views/movie/detail/MovieInfo")
 const MovieStatistic = () => import("@/views/movie/detail/MovieStatistic")
 const MovieReview = () => import("@/views/movie/detail/MovieReview")
 const MovieGallery = () => import("@/views/movie/detail/MovieGallery")
+const MovieSingleRecommend = () => import("@/views/movie/detail/MovieSingleRecommend")
 
 Vue.use(Router)
 
@@ -100,6 +101,10 @@ const routes = [
       {
         path: 'review',
         component: MovieReview,
+      },
+      {
+        path: 'single_recommend',
+        component: MovieSingleRecommend,
       }
     ]
   },

@@ -65,7 +65,7 @@ export default {
       window.open(href.href, '_blank')
     },
     toForgetPassword() {
-      let href = this.$router.resolve({path: '/forgetPassword'});
+      let href = this.$router.resolve({path: '/changePassword'});
       window.open(href.href, '_blank')
     }
   }

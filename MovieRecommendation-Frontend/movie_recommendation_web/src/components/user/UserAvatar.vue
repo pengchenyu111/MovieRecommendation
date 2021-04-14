@@ -28,8 +28,9 @@ export default {
   methods: {
     handleCommand(command) {
       if (command === 'profile') {
-        // todo 跳转到个人主页
-        console.log('aaaaaaa')
+        // 跳转到个人主页
+        let href = this.$router.resolve({path: `/user/profile/${this.userInfo.userId}`});
+        window.open(href.href, '_blank')
       } else if (command === '') {
         // todo 跳转到我的收藏
         console.log('bbbb')

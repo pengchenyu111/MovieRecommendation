@@ -4,7 +4,7 @@ import Router from 'vue-router'
 const Login = () => import('../views/Login.vue')
 const Home = () => import('../views/home/Home')
 const Register = () => import('../views/user/Register')
-const ForgetPassword = () => import('../views/user/ForgetPassword')
+const ChangePassword = () => import('../views/user/ChangePassword')
 const Rank = () => import('../views/rank/Rank')
 const HistoryTop = () => import('../views/rank/HistoryTop')
 const RecentTop = () => import('../views/rank/RecentTop')
@@ -18,6 +18,7 @@ const MovieStatistic = () => import("@/views/movie/detail/MovieStatistic")
 const MovieReview = () => import("@/views/movie/detail/MovieReview")
 const MovieGallery = () => import("@/views/movie/detail/MovieGallery")
 const MovieSingleRecommend = () => import("@/views/movie/detail/MovieSingleRecommend")
+const Profile = () => import("@/views/user/Profile")
 
 Vue.use(Router)
 
@@ -37,9 +38,9 @@ const routes = [
     meta: {title: '注册'},
   },
   {
-    path: '/forgetPassword',
-    component: ForgetPassword,
-    meta: {title: '忘记密码'},
+    path: '/changePassword',
+    component: ChangePassword,
+    meta: {title: '修改密码'},
   },
   {
     path: '/home',
@@ -112,6 +113,11 @@ const routes = [
     path: '/search',
     component: MovieSearchHome,
     meta: {title: '电影搜索'}
+  },
+  {
+    path: '/user/profile/:userId',
+    component: Profile,
+    meta: {title: '个人主页'}
   }
 ]
 

@@ -13,7 +13,7 @@
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
         <result property="sex" column="sex" jdbcType="VARCHAR"/>
-        <result property="birth" column="birth" jdbcType="OTHER"/>
+        <result property="birth" column="birth" jdbcType="VARCHAR"/>
         <result property="age" column="age" jdbcType="INTEGER"/>
         <result property="profession" column="profession" jdbcType="VARCHAR"/>
     </resultMap>
@@ -84,7 +84,7 @@
             <if test="sex != null and sex != ''">
                 and sex = #{sex}
             </if>
-            <if test="birth != null">
+            <if test="birth != ''">
                 and birth = #{birth}
             </if>
             <if test="age != null">
@@ -165,7 +165,7 @@
             <if test="sex != null and sex != ''">
                 sex = #{sex},
             </if>
-            <if test="birth != null">
+            <if test="birth != ''">
                 birth = #{birth},
             </if>
             <if test="age != null">

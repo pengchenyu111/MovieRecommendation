@@ -54,7 +54,7 @@ public class MovieUser implements Serializable {
     private String sex;
 
     @ApiModelProperty(value = "用户生日")
-    private Date birth;
+    private String birth;
 
     @ApiModelProperty(value = "用户年龄")
     private Integer age;

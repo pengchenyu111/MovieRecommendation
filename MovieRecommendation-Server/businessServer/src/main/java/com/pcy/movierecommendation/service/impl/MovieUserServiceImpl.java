@@ -3,6 +3,7 @@ package com.pcy.movierecommendation.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.core.constants.ErrorMessages;
+import com.pcy.movierecommendation.core.utils.DateFormatUtil;
 import com.pcy.movierecommendation.core.utils.EncryptionUtil;
 import com.pcy.movierecommendation.core.utils.IdWorkerUtil;
 import com.pcy.movierecommendation.core.utils.RedisUtil;
@@ -104,6 +105,7 @@ public class MovieUserServiceImpl implements MovieUserService {
      */
     @Override
     public MovieUser update(MovieUser movieUser) {
+        movieUser.setAge(DateFormatUtil.getAgeByBirth(movieUser.getBirth()));
         this.movieUserDao.update(movieUser);
         return this.queryById(movieUser.getUserId());
     }
@@ -192,6 +194,11 @@ public class MovieUserServiceImpl implements MovieUserService {
             IdWorkerUtil idWorkerUtil = new IdWorkerUtil();
             movieUser.setUserUniqueName(String.valueOf(idWorkerUtil.nextId()));
         }
+        // 根据生日设置年龄
+        if (StringUtils.isNotEmpty(movieUser.getBirth())) {
+            movieUser.setAge(DateFormatUtil.getAgeByBirth(movieUser.getBirth()));
+        }
+        // 写入
         int row = movieUserDao.insert(movieUser);
         if (row == 0) {
             return null;

@@ -66,9 +66,16 @@ public class DateFormatUtil {
      * @return 年龄
      * @throws ParseException
      */
-    public static int getAgeByBirth(Date birth) {
+    public static int getAgeByBirth(String birth) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date birthDate = null;
+        try {
+            birthDate = simpleDateFormat.parse(birth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         Calendar cal = Calendar.getInstance();
-        cal.setTime(birth);
+        cal.setTime(birthDate);
         Calendar curr = Calendar.getInstance();
         int age = curr.get(Calendar.YEAR) - cal.get(Calendar.YEAR);
         if ((cal.get(Calendar.MONTH) > curr.get(Calendar.MONTH)) ||

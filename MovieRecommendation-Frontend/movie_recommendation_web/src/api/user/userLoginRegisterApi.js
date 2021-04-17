@@ -8,3 +8,11 @@ export const login = (account, password) => {
   const request = {account: account, password: password}
   return httpFetch.post(url, request)
 }
+
+/**
+ * 用户注册
+ */
+export const register = (request) => {
+  const url = '/movieUser/register'
+  return httpFetch.post(url, request)
+}

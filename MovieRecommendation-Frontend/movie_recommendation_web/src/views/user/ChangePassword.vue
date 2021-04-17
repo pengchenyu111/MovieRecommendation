@@ -1,17 +1,17 @@
 <template>
   <div>
-    <top-bar></top-bar>
     <div class="content-container">
       <el-form :model="changePwdForm" ref="changePwdForm" :rules="rules" label-width="100px" style="width: 40%">
         <el-form-item label="手机号码">
-          {{ changePwdForm.account }}
-          <el-button type="primary"
-                     round
-                     @click="countDown"
-                     style="margin-left: 20px"
-                     :class="{disabled: !this.canClick}">
-            {{ btnContent }}
-          </el-button>
+          <el-input v-model="changePwdForm.account">
+            <el-button type="primary"
+                       round
+                       @click="countDown"
+                       slot="append"
+                       :class="{disabled: !this.canClick}">
+              {{ btnContent }}
+            </el-button>
+          </el-input>
         </el-form-item>
         <el-form-item label="验证码" prop="verifyCode">
           <el-input v-model="changePwdForm.verifyCode"></el-input>
@@ -32,13 +32,11 @@
 </template>
 
 <script>
-import TopBar from "@/components/topbar/TopBar";
 import * as verificationCodeApi from "@/api/verification/verificationCodeApi"
 import * as userApi from "@/api/user/userApi"
 
 export default {
   name: "ChangePassword",
-  components: {TopBar},
   data() {
     let validatePass = (rule, value, callback) => {
       if (value === '') {

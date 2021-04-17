@@ -2,6 +2,7 @@ package com.pcy.movierecommendation.core.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -15,6 +16,7 @@ public class DateFormatUtil {
 
     /**
      * 获取当前时间
+     *
      * @return 当前时间，格式为 yyyy-MM-dd HH:mm:ss
      */
     public static String getNowTime() {
@@ -54,5 +56,27 @@ public class DateFormatUtil {
             e.printStackTrace();
         }
         return simpleDateFormat.format(formatDate);
+    }
+
+
+    /**
+     * 根据生日获取年龄
+     *
+     * @param birth 生日
+     * @return 年龄
+     * @throws ParseException
+     */
+    public static int getAgeByBirth(String birth) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date birthDate = simpleDateFormat.parse(birth);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(birthDate);
+        Calendar curr = Calendar.getInstance();
+        int age = curr.get(Calendar.YEAR) - cal.get(Calendar.YEAR);
+        if ((cal.get(Calendar.MONTH) > curr.get(Calendar.MONTH)) ||
+                (cal.get(Calendar.MONTH) == curr.get(Calendar.MONTH) && cal.get(Calendar.DAY_OF_MONTH) > curr.get(Calendar.DAY_OF_MONTH))) {
+            age--;
+        }
+        return age;
     }
 }

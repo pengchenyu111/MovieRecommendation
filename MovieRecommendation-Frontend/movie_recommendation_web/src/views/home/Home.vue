@@ -25,15 +25,11 @@
     <rank-board :movie-list="historyTopMovieList" get-more-url="rank/history_top" class="rank-board">
       <div slot="rank-title">历史榜单</div>
     </rank-board>
-    <movie-tag :tag-list="tagList" :dialog-visible="dialogVisible"/>
   </div>
 </template>
 
 <script>
-import * as userTagPreferApi from "@/api/tag/tagPreferApi";
-import * as tagApi from "@/api/tag/tagApi";
 import * as recommenderApi from "@/api/recommend/recommenderApi";
-import MovieTag from "@/components/tag/MovieTag";
 import ImgConstants from "@/common/constant/ImgConstants";
 import UserAvatar from "@/components/user/UserAvatar";
 import RankBoard from "@/components/rank/RankBoard";
@@ -41,13 +37,11 @@ import RankBoard from "@/components/rank/RankBoard";
 
 export default {
   name: "Home",
-  components: {RankBoard, UserAvatar, MovieTag},
+  components: {RankBoard, UserAvatar},
   data() {
     return {
       bannerUrl: {backgroundImage: 'url(' + ImgConstants.HOME_BANNER_URL + ')'},
       userInfo: JSON.parse(sessionStorage.getItem("currentUser")),
-      dialogVisible: false,
-      tagList: [],
       recentTopMovieList: [],
       alsUserRecMovieList: [],
       historyTopMovieList: [],
@@ -76,23 +70,6 @@ export default {
       console.log(err);
     })
 
-
-    //以下两个方法是为了加载用户喜好的电影分类
-    userTagPreferApi.queryUserTagPreferById(this.userInfo.userId)
-      .then(res => {
-        if (!res.data.success) {
-          // 如果用户没有喜好标签数据，则打开对话框让用户选择
-          this.dialogVisible = true;
-        }
-      }).catch(err => {
-      console.log(err);
-    })
-    tagApi.queryAllTags()
-      .then(res => {
-        this.tagList = res.data.data
-      }).catch(err => {
-      console.log(err);
-    })
   },
   methods: {
     toRankPage() {

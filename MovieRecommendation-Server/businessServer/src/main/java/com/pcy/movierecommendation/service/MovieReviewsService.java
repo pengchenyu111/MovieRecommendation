@@ -2,6 +2,7 @@ package com.pcy.movierecommendation.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pcy.movierecommendation.entity.movieReviews.MovieReviews;
+import com.pcy.movierecommendation.entity.movieReviews.UserReview;
 
 import java.util.List;
 
@@ -106,5 +107,5 @@ public interface MovieReviewsService {
      * @param pageSize 每页多少数据
      * @return 分页数据
      */
-    PageInfo<MovieReviews> userHistoryReviews(Integer userId, Integer pageNum, Integer pageSize);
+    PageInfo<UserReview> userHistoryReviews(Integer userId, Integer pageNum, Integer pageSize);
 }

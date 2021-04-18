@@ -5,6 +5,7 @@ import com.pcy.movierecommendation.core.constants.ErrorMessages;
 import com.pcy.movierecommendation.core.model.ApiResponse;
 import com.pcy.movierecommendation.entity.movieReviews.MovieReviews;
 import com.pcy.movierecommendation.entity.movieReviews.MovieUserRatings;
+import com.pcy.movierecommendation.entity.movieReviews.UserReview;
 import com.pcy.movierecommendation.service.MovieReviewsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -89,12 +90,12 @@ public class MovieReviewsController {
             @ApiImplicitParam(paramType = "query", name = "pageSize", value = "每页的数量", required = true, dataType = "Integer")
     })
     @GetMapping("/userHistoryReviews/{userId}/page/{pageNum}/{pageSize}")
-    public ApiResponse<PageInfo<MovieReviews>> userHistoryReviews(@PathVariable("userId") Integer userId, @PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
-        PageInfo<MovieReviews> movieReviewsList = this.movieReviewsService.userHistoryReviews(userId, pageNum, pageSize);
-        if (movieReviewsList.getTotal() == 0L) {
+    public ApiResponse<PageInfo<UserReview>> userHistoryReviews(@PathVariable("userId") Integer userId, @PathVariable("pageNum") Integer pageNum, @PathVariable("pageSize") Integer pageSize) {
+        PageInfo<UserReview> userReviewsList = this.movieReviewsService.userHistoryReviews(userId, pageNum, pageSize);
+        if (userReviewsList.getTotal() == 0L) {
             return new ApiResponse<>(Boolean.FALSE, ErrorMessages.QUERY_NULL, null);
         }
-        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, movieReviewsList);
+        return new ApiResponse<>(Boolean.TRUE, ErrorMessages.REQUEST_SUCCESS, userReviewsList);
     }
 
     /**

@@ -11,6 +11,7 @@ import com.pcy.movierecommendation.dao.MovieUserDao;
 import com.pcy.movierecommendation.dao.MovieUserRatingsDao;
 import com.pcy.movierecommendation.entity.movieReviews.MovieReviews;
 import com.pcy.movierecommendation.entity.movieReviews.MovieUserRatings;
+import com.pcy.movierecommendation.entity.movieReviews.UserReview;
 import com.pcy.movierecommendation.service.MovieReviewsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -230,9 +231,9 @@ public class MovieReviewsServiceImpl implements MovieReviewsService {
      * @return 分页数据
      */
     @Override
-    public PageInfo<MovieReviews> userHistoryReviews(Integer userId, Integer pageNum, Integer pageSize) {
+    public PageInfo<UserReview> userHistoryReviews(Integer userId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<MovieReviews> movieReviewsList = this.movieReviewsDao.userHistoryReviews(userId);
-        return new PageInfo<>(movieReviewsList);
+        List<UserReview> userReviewsList = this.movieReviewsDao.userHistoryReviews(userId);
+        return new PageInfo<>(userReviewsList);
     }
 }

@@ -18,6 +18,18 @@
         <result property="movieNegativeRate" column="movie_negative_rate" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap type="com.pcy.movierecommendation.entity.movieReviews.UserReview" id="UserReviewsMap">
+        <result property="reviewId" column="review_id" jdbcType="VARCHAR"/>
+        <result property="doubanId" column="douban_id" jdbcType="INTEGER"/>
+        <result property="userUniqueName" column="user_unique_name" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="coverUrl" column="cover_url" jdbcType="VARCHAR"/>
+        <result property="userMovieRatingContent" column="user_movie_rating_content" jdbcType="VARCHAR"/>
+        <result property="userMovieRating" column="user_movie_rating" jdbcType="INTEGER"/>
+        <result property="userMovieRatingAgree" column="user_movie_rating_agree" jdbcType="INTEGER"/>
+        <result property="userMovieRatingTime" column="user_movie_rating_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <!--查询单个-->
     <select id="queryById" resultMap="MovieReviewsMap">
         select
@@ -109,13 +121,23 @@
     </select>
 
     <!--根据userId查询用户历史评论-->
-    <select id="userHistoryReviews" resultMap="MovieReviewsMap">
+    <select id="userHistoryReviews" resultMap="UserReviewsMap">
         select
-            review_id, douban_id, user_unique_name, user_head_portrait_url, user_url, user_name, user_movie_rating, user_movie_rating_time, user_movie_rating_agree, user_movie_rating_content, movie_positive_rate, movie_general_rate, movie_negative_rate
-        from movie_recommendation.movie_reviews
+            mr.review_id,
+            mr.user_unique_name,
+            md.douban_id,
+            md.title,
+            md.cover_url,
+            mr.user_movie_rating_content,
+            mr.user_movie_rating,
+            mr.user_movie_rating_agree,
+            mr.user_movie_rating_time
+        from movie_recommendation.movie_reviews mr
+                 left join movie_detail md on mr.douban_id = md.douban_id
         where user_unique_name = (
-            select user_unique_name from movie_user where user_id = #{userId})
-        order by user_movie_rating_time DESC
+            select user_unique_name from movie_user where user_id = #{userId}
+        )
+        order by user_movie_rating_agree DESC
     </select>
 
     <!--查看评论，排序-->

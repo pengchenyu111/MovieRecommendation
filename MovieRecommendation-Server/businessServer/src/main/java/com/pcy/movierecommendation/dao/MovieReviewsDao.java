@@ -1,6 +1,7 @@
 package com.pcy.movierecommendation.dao;
 
 import com.pcy.movierecommendation.entity.movieReviews.MovieReviews;
+import com.pcy.movierecommendation.entity.movieReviews.UserReview;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -131,5 +132,5 @@ public interface MovieReviewsDao {
      * @param userId 用户id
      * @return 用户历史评论
      */
-    List<MovieReviews> userHistoryReviews(Integer userId);
+    List<UserReview> userHistoryReviews(Integer userId);
 }

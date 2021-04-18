@@ -19,6 +19,7 @@ const MovieReview = () => import("@/views/movie/detail/MovieReview")
 const MovieGallery = () => import("@/views/movie/detail/MovieGallery")
 const MovieSingleRecommend = () => import("@/views/movie/detail/MovieSingleRecommend")
 const Profile = () => import("@/views/user/Profile")
+const MyReview = () => import("@/views/user/MyReview")
 
 Vue.use(Router)
 
@@ -118,6 +119,11 @@ const routes = [
     path: '/user/profile/:userId',
     component: Profile,
     meta: {title: '个人主页'}
+  },
+  {
+    path: '/user/myReview/:userId',
+    component: MyReview,
+    meta: {title: '我的评论'}
   }
 ]
 

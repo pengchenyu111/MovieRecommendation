@@ -34,3 +34,16 @@ export const review = (request) => {
   return httpFetch.post(url, request)
 }
 
+/**
+ * 根据用户id分页查询该用户评论
+ *
+ * @param userId
+ * @param pageNum
+ * @param pageSize
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const queryUserReviews = (userId, pageNum, pageSize) => {
+  const url = `movieReviews/userHistoryReviews/${userId}/page/${pageNum}/${pageSize}`
+  return httpFetch.get(url)
+}
+

@@ -31,12 +31,13 @@ export default {
         // 跳转到个人主页
         let href = this.$router.resolve({path: `/user/profile/${this.userInfo.userId}`});
         window.open(href.href, '_blank')
-      } else if (command === '') {
+      } else if (command === 'userCollection') {
         // todo 跳转到我的收藏
-        console.log('bbbb')
-      } else if (command === '') {
-        // todo 跳转到我的评论
-        console.log('cccc')
+        this.$message.error("暂未开放！")
+      } else if (command === 'userReview') {
+        // 跳转到我的评论
+        let href = this.$router.resolve({path: `/user/myReview/${this.userInfo.userId}`});
+        window.open(href.href, '_blank')
       } else if (command === 'exit') {
         // 退出登录
         this.$router.replace('/login');

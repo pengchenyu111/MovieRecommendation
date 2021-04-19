@@ -56,7 +56,11 @@ Scrapy官方文档：https://docs.scrapy.org/en/latest/
 
 本项目为电影推荐系统的后端项目。
 
-开发框架基于SpringBoot，计算框架基于Spark。通过基于内容推荐、基于ALS的协同过滤离线推荐和实时推荐算法来为用户推荐呵护口味的电影！
+开发框架：SpringBoot
+
+计算框架：Spark
+
+综合利用统计推荐、内容推荐、离线推荐、实时推荐等推荐算法为用户推荐合乎自己喜好的电影！
 
 如需了解详情，请参阅该文件夹下的README文件。
 
@@ -67,6 +71,8 @@ Scrapy官方文档：https://docs.scrapy.org/en/latest/
 ## MovieRecommendation-Web
 
 本项目为电影推荐系统的前端项目。
+
+开发框架： Vue 2.6
 
 如需了解详情，请参阅该文件夹下的README文件。
 
